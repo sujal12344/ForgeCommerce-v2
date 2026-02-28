@@ -1,0 +1,153 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  // url       = env("DATABASE_URL")
+  // directUrl = env("DIRECT_URL")
+}
+
+model Store {
+  id         String      @id @default(cuid())
+  name       String
+  userId     String
+  billboard  BillBoard[] @relation("StoretoBillboards")
+  categories Category[]  @relation("StoretoCategories")
+  sizes      Size[]      @relation("StoretoSizes")
+  colors     Color[]     @relation("StoretoColors")
+  products   Product[]   @relation("StoretoProducts")
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  order      Order[]     @relation("StoreToOrder")
+
+  @@index([userId])
+}
+
+model BillBoard {
+  id         String     @id @default(cuid())
+  label      String
+  imageUrl   String
+  storeId    String
+  store      Store      @relation("StoretoBillboards", fields: [storeId], references: [id], onDelete: Cascade)
+  categories Category[] @relation("BillboardtoCategories")
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  @@index([storeId])
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  storeId     String
+  store       Store     @relation("StoretoCategories", fields: [storeId], references: [id], onDelete: Cascade)
+  billboardId String
+  billboard   BillBoard @relation("BillboardtoCategories", fields: [billboardId], references: [id], onDelete: Cascade)
+  name        String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  products    Product[] @relation("ProducttoCategory")
+
+  @@index([storeId])
+  @@index([billboardId])
+}
+
+model Size {
+  id        String    @id @default(cuid())
+  storeId   String
+  store     Store     @relation("StoretoSizes", fields: [storeId], references: [id], onDelete: Cascade)
+  name      String
+  value     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[] @relation("ProducttoSizes")
+
+  @@index([storeId])
+}
+
+model Color {
+  id        String    @id @default(cuid())
+  storeId   String
+  store     Store     @relation("StoretoColors", fields: [storeId], references: [id], onDelete: Cascade)
+  name      String
+  value     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[] @relation("ProducttoColor")
+
+  @@index([storeId])
+}
+
+model Product {
+  id          String      @id @default(cuid())
+  storeId     String
+  store       Store       @relation("StoretoProducts", fields: [storeId], references: [id], onDelete: Cascade)
+  categoryId  String
+  category    Category    @relation("ProducttoCategory", fields: [categoryId], references: [id], onDelete: Cascade)
+  sizeId      String
+  size        Size        @relation("ProducttoSizes", fields: [sizeId], references: [id], onDelete: Restrict)
+  colorId     String
+  color       Color       @relation("ProducttoColor", fields: [colorId], references: [id], onDelete: Restrict)
+  name        String
+  price       Decimal     @db.Decimal(10, 2)
+  description String?
+  ytURL       String?
+  featured    Boolean     @default(false)
+  archived    Boolean     @default(false)
+  images      Image[]     @relation("ProducttoImage")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  orderItem   OrderItem[] @relation("ProducttoOrderitem")
+
+  @@index([storeId])
+  @@index([categoryId])
+  @@index([sizeId])
+  @@index([colorId])
+  @@index([featured])
+  @@index([archived])
+}
+
+model Image {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation("ProducttoImage", fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
+}
+
+model Order {
+  id         String      @id @default(cuid())
+  storeId    String // Foreign Key to Store
+  store      Store       @relation("StoreToOrder", fields: [storeId], references: [id], onDelete: Cascade)
+  orderItems OrderItem[] // Relation to OrderItem model
+  name       String
+  email      String
+  isPaid     Boolean     @default(false)
+  phone      String      @default("")
+  address    String      @default("")
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@index([storeId])
+  @@index([isPaid])
+  @@index([createdAt])
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String // Foreign Key to Order
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String?  // Foreign Key to Product (nullable to preserve history)
+  product   Product? @relation("ProducttoOrderitem", fields: [productId], references: [id], onDelete: SetNull)
+  quantity  Int      @default(1)
+  price     Decimal  @db.Decimal(10, 2) // Price snapshot at time of purchase
+
+  @@index([orderId])
+  @@index([productId])
+}
