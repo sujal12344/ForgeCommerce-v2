@@ -86,7 +86,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
       router.refresh();
       router.push(`/${storeId}/categories`);
       toast.success(toastMessage);
-    } catch (error: any) {
+    } catch {
       toast.error("Something went wrong.");
     } finally {
       setLoading(false);
@@ -100,9 +100,9 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
       router.refresh();
       router.push(`/${storeId}/categories`);
       toast.success("Category deleted.");
-    } catch (error: any) {
+    } catch {
       toast.error(
-        "Make sure you removed all products using this category first.",
+        "Make sure you removed all products using this category first."
       );
     } finally {
       setLoading(false);
@@ -177,7 +177,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {billboards.map((billboard) => (
+                      {billboards.map(billboard => (
                         <SelectItem key={billboard.id} value={billboard.id}>
                           {billboard.label}
                         </SelectItem>

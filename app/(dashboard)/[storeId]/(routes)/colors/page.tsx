@@ -1,7 +1,11 @@
 import prisma from "@/prisma/client";
 import Colors from "./components/Colors";
 
-const ColorsPage = async ({ params }: { params: Promise<{ storeId: string }> }) => {
+const ColorsPage = async ({
+  params,
+}: {
+  params: Promise<{ storeId: string }>;
+}) => {
   const { storeId } = await params;
   const FindColors = await prisma.color.findMany({
     where: {
@@ -12,7 +16,7 @@ const ColorsPage = async ({ params }: { params: Promise<{ storeId: string }> }) 
     },
   });
 
-  const FilteredData = FindColors.map((color) => ({
+  const FilteredData = FindColors.map(color => ({
     id: color.id,
     name: color.name,
     value: color.value,

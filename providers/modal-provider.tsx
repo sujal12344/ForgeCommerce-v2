@@ -4,10 +4,10 @@ import { StoreModal } from "@/components/modals-and-nav/store-modal";
 import { useEffect, useState } from "react";
 
 export const ModalProvider = () => {
-  const [isMounted, SetisMounted] = useState(false);
+  const [isMounted, SetIsMounted] = useState(false);
 
   useEffect(() => {
-    SetisMounted(true); //Until this lifecycle is runned , there shouldnt be any difference between server and client side components hence we are passingn null back
+    SetIsMounted(true); //Until this lifecycle is runned , there shouldnt be any difference between server and client side components hence we are passingn null back
   }, []);
 
   if (!isMounted) {

@@ -5,10 +5,9 @@ import { auth } from "@clerk/nextjs/server";
 
 export async function GET(
   req: Request,
-  { params }: { params: Promise<{ colorId: string; storeId: string }> },
+  { params }: { params: Promise<{ colorId: string; storeId: string }> }
 ) {
   try {
-
     const { colorId, storeId } = await params;
     if (!colorId) {
       return new NextResponse("Color id is required", { status: 400 });
@@ -38,10 +37,9 @@ export async function GET(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: Promise<{ colorId: string; storeId: string }> },
+  { params }: { params: Promise<{ colorId: string; storeId: string }> }
 ) {
   try {
-
     const { colorId, storeId } = await params;
     const { userId } = await auth();
 
@@ -84,7 +82,7 @@ export async function DELETE(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: Promise<{ colorId: string; storeId: string }> },
+  { params }: { params: Promise<{ colorId: string; storeId: string }> }
 ) {
   try {
     const { userId } = await auth();

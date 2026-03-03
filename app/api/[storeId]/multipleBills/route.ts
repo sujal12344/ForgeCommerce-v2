@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(
   req: Request,
-  { params }: { params: Promise<{ storeId: string }> },
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   const { storeId } = await params;
   let dataObj;
@@ -55,7 +55,7 @@ export async function POST(
     if (entries.length > 100) {
       return new NextResponse(
         "Cannot create more than 100 billboards at once",
-        { status: 400 },
+        { status: 400 }
       );
     }
 

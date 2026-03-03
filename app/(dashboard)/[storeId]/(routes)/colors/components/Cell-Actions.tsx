@@ -34,7 +34,8 @@ const CellActions = ({ data }: CellActionsProps) => {
       toast.success("Color successfully deleted");
       router.refresh();
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Something went wrong";
+      const message =
+        err instanceof Error ? err.message : "Something went wrong";
       toast.error(message);
     } finally {
       setloading(false);
@@ -69,7 +70,7 @@ const CellActions = ({ data }: CellActionsProps) => {
               } catch {
                 toast.error("Failed to copy to clipboard");
               }
-             }}
+            }}
           >
             <CopyIcon className="h-4 w-4 mr-2" />
             Copy ID

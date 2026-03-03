@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: Promise<{ storeId: string }> },
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   console.log(params);
   const { userId } = await auth();

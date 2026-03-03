@@ -1,4 +1,5 @@
-import { DEMO_STORE_ID } from "@/lib/constants";
+import "dotenv/config";
+import { DEMO_STORE_ID } from "../lib/constants";
 import prisma from "./client";
 
 async function seedIntoDB() {
@@ -6,27 +7,24 @@ async function seedIntoDB() {
 
   console.log("🌱 Starting database seeding...");
 
-  // Clean existing demo data before reseeding (idempotent)
+  // Clean only DEMO_STORE_ID related data — cascade handles everything
   console.log("🧹 Cleaning existing demo data...");
-  await prisma.$transaction([
-    prisma.orderItem.deleteMany({ where: { order: { storeId: DEMO_STORE_ID } } }),
-    prisma.order.deleteMany({ where: { storeId: DEMO_STORE_ID } }),
-    prisma.image.deleteMany({ where: { product: { storeId: DEMO_STORE_ID } } }),
-    prisma.product.deleteMany({ where: { storeId: DEMO_STORE_ID } }),
-    prisma.color.deleteMany({ where: { storeId: DEMO_STORE_ID } }),
-    prisma.size.deleteMany({ where: { storeId: DEMO_STORE_ID } }),
-    prisma.category.deleteMany({ where: { storeId: DEMO_STORE_ID } }),
-    prisma.billBoard.deleteMany({ where: { storeId: DEMO_STORE_ID } }),
-  ]);
+  await prisma.store
+    .deleteMany({ where: { id: DEMO_STORE_ID } })
+    .then(() => {
+      console.log("✅ Existing demo data cleaned successfully.");
+    })
+    .catch(() => {
+      console.error("Error cleaning demo data:");
+    });
+  console.log("✅ Demo data cleaned.");
 
   // Create Store
   console.log("🏪 Creating store...");
-  const store = await prisma.store.upsert({
-    where: { id: DEMO_STORE_ID },
-    update: {},
-    create: {
+  const store = await prisma.store.create({
+    data: {
       id: DEMO_STORE_ID,
-      name: "ForgeCom",
+      name: "DEMO_STORE_NAME",
       userId: "user_37TghqIwElaGZ6C4qze8iWq1ZbU",
     },
   });
@@ -549,8 +547,14 @@ async function seedIntoDB() {
         storeId,
         orderItems: {
           create: [
-            { productId: classicTShirtProduct.id, price: classicTShirtProduct.price },
-            { productId: runningShoesProduct.id, price: runningShoesProduct.price },
+            {
+              productId: classicTShirtProduct.id,
+              price: classicTShirtProduct.price,
+            },
+            {
+              productId: runningShoesProduct.id,
+              price: runningShoesProduct.price,
+            },
           ],
         },
         createdAt: new Date("2025-09-15T10:00:00Z"),
@@ -565,7 +569,12 @@ async function seedIntoDB() {
         isPaid: true,
         storeId,
         orderItems: {
-          create: [{ productId: leatherWalletProduct.id, price: leatherWalletProduct.price }],
+          create: [
+            {
+              productId: leatherWalletProduct.id,
+              price: leatherWalletProduct.price,
+            },
+          ],
         },
         createdAt: new Date("2025-03-20T10:00:00Z"),
       },
@@ -594,7 +603,9 @@ async function seedIntoDB() {
         isPaid: true,
         storeId,
         orderItems: {
-          create: [{ productId: shirt12Product.id, price: shirt12Product.price }],
+          create: [
+            { productId: shirt12Product.id, price: shirt12Product.price },
+          ],
         },
         createdAt: new Date("2025-08-18T10:00:00Z"),
       },
@@ -608,7 +619,9 @@ async function seedIntoDB() {
         isPaid: true,
         storeId,
         orderItems: {
-          create: [{ productId: shirt12Product.id, price: shirt12Product.price }],
+          create: [
+            { productId: shirt12Product.id, price: shirt12Product.price },
+          ],
         },
         createdAt: new Date("2025-02-25T10:00:00Z"),
       },
@@ -720,7 +733,7 @@ seedIntoDB()
   .then(() => {
     console.log("🌱 Database seeding completed.");
   })
-  .catch((e) => {
+  .catch(e => {
     console.error("❌ Error during seeding:", e);
     process.exit(1);
   })

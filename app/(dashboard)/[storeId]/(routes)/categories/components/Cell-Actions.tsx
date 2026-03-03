@@ -24,7 +24,9 @@ const CellActions = ({ data }: CellActionsProps) => {
   const [open, setOpen] = useState(false);
   const params = useParams();
   const rawStoreId = params.storeId;
-  const storeId = Array.isArray(rawStoreId) ? rawStoreId[0] : (rawStoreId ?? '');
+  const storeId = Array.isArray(rawStoreId)
+    ? rawStoreId[0]
+    : (rawStoreId ?? "");
   const router = useRouter();
   const HandleEdit = () => {
     router.push(`/${storeId}/categories/${data.id}`);
@@ -35,7 +37,7 @@ const CellActions = ({ data }: CellActionsProps) => {
       await axios.delete(`/api/${storeId}/categories/${data.id}`);
       toast.success("Category successfully deleted");
       router.refresh();
-    } catch (err) {
+    } catch {
       toast.error("Something went wrong");
     } finally {
       setLoading(false);

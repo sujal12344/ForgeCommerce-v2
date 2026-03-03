@@ -44,7 +44,7 @@ const JsonEditor: React.FC<JsonEditorProps> = ({
     onChange(newValue);
   };
 
-  const fieldId = label.toLowerCase().replace(/\s+/g, '-');
+  const fieldId = label.toLowerCase().replace(/\s+/g, "-");
 
   return (
     <div className="flex flex-col space-y-2">
@@ -134,8 +134,8 @@ const JsonEditorModal: React.FC<JsonEditorModalProps> = ({
         {} as Record<string, string>
       )
     );
-  // fieldsKey is a stable serialized representation of fields
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // fieldsKey is a stable serialized representation of fields
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fieldsKey]);
 
   const validateJson = (json: string, fieldName: string) => {
@@ -157,16 +157,16 @@ const JsonEditorModal: React.FC<JsonEditorModalProps> = ({
 
   const handleSubmit = async () => {
     if (Object.values(jsonErrors).some(error => error !== "")) {
-    toast({
-      title: "Validation Error",
-      description: "Please fix JSON errors before submitting.",
-      variant: "destructive",
-    });
-    return;
-  }
+      toast({
+        title: "Validation Error",
+        description: "Please fix JSON errors before submitting.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     setIsLoading(true);
-    try  {
+    try {
       const parsedData = Object.fromEntries(
         Object.entries(jsonData).map(([key, value]) => [key, JSON.parse(value)])
       );
@@ -189,10 +189,7 @@ const JsonEditorModal: React.FC<JsonEditorModalProps> = ({
 
   return (
     <div className="">
-      <Dialog
-        open={isOpen}
-        onOpenChange={setIsOpen}
-      >
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <Button variant="outline" onClick={() => setIsOpen(true)}>
             {triggerButtonText}

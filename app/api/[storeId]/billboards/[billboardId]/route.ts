@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  { params }: { params: Promise<{ billboardId: string }> },
+  { params }: { params: Promise<{ billboardId: string }> }
 ) {
   try {
     const { billboardId } = await params;
@@ -27,14 +27,14 @@ export async function GET(
     console.error("Error fetching billboard:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
 
 export async function PATCH(
   req: Request,
-  { params }: { params: Promise<{ storeId: string; billboardId: string }> },
+  { params }: { params: Promise<{ storeId: string; billboardId: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -83,7 +83,7 @@ export async function PATCH(
     if (!existingBillboard) {
       return NextResponse.json(
         { error: "Billboard not found" },
-        { status: 404 },
+        { status: 404 }
       );
     }
 
@@ -103,14 +103,14 @@ export async function PATCH(
     console.error("Error updating billboard:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
 
 export async function DELETE(
   req: Request,
-  { params }: { params: Promise<{ storeId: string; billboardId: string }> },
+  { params }: { params: Promise<{ storeId: string; billboardId: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -150,7 +150,7 @@ export async function DELETE(
     if (!existingBillboard) {
       return NextResponse.json(
         { error: "Billboard not found" },
-        { status: 404 },
+        { status: 404 }
       );
     }
 
@@ -166,7 +166,7 @@ export async function DELETE(
     console.error("Error deleting billboard:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

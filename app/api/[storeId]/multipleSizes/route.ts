@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(
   req: Request,
-  { params }: { params: Promise<{ storeId: string }> },
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   let dataObj;
   const { userId } = await auth();
@@ -55,12 +55,12 @@ export async function POST(
     }
 
     const invalidEntry = entries.find(
-      ([, value]) => typeof value !== "string" && typeof value !== "number",
+      ([, value]) => typeof value !== "string" && typeof value !== "number"
     );
     if (invalidEntry) {
       return new NextResponse(
         `Invalid value type for key "${invalidEntry[0]}"`,
-        { status: 400 },
+        { status: 400 }
       );
     }
 

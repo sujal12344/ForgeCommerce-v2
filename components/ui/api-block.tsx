@@ -27,7 +27,7 @@ const onCopy = async (description: string) => {
   } catch {
     toast.error("Failed to copy");
   }
- };
+};
 
 const ApiBlock = ({ title, description, variant }: ApiListProps) => {
   return (

@@ -10,7 +10,7 @@ type ProductWithImages = Prisma.ProductGetPayload<{
 
 export async function POST(
   req: Request,
-  { params }: { params: Promise<{ storeId: string }> },
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   try {
     const { storeId } = await params;
@@ -64,7 +64,7 @@ export async function POST(
         console.log("PRODUCTS_BULK_POST_INVALID_PRODUCT_DATA", product);
         return new NextResponse(
           "Invalid product data: missing required fields",
-          { status: 400 },
+          { status: 400 }
         );
       }
     }
@@ -126,7 +126,7 @@ export async function POST(
             ytURL: ytURL || "",
           },
         });
-      }),
+      })
     );
     console.log("PRODUCTS_BULK_POST_COMPLETED and RETURNING and PROCESSING");
     return NextResponse.json(createdProducts);

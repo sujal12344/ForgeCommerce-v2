@@ -4,15 +4,15 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: Promise<{ storeId: string }> },
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   // console.log(params);
   const { storeId } = await params;
   const { userId } = await auth();
 
-  if (!userId || !storeId) { 
-    return NextResponse.json("Unauthorized", { status: 401 })
-  };
+  if (!userId || !storeId) {
+    return NextResponse.json("Unauthorized", { status: 401 });
+  }
 
   let idsArr;
 

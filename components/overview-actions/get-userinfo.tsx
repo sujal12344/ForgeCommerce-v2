@@ -22,7 +22,7 @@ export default async function getUserinfo(storeId: string) {
     take: 5,
   });
 
-  const userData = userInfo.map((order) => ({
+  const userData = userInfo.map(order => ({
     id: order.id,
     name: order.name,
     email: order.email,

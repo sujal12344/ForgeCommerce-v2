@@ -55,7 +55,8 @@ const SettingsPage = ({ name, id }: SettingsProps) => {
         router.refresh();
       }
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to update store name";
+      const message =
+        err instanceof Error ? err.message : "Failed to update store name";
       toast.error(message);
     } finally {
       setloading(false);

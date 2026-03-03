@@ -4,12 +4,15 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  { params }: { params: Promise<{ storeId: string }> },
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   try {
     const { storeId } = await params;
     if (!storeId)
-      return NextResponse.json({ error: "Store Id is required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Store Id is required" },
+        { status: 400 }
+      );
     const FindBillboards = await prisma.billBoard.findMany({
       where: {
         storeId,
@@ -20,14 +23,14 @@ export async function GET(
     console.log(err);
     return NextResponse.json(
       { error: "Failed to fetch billboards" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: Promise<{ storeId: string }> },
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   try {
     const { storeId } = await params;
@@ -40,7 +43,7 @@ export async function POST(
         { error: "Label and ImageUrl are required" },
         {
           status: 400,
-        },
+        }
       );
     const IsStorevalid = await prisma.store.findFirst({
       where: {
@@ -53,7 +56,7 @@ export async function POST(
         { error: "Store not found or access denied" },
         {
           status: 403,
-        },
+        }
       );
 
     const createBill = await prisma.billBoard.create({
@@ -68,7 +71,7 @@ export async function POST(
     console.log(error);
     return NextResponse.json(
       { error: "Failed to create billboard" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

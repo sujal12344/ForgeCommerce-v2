@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: Promise<{ storeId: string }> },
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   // console.log(params);
   const { userId } = await auth();
@@ -21,13 +21,13 @@ export async function DELETE(
   if (
     !Array.isArray(idsArr) ||
     idsArr.length === 0 ||
-    !idsArr.every((id) => typeof id === "string" && id.trim().length > 0)
+    !idsArr.every(id => typeof id === "string" && id.trim().length > 0)
   ) {
     return NextResponse.json("Invalid or empty idsArr", { status: 400 });
   }
   const validIds: string[] = (idsArr as string[])
-    .map((id) => id.trim())
-    .filter((id) => id.length > 0);
+    .map(id => id.trim())
+    .filter(id => id.length > 0);
   if (!userId || !storeId) {
     return NextResponse.json("Unauthorized", { status: 401 });
   }

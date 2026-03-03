@@ -82,7 +82,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   const defaultValues = initialData
     ? {
         ...initialData,
-        Image: initialData.images.map((img) => ({ url: img.url })),
+        Image: initialData.images.map(img => ({ url: img.url })),
         price: parseFloat(String(initialData?.price)),
       }
     : {
@@ -119,7 +119,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       router.refresh();
       router.push(`/${storeId}/products`);
       toast.success(toastMessage);
-    } catch (error: any) {
+    } catch {
       toast.error("Something went wrong.");
     } finally {
       setLoading(false);
@@ -133,7 +133,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       router.refresh();
       router.push(`/${storeId}/products`);
       toast.success("Product deleted.");
-    } catch (error: any) {
+    } catch {
       toast.error("Something went wrong.");
     } finally {
       setLoading(false);
@@ -176,14 +176,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 <FormLabel>Images</FormLabel>
                 <FormControl>
                   <ImageUpload
-                    values={field.value.map((image) => image.url)}
+                    values={field.value.map(image => image.url)}
                     disabled={loading}
-                    onChange={(url) =>
-                      field.onChange([...field.value, { url }])
-                    }
-                    onRemove={(url) =>
+                    onChange={url => field.onChange([...field.value, { url }])}
+                    onRemove={url =>
                       field.onChange([
-                        ...field.value.filter((current) => current.url !== url),
+                        ...field.value.filter(current => current.url !== url),
                       ])
                     }
                   />
@@ -249,7 +247,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {categories.map((category) => (
+                      {categories.map(category => (
                         <SelectItem key={category.id} value={category.id}>
                           {category.name}
                         </SelectItem>
@@ -281,7 +279,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {sizes.map((size) => (
+                      {sizes.map(size => (
                         <SelectItem key={size.id} value={size.id}>
                           {size.name}
                         </SelectItem>
@@ -313,7 +311,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {colors.map((color) => (
+                      {colors.map(color => (
                         <SelectItem key={color.id} value={color.id}>
                           {color.name}
                         </SelectItem>
@@ -332,7 +330,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                   <FormControl>
                     <Checkbox
                       checked={field.value ?? false}
-                      onCheckedChange={(checked) =>
+                      onCheckedChange={checked =>
                         field.onChange(checked === true)
                       }
                     />
@@ -354,7 +352,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                   <FormControl>
                     <Checkbox
                       checked={field.value ?? false}
-                      onCheckedChange={(checked) =>
+                      onCheckedChange={checked =>
                         field.onChange(checked === true)
                       }
                     />

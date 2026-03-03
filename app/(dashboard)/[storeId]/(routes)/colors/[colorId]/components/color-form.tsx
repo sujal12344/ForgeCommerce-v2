@@ -79,7 +79,7 @@ const ColorForm = ({ initialData }: ColorsFormProps) => {
       router.push(`/${storeId}/colors`);
     } catch (err) {
       toast.error(
-        "Please delete all products using this color first and try again",
+        "Please delete all products using this color first and try again"
       );
     } finally {
       setloading(false);

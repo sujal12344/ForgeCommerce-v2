@@ -5,7 +5,7 @@ import prisma from "@/prisma/client";
 
 export async function GET(
   req: Request,
-  { params }: { params: Promise<{ categoryId: string }> },
+  { params }: { params: Promise<{ categoryId: string }> }
 ) {
   try {
     const { categoryId } = await params;
@@ -35,7 +35,7 @@ export async function GET(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: Promise<{ categoryId: string; storeId: string }> },
+  { params }: { params: Promise<{ categoryId: string; storeId: string }> }
 ) {
   try {
     const { categoryId, storeId } = await params;
@@ -80,7 +80,7 @@ export async function DELETE(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: Promise<{ categoryId: string; storeId: string }> },
+  { params }: { params: Promise<{ categoryId: string; storeId: string }> }
 ) {
   try {
     const { categoryId, storeId } = await params;

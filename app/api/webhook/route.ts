@@ -51,7 +51,7 @@ export async function POST(req: Request) {
     }
 
     try {
-      await prisma.$transaction(async (tx) => {
+      await prisma.$transaction(async tx => {
         const order = await tx.order.update({
           where: {
             id: orderId,
@@ -68,13 +68,13 @@ export async function POST(req: Request) {
           },
         });
         const productIds = order.orderItems
-          .map((item) => item.productId)
+          .map(item => item.productId)
           .filter((id): id is string => typeof id === "string");
 
         if (productIds.length === 0) {
           console.warn(
             "checkout.session.completed: no product IDs found for order",
-            orderId,
+            orderId
           );
           return;
         }

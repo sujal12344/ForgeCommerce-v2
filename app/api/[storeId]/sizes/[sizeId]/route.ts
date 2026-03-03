@@ -5,7 +5,7 @@ import { auth } from "@clerk/nextjs/server";
 
 export async function GET(
   req: Request,
-  { params }: { params: Promise<{ sizeId: string; storeId: string }> },
+  { params }: { params: Promise<{ sizeId: string; storeId: string }> }
 ) {
   try {
     const { sizeId, storeId } = await params;
@@ -38,7 +38,7 @@ export async function GET(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: Promise<{ sizeId: string; storeId: string }> },
+  { params }: { params: Promise<{ sizeId: string; storeId: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -83,7 +83,7 @@ export async function DELETE(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: Promise<{ sizeId: string; storeId: string }> },
+  { params }: { params: Promise<{ sizeId: string; storeId: string }> }
 ) {
   try {
     const { userId } = await auth();

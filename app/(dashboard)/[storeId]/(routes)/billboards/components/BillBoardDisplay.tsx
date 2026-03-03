@@ -23,7 +23,7 @@ const Billboards = ({ BillboardData }: billboardsprops) => {
     ? rawStoreId[0]
     : (rawStoreId ?? "");
   const [billboards, setBillboards] = useState(BillboardData);
-  const FilteredData = billboards.map((bill) => ({
+  const FilteredData = billboards.map(bill => ({
     label: bill.label,
     createdAt: new Date(bill.createdAt).toDateString(),
     id: bill.id,
@@ -32,14 +32,11 @@ const Billboards = ({ BillboardData }: billboardsprops) => {
 
   const onDeleteSelected = async (ids: string[]) => {
     try {
-      const res = await axios.delete(
-        `/api/${storeIdSafe}/billboards/multidelete`,
-        {
-          data: { idsArr: ids },
-        },
-      );
-      setBillboards((prevBillboards) =>
-        prevBillboards.filter((billboard) => !ids.includes(billboard.id)),
+      await axios.delete(`/api/${storeIdSafe}/billboards/multidelete`, {
+        data: { idsArr: ids },
+      });
+      setBillboards(prevBillboards =>
+        prevBillboards.filter(billboard => !ids.includes(billboard.id))
       );
       return { success: true };
     } catch (err) {

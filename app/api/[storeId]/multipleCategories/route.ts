@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(
   req: Request,
-  { params }: { params: Promise<{ storeId: string }> },
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   try {
     let nameArr: unknown;
@@ -22,9 +22,7 @@ export async function POST(
       });
     }
     if (
-      !nameArr.every(
-        (name) => typeof name === "string" && name.trim().length > 0,
-      )
+      !nameArr.every(name => typeof name === "string" && name.trim().length > 0)
     ) {
       return new NextResponse("All names must be non-empty strings", {
         status: 400,
@@ -58,7 +56,7 @@ export async function POST(
         status: 400,
       });
     }
-    const billIdsMap = getBills.map((bill) => bill.id);
+    const billIdsMap = getBills.map(bill => bill.id);
     const addCategories = await prisma.category.createManyAndReturn({
       data: nameArr.map((name: string, index: number) => ({
         name: name.trim(),
@@ -67,9 +65,9 @@ export async function POST(
       })),
     });
     // console.log(addCategories);
-    return NextResponse.json({ 
-      success: true, 
-      count: addCategories.length, 
+    return NextResponse.json({
+      success: true,
+      count: addCategories.length,
     });
   } catch (error) {
     console.error("[MULTIPLE_CATEGORIES_POST]", error);

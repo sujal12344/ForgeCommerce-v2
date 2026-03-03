@@ -87,9 +87,9 @@ const BillBoardForm = ({ initialdata }: BillBoardFormProps) => {
       toast.success("Billboard successfully deleted");
       router.refresh();
       router.push(`/${storeId}/billboards`);
-    } catch (err) {
+    } catch {
       toast.error(
-        "Please delete all the categories before deleting this first",
+        "Please delete all the categories before deleting this first"
       );
     } finally {
       setLoading(false);
@@ -127,7 +127,7 @@ const BillBoardForm = ({ initialdata }: BillBoardFormProps) => {
               control={form.control}
               name="imageUrl"
               render={(
-                { field }, //field passes imageUrl array
+                { field } //field passes imageUrl array
               ) => (
                 <FormItem>
                   <FormLabel className="font-bold text-primary">
@@ -136,7 +136,7 @@ const BillBoardForm = ({ initialdata }: BillBoardFormProps) => {
                   <FormControl>
                     <ImageUpload
                       disabled={loading}
-                      onChange={(url) => {
+                      onChange={url => {
                         field.onChange(url); //Updates the array with the current url
                       }}
                       onRemove={() => {

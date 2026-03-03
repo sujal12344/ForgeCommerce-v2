@@ -20,7 +20,9 @@ const Products = ({ ProductsData }: ProductsProps) => {
   const router = useRouter();
   const params = useParams();
   const rawStoreId = params.storeId;
-  const storeId = Array.isArray(rawStoreId) ? rawStoreId[0] : (rawStoreId ?? '');
+  const storeId = Array.isArray(rawStoreId)
+    ? rawStoreId[0]
+    : (rawStoreId ?? "");
   const [Products, setProducts] =
     React.useState<FilteredDataProps[]>(ProductsData);
   const [isDeleting, setIsDeleting] = React.useState(false);
@@ -28,14 +30,13 @@ const Products = ({ ProductsData }: ProductsProps) => {
   const onDeleteSelected = async (ids: string[]) => {
     if (isDeleting)
       return { success: false, error: "Delete already in progress" };
-    if (!storeId)
-      return { success: false, error: "Store ID is unavailable" };
+    if (!storeId) return { success: false, error: "Store ID is unavailable" };
     setIsDeleting(true);
     try {
       await axios.delete(`/api/${storeId}/products/multidelete`, {
         data: { idsArr: ids },
       });
-      setProducts((prev) => prev.filter((item) => !ids.includes(item.id)));
+      setProducts(prev => prev.filter(item => !ids.includes(item.id)));
       router.refresh();
       toast.success("Products deleted successfully");
       return { success: true };

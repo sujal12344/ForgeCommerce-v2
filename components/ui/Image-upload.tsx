@@ -3,7 +3,10 @@ import React, { useEffect, useState } from "react";
 import { Button } from "./button";
 import { ImagePlus, Trash } from "lucide-react";
 import Image from "next/image";
-import { CldUploadWidget, CloudinaryUploadWidgetResults } from "next-cloudinary";
+import {
+  CldUploadWidget,
+  CloudinaryUploadWidgetResults,
+} from "next-cloudinary";
 
 type ImageUploadProps = {
   disabled: boolean;
@@ -24,7 +27,11 @@ const ImageUpload = ({
   }, []);
 
   const onSuccess = (result: CloudinaryUploadWidgetResults) => {
-    if (result.info && typeof result.info === "object" && result.info.secure_url) {
+    if (
+      result.info &&
+      typeof result.info === "object" &&
+      result.info.secure_url
+    ) {
       onChange(result.info.secure_url);
     }
   };
@@ -49,7 +56,13 @@ const ImageUpload = ({
                 <Trash className="h-5 w-4" />
               </Button>
             </div>
-            <Image fill sizes="200px" className="object-cover" alt="Image" src={url} />
+            <Image
+              fill
+              sizes="200px"
+              className="object-cover"
+              alt="Image"
+              src={url}
+            />
           </div>
         ))}
       </div>

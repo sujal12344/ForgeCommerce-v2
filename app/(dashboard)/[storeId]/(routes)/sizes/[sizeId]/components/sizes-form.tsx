@@ -54,8 +54,14 @@ const SizeForm = ({ initialData }: SizesFormProps) => {
     },
   });
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    if (!storeId) { toast.error("Store ID is missing"); return; }
-    if (initialData && !sizeId) { toast.error("Size ID is missing"); return; }
+    if (!storeId) {
+      toast.error("Store ID is missing");
+      return;
+    }
+    if (initialData && !sizeId) {
+      toast.error("Size ID is missing");
+      return;
+    }
     try {
       setloading(true);
       if (initialData) {
@@ -76,16 +82,19 @@ const SizeForm = ({ initialData }: SizesFormProps) => {
   };
 
   const Handledelete = async () => {
-    if (!storeId || !sizeId) { toast.error("Missing route params"); return; }
+    if (!storeId || !sizeId) {
+      toast.error("Missing route params");
+      return;
+    }
     try {
       setloading(true);
       await axios.delete(`/api/${storeId}/sizes/${sizeId}`);
       toast.success("Size successfully deleted");
       router.refresh();
       router.push(`/${storeId}/sizes`);
-    } catch (err) {
+    } catch {
       toast.error(
-        "Please delete all products using this size before deleting it",
+        "Please delete all products using this size before deleting it"
       );
     } finally {
       setloading(false);

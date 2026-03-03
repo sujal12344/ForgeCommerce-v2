@@ -16,7 +16,7 @@ export default function GlobalError({
             onClick={() => reset()}
             className="rounded-md bg-black px-4 py-2 text-sm text-white dark:bg-white dark:text-black"
           >
-            Try again
+            Try again {error.digest ? `(${error.digest})` : ""}
           </button>
         </div>
       </body>

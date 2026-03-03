@@ -28,7 +28,7 @@ const Content = ({ isTestMode = false }: { isTestMode?: boolean }) => {
       </tr>
     </table>
   </div>
-  ${isTestMode ? `<h4 style="color:red;">You won't receive any emails as the payment was in test mode</h4>` : ''}
+  ${isTestMode ? `<h4 style="color:red;">You won't receive any emails as the payment was in test mode</h4>` : ""}
   `;
 };
 

@@ -5,7 +5,7 @@ import prisma from "@/prisma/client";
 
 export async function GET(
   req: Request,
-  { params }: { params: Promise<{ productId: string }> },
+  { params }: { params: Promise<{ productId: string }> }
 ) {
   try {
     const { productId } = await params;
@@ -38,7 +38,7 @@ export async function GET(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: Promise<{ productId: string; storeId: string }> },
+  { params }: { params: Promise<{ productId: string; storeId: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -82,7 +82,7 @@ export async function DELETE(
 
 export async function PUT(
   req: Request,
-  { params }: { params: Promise<{ productId: string; storeId: string }> },
+  { params }: { params: Promise<{ productId: string; storeId: string }> }
 ) {
   try {
     const { productId, storeId } = await params;
@@ -183,7 +183,7 @@ export async function PUT(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: Promise<{ productId: string; storeId: string }> },
+  { params }: { params: Promise<{ productId: string; storeId: string }> }
 ) {
   try {
     const { productId, storeId } = await params;
@@ -193,7 +193,7 @@ export async function PATCH(
       const body = await req.json();
       featured = body.featured;
       archived = body.archived;
-    } catch (error) {
+    } catch {
       return new NextResponse("Invalid JSON body", { status: 400 });
     }
     if (!userId) {

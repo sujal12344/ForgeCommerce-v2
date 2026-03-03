@@ -19,7 +19,7 @@ export default async function StoreIdLayout({
       userId,
     },
   });
-  if (!IsStore) redirect("/");
+  // if (!IsStore) redirect("/");
   return (
     <>
       <Navbar />

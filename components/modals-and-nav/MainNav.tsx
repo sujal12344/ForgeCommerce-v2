@@ -57,14 +57,14 @@ const MainNav = ({
   return (
     <>
       <ul className={cn("flex items-center space-x-4 lg:space-x-6", className)}>
-        {routes.map((route) => (
+        {routes.map(route => (
           <li key={route.href}>
             <Link
               className={cn(
                 "font-medium text-sm transition-colors hover:text-primary dark:text-white ",
                 route.active
                   ? "text-black dark:text-white"
-                  : "text-muted-foreground",
+                  : "text-muted-foreground"
               )}
               href={route.href}
             >

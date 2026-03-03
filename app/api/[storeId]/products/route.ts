@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(
   req: Request,
-  { params }: { params: Promise<{ storeId: string }> },
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -34,8 +34,13 @@ export async function POST(
       return new NextResponse("Images are required", { status: 400 });
     }
 
-    const parsedPrice = typeof price === 'number' ? price : parseFloat(price);
-    if (price === undefined || price === null || isNaN(parsedPrice) || parsedPrice < 0) {
+    const parsedPrice = typeof price === "number" ? price : parseFloat(price);
+    if (
+      price === undefined ||
+      price === null ||
+      isNaN(parsedPrice) ||
+      parsedPrice < 0
+    ) {
       return new NextResponse("Price is required", { status: 400 });
     }
 
@@ -95,9 +100,9 @@ export async function POST(
 
 export async function GET(
   req: Request,
-  { params }: { params: Promise<{ storeId: string }> },
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
-  try {    
+  try {
     const { storeId } = await params;
     const { searchParams } = new URL(req.url);
     const categoryId = searchParams.get("categoryId") || undefined;

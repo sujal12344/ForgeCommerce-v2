@@ -26,7 +26,9 @@ interface DataTableProps<TData extends { id: string }, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   searchKey: string;
-  onDeleteSelected: (ids: string[]) => Promise<{ success: boolean; error?: string }>;
+  onDeleteSelected: (
+    ids: string[]
+  ) => Promise<{ success: boolean; error?: string }>;
   isOrder?: boolean;
 }
 

@@ -23,18 +23,19 @@ const Orders = ({ OrdersData }: OrdersProps) => {
 
     try {
       console.log(ids, "ids deleted");
-      const res = await axios.delete(
-        `/api/${storeId}/orders/multidelete`,
-        {
-          data: { idsArr: ids },
-        }
-      );
+      const res = await axios.delete(`/api/${storeId}/orders/multidelete`, {
+        data: { idsArr: ids },
+      });
       console.log(res, "res");
       setOrders(prev => prev.filter(item => !ids.includes(item.id)));
       return { success: true };
     } catch (err) {
       console.log(err);
-      return { success: false, error: "Check if the orders attached to products is deleted and try again" };
+      return {
+        success: false,
+        error:
+          "Check if the orders attached to products is deleted and try again",
+      };
     }
   };
 

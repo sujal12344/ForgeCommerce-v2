@@ -5,7 +5,7 @@ import prisma from "@/prisma/client";
 
 export async function POST(
   req: Request,
-  { params }: { params: Promise<{ storeId: string }> },
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   try {
     const { userId } = await auth();
@@ -49,7 +49,9 @@ export async function POST(
     });
 
     if (!billboard) {
-      return new NextResponse("Billboard not found in this store", { status: 400 });
+      return new NextResponse("Billboard not found in this store", {
+        status: 400,
+      });
     }
 
     const categories = await prisma.category.create({
@@ -69,7 +71,7 @@ export async function POST(
 
 export async function GET(
   _req: Request,
-  { params }: { params: Promise<{ storeId: string }> },
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   try {
     const { storeId } = await params;

@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: Promise<{ storeId: string }> },
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   const { userId } = await auth();
   const { storeId } = await params;
@@ -31,7 +31,7 @@ export async function DELETE(
   if (
     !Array.isArray(idsArr) ||
     idsArr.length === 0 ||
-    !idsArr.every((id) => typeof id === "string" && id.length > 0)
+    !idsArr.every(id => typeof id === "string" && id.length > 0)
   ) {
     return NextResponse.json("Invalid or empty idsArr", { status: 400 });
   }

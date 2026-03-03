@@ -15,12 +15,12 @@ export async function OPTIONS() {
 
 export async function POST(
   req: Request,
-  { params }: { params: Promise<{ storeId: string }> },
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   let body;
   try {
     body = await req.json();
-  } catch (error) {
+  } catch {
     return NextResponse.json("Invalid JSON body", {
       status: 400,
       headers: corsHeaders,
@@ -33,7 +33,7 @@ export async function POST(
   if (
     !Array.isArray(productIds) ||
     productIds.length === 0 ||
-    !productIds.every((id) => typeof id === "string" && id.length > 0)
+    !productIds.every(id => typeof id === "string" && id.length > 0)
   ) {
     return NextResponse.json("Product id's needed", {
       status: 400,
@@ -66,12 +66,12 @@ export async function POST(
       acc[id] = (acc[id] || 0) + 1;
       return acc;
     },
-    {},
+    {}
   );
 
   const items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
-  products.forEach((product) => {
+  products.forEach(product => {
     items.push({
       quantity: quantityMap[product.id],
       price_data: {
@@ -87,7 +87,7 @@ export async function POST(
   if (!process.env.FRONTEND_URL) {
     return NextResponse.json(
       { error: "Server configuration error" },
-      { status: 500, headers: corsHeaders },
+      { status: 500, headers: corsHeaders }
     );
   }
 
@@ -98,7 +98,7 @@ export async function POST(
       orderItems: {
         create: uniqueProductIds.map((id: string) => ({
           quantity: quantityMap[id],
-          price: products.find((p) => p.id === id)!.price,
+          price: products.find(p => p.id === id)!.price,
           product: { connect: { id } },
         })),
       },
@@ -123,7 +123,7 @@ export async function POST(
     console.error("Stripe session creation failed:", error);
     return NextResponse.json(
       { error: "Failed to create checkout session" },
-      { status: 500, headers: corsHeaders },
+      { status: 500, headers: corsHeaders }
     );
   }
 

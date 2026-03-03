@@ -22,9 +22,13 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-const Dashboard = async ({ params }: { params: Promise<{ storeId: string }> }) => {
+const Dashboard = async ({
+  params,
+}: {
+  params: Promise<{ storeId: string }>;
+}) => {
   const { storeId } = await params;
-   const [sales, availProducts, totalRevenue, graphData, salesData, dataExist] =
+  const [sales, availProducts, totalRevenue, graphData, salesData, dataExist] =
     await Promise.all([
       getSales(storeId),
       getProducts(storeId),

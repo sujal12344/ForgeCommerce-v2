@@ -16,12 +16,15 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   if (!name) {
-    return NextResponse.json({ error: "Store name is required" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Store name is required" },
+      { status: 400 }
+    );
   }
 
   try {
     const store = await prisma.store.create({
-     data: {
+      data: {
         name,
         userId,
       },
@@ -29,6 +32,9 @@ export async function POST(req: Request) {
     return NextResponse.json(store, { status: 201 });
   } catch (error) {
     console.error("Failed to create store:", error);
-    return NextResponse.json({ error: "Failed to create store" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to create store" },
+      { status: 500 }
+    );
   }
 }

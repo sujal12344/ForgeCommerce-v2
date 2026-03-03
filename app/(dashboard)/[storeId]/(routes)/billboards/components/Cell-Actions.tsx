@@ -36,7 +36,7 @@ const CellActions = ({ data }: CellActionsProps) => {
       router.refresh();
     } catch (err) {
       toast.error(
-        "Please delete all the categories before deleting this first",
+        "Please delete all the categories before deleting this first"
       );
     } finally {
       setloading(false);

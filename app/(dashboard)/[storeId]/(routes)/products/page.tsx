@@ -2,7 +2,11 @@ import { formatter } from "@/lib/utils";
 import prisma from "@/prisma/client";
 import Products from "./components/products";
 
-const BillboardPage = async ({ params }: { params: Promise<{ storeId: string }> }) => {
+const BillboardPage = async ({
+  params,
+}: {
+  params: Promise<{ storeId: string }>;
+}) => {
   const { storeId } = await params;
   const FindProduct = await prisma.product.findMany({
     where: {
@@ -17,7 +21,7 @@ const BillboardPage = async ({ params }: { params: Promise<{ storeId: string }> 
       updatedAt: "desc",
     },
   });
-  const filteredData = FindProduct.map((product) => ({
+  const filteredData = FindProduct.map(product => ({
     id: product.id,
     name: product.name,
     price: formatter.format(product.price.toNumber()),

@@ -28,8 +28,8 @@ const Categories = ({ CategoriesData }: CategoriesProps) => {
         data: { idsArr: ids },
       });
       console.log(res, "res");
-      setCategories((prevCategories) =>
-        prevCategories.filter((category) => !ids.includes(category.id)),
+      setCategories(prevCategories =>
+        prevCategories.filter(category => !ids.includes(category.id))
       );
       return { success: true };
     } catch (err) {

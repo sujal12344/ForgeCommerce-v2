@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: Promise<{ storeId: string }> },
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   const { storeId } = await params;
   const { userId } = await auth();
@@ -12,7 +12,7 @@ export async function DELETE(
   try {
     const body = await req.json();
     idsArr = body.idsArr;
-  } catch (error) {
+  } catch {
     return NextResponse.json("Invalid request body", { status: 400 });
   }
   if (!userId || !storeId)
@@ -21,12 +21,12 @@ export async function DELETE(
   if (
     !Array.isArray(idsArr) ||
     idsArr.length === 0 ||
-    !idsArr.every((id) => typeof id === "string")
+    !idsArr.every(id => typeof id === "string")
   ) {
     return NextResponse.json("idsArr must be a non-empty array of strings", {
-       status: 400,
-     });
-   }
+      status: 400,
+    });
+  }
 
   const Isvalid = await prisma.store.findFirst({
     where: {
@@ -45,11 +45,13 @@ export async function DELETE(
       },
     });
     if (deleteResult.count === 0) {
-      return NextResponse.json("No billboards found to delete", { status: 404 });
+      return NextResponse.json("No billboards found to delete", {
+        status: 404,
+      });
     }
     return NextResponse.json(deleteResult);
   } catch (error) {
     console.error("[BILLBOARDS_MULTIDELETE]", error);
     return NextResponse.json("Internal server error", { status: 500 });
-   }
+  }
 }

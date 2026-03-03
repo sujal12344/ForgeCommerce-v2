@@ -29,4 +29,3 @@ const SizePage = async ({
 };
 
 export default SizePage;
-

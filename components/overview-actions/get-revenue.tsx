@@ -12,12 +12,12 @@ export default async function getRevenue(storeId: string) {
       orderItems: true,
     },
   });
-  const orderItems = orders.flatMap((order) => order.orderItems);
+  const orderItems = orders.flatMap(order => order.orderItems);
   const productIds = [
     ...new Set(
       orderItems
-        .map((item) => item.productId)
-        .filter((id): id is string => id !== null),
+        .map(item => item.productId)
+        .filter((id): id is string => id !== null)
     ),
   ];
 
@@ -31,7 +31,7 @@ export default async function getRevenue(storeId: string) {
     },
   });
 
-  const priceMap = new Map(products.map((p) => [p.id, p.price.toNumber()]));
+  const priceMap = new Map(products.map(p => [p.id, p.price.toNumber()]));
 
   const total = orderItems.reduce((sum, item) => {
     return sum + (item.productId ? (priceMap.get(item.productId) ?? 0) : 0);

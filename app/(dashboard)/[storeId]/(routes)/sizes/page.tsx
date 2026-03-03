@@ -14,7 +14,7 @@ const SizesPage = async ({ params }: { params: { storeId: string } }) => {
     },
   });
 
-  const FilteredData = FindSizes.map((size) => ({
+  const FilteredData = FindSizes.map(size => ({
     id: size.id,
     name: size.name,
     value: size.value,

@@ -30,20 +30,19 @@ const Sizes = ({ SizesData }: SizesProps) => {
   const onDeleteSelected = async (ids: string[]) => {
     try {
       // console.log(ids, "ids deleted");
-      const res = await axios.delete(
-        `/api/${storeId}/sizes/multidelete`,
-        {
-          data: { idsArr: ids },
-        },
-      );
+      const res = await axios.delete(`/api/${storeId}/sizes/multidelete`, {
+        data: { idsArr: ids },
+      });
       // console.log(res, "res");
-      setSizes((prev) => prev.filter((item) => !ids.includes(item.id)));
+      setSizes(prev => prev.filter(item => !ids.includes(item.id)));
       router.refresh();
       toast.success("Sizes deleted successfully");
       return { success: true };
     } catch (err) {
       // console.log(err);
-      toast.error("Check if the sizes attached to products are deleted and try again");
+      toast.error(
+        "Check if the sizes attached to products are deleted and try again"
+      );
       return {
         success: false,
         error:

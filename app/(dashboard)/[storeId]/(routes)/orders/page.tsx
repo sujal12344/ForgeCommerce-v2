@@ -23,18 +23,18 @@ const OrdersPage = async ({
       updatedAt: "desc",
     },
   });
-  const FilterData = FindOrders.map((order) => ({
+  const FilterData = FindOrders.map(order => ({
     id: order.id,
     phone: order.phone,
     isPaid: order.isPaid,
     product: order.orderItems
-      .map((item) => item.product?.name ?? "Unknown")
+      .map(item => item.product?.name ?? "Unknown")
       .join(", "),
     address: order.address,
     totalPrice: formatter.format(
       order.orderItems.reduce((total, item) => {
         return total + Number(item.product?.price ?? 0);
-      }, 0),
+      }, 0)
     ),
     createdAt: order.createdAt.toISOString().split("T")[0], // or use date-fns format()
   }));

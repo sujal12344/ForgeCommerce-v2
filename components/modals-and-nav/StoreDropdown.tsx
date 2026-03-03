@@ -36,12 +36,12 @@ const StoreDropdown = ({ items = [] }: StoreDropdownItems) => {
   const params = useParams();
   const { storeId } = params;
   const router = useRouter();
-  const formattedItems = items.map((item) => ({
+  const formattedItems = items.map(item => ({
     label: item.name,
     value: item.id,
   }));
 
-  const currentStore = formattedItems.find((item) => item.value === storeId);
+  const currentStore = formattedItems.find(item => item.value === storeId);
   const onStoreSelect = (store: { label: string; value: string }) => {
     setOpen(false);
     router.push(`/${store.value}`);
@@ -67,7 +67,7 @@ const StoreDropdown = ({ items = [] }: StoreDropdownItems) => {
           <CommandList>
             <CommandEmpty>No store found.</CommandEmpty>
             <CommandGroup heading="Stores">
-              {formattedItems.map((item) => (
+              {formattedItems.map(item => (
                 <CommandItem
                   key={item.value}
                   onSelect={() => onStoreSelect(item)}
@@ -80,7 +80,7 @@ const StoreDropdown = ({ items = [] }: StoreDropdownItems) => {
                       "ml-auto h-4 w-4",
                       currentStore?.value === item.value
                         ? "opacity-100"
-                        : "opacity-0",
+                        : "opacity-0"
                     )}
                   />
                 </CommandItem>
