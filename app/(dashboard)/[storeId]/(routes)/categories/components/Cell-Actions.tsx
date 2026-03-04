@@ -88,7 +88,7 @@ const CellActions = ({ data }: CellActionsProps) => {
             <h2> Edit</h2>
           </DropdownMenuItem>
           <DropdownMenuItem
-            className="cursor-pointer"
+            className="cursor-pointer text-red-500 focus:text-red-500 focus:bg-red-500/10"
             onClick={() => {
               setOpen(true);
             }}

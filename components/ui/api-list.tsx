@@ -14,12 +14,12 @@ const ApiList = ({ Entityname, EntityIdname }: ApiListProps) => {
   const origin = UseOrigin();
 
   if (!origin || !storeId) {
-    return null; // or a loading skeleton
+    return null;
   }
 
   const baseUrl = `${origin}/api/${storeId}`;
   return (
-    <>
+    <div className="space-y-2">
       <ApiBlock
         title="GET"
         variant="public"
@@ -28,7 +28,7 @@ const ApiList = ({ Entityname, EntityIdname }: ApiListProps) => {
       <ApiBlock
         title="GET"
         variant="public"
-        description={`${baseUrl}/${Entityname}/${EntityIdname}`}
+        description={`${baseUrl}/${Entityname}/{${EntityIdname}}`}
       />
       <ApiBlock
         title="POST"
@@ -38,14 +38,14 @@ const ApiList = ({ Entityname, EntityIdname }: ApiListProps) => {
       <ApiBlock
         title="PATCH"
         variant="admin"
-        description={`${baseUrl}/${Entityname}/${EntityIdname}`}
+        description={`${baseUrl}/${Entityname}/{${EntityIdname}}`}
       />
       <ApiBlock
         title="DELETE"
         variant="admin"
-        description={`${baseUrl}/${Entityname}/${EntityIdname}`}
+        description={`${baseUrl}/${Entityname}/{${EntityIdname}}`}
       />
-    </>
+    </div>
   );
 };
 

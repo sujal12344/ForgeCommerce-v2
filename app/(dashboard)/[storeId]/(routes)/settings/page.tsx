@@ -17,12 +17,18 @@ export default async function Settings({
   const FindStoreInfo = await prisma.store.findFirst({
     where: {
       id: storeId,
-      userId: userId,
+      userId,
     },
   });
 
   if (FindStoreInfo) {
-    return <SettingsPage name={FindStoreInfo.name} id={FindStoreInfo.id} />;
+    return (
+      <div className="flex flex-col">
+        <div className="flex-1 py-6 px-8">
+          <SettingsPage name={FindStoreInfo.name} id={FindStoreInfo.id} />
+        </div>
+      </div>
+    );
   }
   redirect("/");
 }

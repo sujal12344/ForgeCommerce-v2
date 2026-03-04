@@ -2,16 +2,16 @@
 import { Button } from "@/components/ui/button";
 import Heading from "@/components/ui/heading";
 import { Plus } from "lucide-react";
-import React from "react";
 import { useParams, useRouter } from "next/navigation";
+import React from "react";
 
+import SampleDataModalSizes from "@/components/quick-adds/sample-data-sizes";
 import { Separator } from "@/components/ui/separator";
+import axios from "axios";
+import toast from "react-hot-toast";
+import ApiList from "../../../../../../components/ui/api-list";
 import { DataTable } from "../../../../../../components/ui/data-table";
 import { SizesColumn, columns } from "./column";
-import ApiList from "../../../../../../components/ui/api-list";
-import axios from "axios";
-import SampleDataModalSizes from "@/components/quick-adds/sample-data-sizes";
-import toast from "react-hot-toast";
 
 type SizesProps = {
   SizesData: SizesColumn[];
@@ -52,24 +52,20 @@ const Sizes = ({ SizesData }: SizesProps) => {
   };
 
   return (
-    <>
-      <div className="flex items-center justify-between">
-        <div>
-          <Heading
-            title={`Sizes(${sizes.length})`}
-            description="Create and manage Sizes"
-          />
-        </div>
-        <div className="flex items-center justify-center space-x-2">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between gap-4">
+        <Heading
+          title={`Sizes (${sizes.length})`}
+          description="Create and manage product sizes"
+        />
+        <div className="flex items-center gap-2">
           <SampleDataModalSizes />
           <Button
-            onClick={() => {
-              router.push(`/${storeId}/sizes/new`);
-            }}
-            className="gap-x-2 hover:bg-secondary hover:text-primary"
+            onClick={() => router.push(`/${storeId}/sizes/new`)}
+            className="gap-x-2 bg-linear-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white hover:scale-105 transition-all duration-200 shadow-sm"
           >
-            <Plus className="h-5 w-4" />
-            New
+            <Plus className="h-4 w-4" />
+            New Size
           </Button>
         </div>
       </div>
@@ -80,15 +76,16 @@ const Sizes = ({ SizesData }: SizesProps) => {
         columns={columns}
         data={sizes}
       />
-      <div className="w-full mt-10 ml-2">
-        <Heading
-          title={"Api"}
-          description="APIs to connected frontend and backend"
-        />
-        <Separator />
-        <ApiList Entityname="sizes" EntityIdname="{sizeId}" />
+      <div className="space-y-3 pt-2">
+        <div className="flex items-center gap-2">
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            API Reference
+          </p>
+          <div className="flex-1 h-px bg-border/50" />
+        </div>
+        <ApiList Entityname="sizes" EntityIdname="sizeId" />
       </div>
-    </>
+    </div>
   );
 };
 

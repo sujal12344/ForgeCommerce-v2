@@ -1,5 +1,4 @@
 "use client";
-import { CopyIcon, Edit3Icon, MoreHorizontal, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -8,10 +7,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { CopyIcon, Edit3Icon, MoreHorizontal, Trash2 } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { AlertModal } from "../../../../../../components/modals-and-nav/Alert-modal";
 import { SizesColumn } from "./column";
 type CellActionsProps = {
@@ -33,7 +33,7 @@ const CellActions = ({ data }: CellActionsProps) => {
       await axios.delete(`/api/${storeId}/sizes/${data.id}`);
       toast.success("Size successfully deleted");
       router.refresh();
-    } catch (err) {
+    } catch {
       toast.error("Something went wrong");
     } finally {
       setloading(false);
@@ -80,7 +80,7 @@ const CellActions = ({ data }: CellActionsProps) => {
             Edit
           </DropdownMenuItem>
           <DropdownMenuItem
-            className="cursor-pointer"
+            className="cursor-pointer text-red-500 focus:text-red-500 focus:bg-red-500/10"
             onClick={() => {
               setOpen(true);
             }}

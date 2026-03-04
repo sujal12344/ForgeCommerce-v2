@@ -1,29 +1,27 @@
 "use client";
+import ApiBlock from "@/components/ui/api-block";
 import { Button } from "@/components/ui/button";
-import Heading from "@/components/ui/heading";
-import { Trash as TrashIcon } from "lucide-react";
-import * as z from "zod";
-import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useState } from "react";
-import axios from "axios";
-import { cn } from "@/lib/utils";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { AlertModal } from "../../../../../../components/modals-and-nav/Alert-modal";
+import Heading from "@/components/ui/heading";
+import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import UseOrigin from "@/hooks/origin-client";
-import ApiBlock from "@/components/ui/api-block";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { Trash as TrashIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import * as z from "zod";
+import { AlertModal } from "../../../../../../components/modals-and-nav/Alert-modal";
 
 type SettingsProps = {
   name: string;
@@ -69,46 +67,36 @@ const SettingsPage = ({ name, id }: SettingsProps) => {
       await axios.delete(`/api/store/${id}`);
       toast.success("Store successfully deleted");
       router.push("/");
-    } catch (err) {
+    } catch {
       toast.error("Please delete all the products first");
     } finally {
       setloading(false);
     }
   };
   return (
-    <>
+    <div className="space-y-6">
       <AlertModal
         isOpen={open}
         loading={loading}
-        onClose={() => {
-          setOpen(false);
-        }}
+        onClose={() => setOpen(false)}
         onConfirm={HandleDelete}
       />
-      <div className="flex  items-center justify-between pt-6 px-6">
-        <div>
-          <Heading
-            title={"Settings"}
-            description={"To update and delete stores"}
-          />
-        </div>
-        <Button
-          variant={"destructive"}
-          size={"icon"}
-          onClick={() => setOpen(true)}
-        >
-          <TrashIcon className="h-5 w-4" />
-        </Button>
+      <div className="flex items-center justify-between">
+        <Heading
+          title="Settings"
+          description="Manage store preferences and danger zone"
+        />
       </div>
-      <div className="pl-6 w-1/3 flex items-start mt-10">
+      <Separator />
+      <div className="grid md:grid-cols-3 gap-8">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
               name="updatedname"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-bold text-primary">Name</FormLabel>
+                  <FormLabel>Store Name</FormLabel>
                   <FormControl>
                     <Input
                       disabled={loading}
@@ -116,30 +104,62 @@ const SettingsPage = ({ name, id }: SettingsProps) => {
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription></FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <div className={cn("flex ")}>
-              <Button
-                className="hover:bg-white hover:text-black hover:border-black border-2 px-3 "
-                disabled={loading}
-                type="submit"
-              >
-                Save Changes
-              </Button>
-            </div>
+            <Button
+              className="bg-linear-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white hover:scale-105 transition-all duration-200 shadow-sm"
+              disabled={loading}
+              type="submit"
+            >
+              Save Changes
+            </Button>
           </form>
         </Form>
       </div>
-      <Separator className="mx-6 mt-2 " />
+      <Separator />
+      <div className="flex items-center gap-2">
+        <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+          API Reference
+        </span>
+        <div className="flex-1 h-px bg-border/50" />
+      </div>
       <ApiBlock
         title="NEXT_PUBLIC_API_URL"
         description={`${origin}/api/${id}`}
         variant="public"
+        type="env"
       />
-    </>
+      <Separator />
+      <div className="flex items-center gap-2">
+        <span className="text-xs font-semibold uppercase tracking-widest text-red-500/70">
+          Danger Zone
+        </span>
+        <div className="flex-1 h-px bg-red-500/20" />
+      </div>
+      <div className="rounded-lg border border-red-500/20 bg-red-500/5 p-4 flex items-center justify-between">
+        <div>
+          <p className="text-sm font-medium text-foreground">
+            Delete this store
+          </p>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            Permanently delete this store and all of its data. This action
+            cannot be undone.
+          </p>
+        </div>
+        <Button
+          variant="destructive"
+          size="sm"
+          onClick={() => setOpen(true)}
+          disabled={loading}
+          className="shrink-0 ml-4"
+        >
+          <TrashIcon className="h-4 w-4 mr-2" />
+          Delete Store
+        </Button>
+      </div>
+    </div>
   );
 };
 

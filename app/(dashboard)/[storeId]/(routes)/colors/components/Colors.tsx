@@ -39,24 +39,20 @@ const Colors = ({ ColorsData }: ColorsProps) => {
   };
 
   return (
-    <>
-      <div className="flex items-center justify-between">
-        <div>
-          <Heading
-            title={`Colors(${Colors.length})`}
-            description="Create and manage Colors"
-          />
-        </div>
-        <div className="flex items-center justify-center space-x-2">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between gap-4">
+        <Heading
+          title={`Colors (${Colors.length})`}
+          description="Create and manage product colors"
+        />
+        <div className="flex items-center gap-2">
           <SampleDataModalColors />
           <Button
-            onClick={() => {
-              router.push(`/${storeId}/colors/new`);
-            }}
-            className="gap-x-2 hover:bg-secondary hover:text-primary"
+            onClick={() => router.push(`/${storeId}/colors/new`)}
+            className="gap-x-2 bg-linear-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white hover:scale-105 transition-all duration-200 shadow-sm"
           >
-            <Plus className="h-5 w-4" />
-            New
+            <Plus className="h-4 w-4" />
+            New Color
           </Button>
         </div>
       </div>
@@ -67,15 +63,16 @@ const Colors = ({ ColorsData }: ColorsProps) => {
         columns={columns}
         data={Colors}
       />
-      <div className="w-full mt-10 ml-2">
-        <Heading
-          title={"Api"}
-          description="APIs to connect frontend and backend"
-        />
-        <Separator />
-        <ApiList Entityname="colors" EntityIdname="{colorId}" />
+      <div className="space-y-3 pt-2">
+        <div className="flex items-center gap-2">
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            API Reference
+          </p>
+          <div className="flex-1 h-px bg-border/50" />
+        </div>
+        <ApiList Entityname="colors" EntityIdname="colorId" />
       </div>
-    </>
+    </div>
   );
 };
 

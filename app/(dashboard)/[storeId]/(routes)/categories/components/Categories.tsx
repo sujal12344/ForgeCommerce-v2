@@ -43,24 +43,20 @@ const Categories = ({ CategoriesData }: CategoriesProps) => {
   };
 
   return (
-    <>
-      <div className="flex items-center justify-between">
-        <div>
-          <Heading
-            title={`Categories(${categories.length})`}
-            description="Create and manage Categories"
-          />
-        </div>
-        <div className="flex items-center justify-center space-x-2">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between gap-4">
+        <Heading
+          title={`Categories (${categories.length})`}
+          description="Create and manage store categories"
+        />
+        <div className="flex items-center gap-2">
           <SampleDataModalCat />
           <Button
-            onClick={() => {
-              router.push(`/${storeId}/categories/new`);
-            }}
-            className="gap-x-2 hover:bg-secondary hover:text-primary"
+            onClick={() => router.push(`/${storeId}/categories/new`)}
+            className="gap-x-2 bg-linear-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white hover:scale-105 transition-all duration-200 shadow-sm"
           >
-            <Plus className="h-5 w-4" />
-            New
+            <Plus className="h-4 w-4" />
+            New Category
           </Button>
         </div>
       </div>
@@ -71,15 +67,16 @@ const Categories = ({ CategoriesData }: CategoriesProps) => {
         columns={columns}
         data={categories}
       />
-      <div className="w-full mt-10 ml-2">
-        <Heading
-          title={"Api"}
-          description="APIs to connected frontend and backend"
-        />
-        <Separator />
-        <ApiList Entityname="categories" EntityIdname="{categoryId}" />
+      <div className="space-y-3 pt-2">
+        <div className="flex items-center gap-2">
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            API Reference
+          </p>
+          <div className="flex-1 h-px bg-border/50" />
+        </div>
+        <ApiList Entityname="categories" EntityIdname="categoryId" />
       </div>
-    </>
+    </div>
   );
 };
 

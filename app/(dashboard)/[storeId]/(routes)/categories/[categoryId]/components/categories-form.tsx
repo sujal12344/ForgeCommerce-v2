@@ -189,7 +189,11 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
               )}
             />
           </div>
-          <Button disabled={loading} className="ml-auto" type="submit">
+          <Button
+            disabled={loading}
+            className="bg-linear-to-r from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700 text-white hover:scale-105 transition-all duration-200 shadow-sm"
+            type="submit"
+          >
             {action}
           </Button>
         </form>

@@ -45,24 +45,20 @@ const Billboards = ({ BillboardData }: billboardsprops) => {
     }
   };
   return (
-    <>
-      <div className="flex items-center justify-between">
-        <div>
-          <Heading
-            title={`Billboards(${billboards.length})`}
-            description="Create and manage billboards"
-          />
-        </div>
-        <div className="flex items-center justify-center space-x-2">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between gap-4">
+        <Heading
+          title={`Billboards (${billboards.length})`}
+          description="Create and manage store billboards"
+        />
+        <div className="flex items-center gap-2">
           <SampleDataModalBill />
           <Button
-            onClick={() => {
-              router.push(`/${storeIdSafe}/billboards/new`);
-            }}
-            className="gap-x-2 hover:bg-secondary hover:text-primary"
+            onClick={() => router.push(`/${storeIdSafe}/billboards/new`)}
+            className="gap-x-2 bg-linear-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white hover:scale-105 transition-all duration-200 shadow-sm"
           >
-            <Plus className="h-5 w-4" />
-            New
+            <Plus className="h-4 w-4" />
+            New Billboard
           </Button>
         </div>
       </div>
@@ -73,15 +69,14 @@ const Billboards = ({ BillboardData }: billboardsprops) => {
         columns={columns}
         data={FilteredData}
       />
-      <div className="w-full mt-10 ml-2">
-        <Heading
-          title={"Api"}
-          description="APIs to connect frontend and backend"
-        />
-        <Separator />
+      <div className="space-y-3 pt-2">
+        <div className="flex items-center gap-2">
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">API Reference</p>
+          <div className="flex-1 h-px bg-border/50" />
+        </div>
         <ApiList Entityname="billboards" EntityIdname="billboardId" />
       </div>
-    </>
+    </div>
   );
 };
 

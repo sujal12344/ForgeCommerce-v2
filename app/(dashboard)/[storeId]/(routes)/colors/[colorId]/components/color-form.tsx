@@ -144,8 +144,9 @@ const ColorForm = ({ initialData }: ColorsFormProps) => {
                         {...field}
                       />
                       <div
-                        className="border p-4 rounded-full"
+                        className="h-9 w-9 rounded-full border-2 border-border shadow-sm shrink-0 transition-transform hover:scale-110"
                         style={{ backgroundColor: field.value }}
+                        title={field.value}
                       />
                     </div>
                   </FormControl>
@@ -167,12 +168,15 @@ const ColorForm = ({ initialData }: ColorsFormProps) => {
               )}
             />
           </div>
-          <Button disabled={loading} className="ml-auto" type="submit">
+          <Button
+            disabled={loading}
+            className="bg-linear-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white hover:scale-105 transition-all duration-200 shadow-sm"
+            type="submit"
+          >
             {buttontag}
           </Button>
         </form>
       </Form>
-      <Separator className="mx-6 mt-2 " />
     </>
   );
 };

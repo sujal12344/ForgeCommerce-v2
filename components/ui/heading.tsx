@@ -1,5 +1,3 @@
-import React from "react";
-
 const Heading = ({
   title,
   description,
@@ -8,12 +6,12 @@ const Heading = ({
   description: string;
 }) => {
   return (
-    <>
-      <div>
-        <h1 className="font-bold text-2xl text-primary ">{title}</h1>
-        <p className="text-muted-foreground">{description}</p>
-      </div>
-    </>
+    <div className="space-y-0.5">
+      <h1 className="text-2xl font-semibold tracking-tight text-foreground">
+        {title}
+      </h1>
+      <p className="text-sm text-muted-foreground">{description}</p>
+    </div>
   );
 };
 

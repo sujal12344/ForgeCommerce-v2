@@ -1,6 +1,5 @@
 import prisma from "@/prisma/client";
 import { auth } from "@clerk/nextjs/server";
-// import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 export default async function RootLayout2({
@@ -15,7 +14,7 @@ export default async function RootLayout2({
 
   const findStore = await prisma.store.findFirst({
     where: {
-      userId: userId,
+      userId,
     },
   });
   if (findStore) {

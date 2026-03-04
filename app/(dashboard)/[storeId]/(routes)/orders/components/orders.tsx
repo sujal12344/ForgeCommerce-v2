@@ -1,11 +1,11 @@
 "use client";
 import Heading from "@/components/ui/heading";
-import React from "react";
-import { useParams } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
+import axios from "axios";
+import { useParams } from "next/navigation";
+import React from "react";
 import { DataTable } from "../../../../../../components/ui/data-table";
 import { OrderColumn, columns } from "./column";
-import axios from "axios";
 
 type OrdersProps = {
   OrdersData: OrderColumn[];
@@ -40,11 +40,11 @@ const Orders = ({ OrdersData }: OrdersProps) => {
   };
 
   return (
-    <>
-      <div className="flex items-center justify-between">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between gap-4">
         <Heading
-          title={`Orders(${Orders.length})`}
-          description="Create and manage Orders"
+          title={`Orders (${Orders.length})`}
+          description="View and manage customer orders"
         />
       </div>
       <Separator />
@@ -55,8 +55,7 @@ const Orders = ({ OrdersData }: OrdersProps) => {
         data={Orders}
         isOrder={true}
       />
-      <div className="w-full mt-10 ml-2"></div>
-    </>
+    </div>
   );
 };
 

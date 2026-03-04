@@ -13,13 +13,14 @@ export default async function StoreIdLayout({
   const { userId } = await auth();
   if (!userId) redirect("/sign-in");
   const { storeId } = await params;
+
   const IsStore = await prisma.store.findFirst({
     where: {
       id: storeId,
       userId,
     },
   });
-  // if (!IsStore) redirect("/");
+  if (!IsStore) redirect("/");
   return (
     <>
       <Navbar />

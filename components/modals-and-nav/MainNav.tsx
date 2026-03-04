@@ -1,5 +1,15 @@
 "use client";
 import { cn } from "@/lib/utils";
+import {
+  Image,
+  LayoutDashboard,
+  Package,
+  Palette,
+  Ruler,
+  Settings,
+  ShoppingCart,
+  Tag,
+} from "lucide-react";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import React from "react";
@@ -16,64 +26,80 @@ const MainNav = ({
     {
       href: `/${storeId}`,
       label: "Dashboard",
+      icon: LayoutDashboard,
       active: pathname === `/${storeId}`,
     },
     {
       href: `/${storeId}/billboards`,
       label: "Billboards",
+      icon: Image,
       active: pathname === `/${storeId}/billboards`,
     },
     {
       href: `/${storeId}/categories`,
       label: "Categories",
+      icon: Tag,
       active: pathname === `/${storeId}/categories`,
     },
     {
       href: `/${storeId}/colors`,
       label: "Colors",
+      icon: Palette,
       active: pathname === `/${storeId}/colors`,
     },
     {
       href: `/${storeId}/sizes`,
       label: "Sizes",
+      icon: Ruler,
       active: pathname === `/${storeId}/sizes`,
     },
     {
       href: `/${storeId}/products`,
       label: "Products",
+      icon: Package,
       active: pathname === `/${storeId}/products`,
     },
     {
       href: `/${storeId}/orders`,
       label: "Orders",
+      icon: ShoppingCart,
       active: pathname === `/${storeId}/orders`,
     },
     {
       href: `/${storeId}/settings`,
       label: "Settings",
+      icon: Settings,
       active: pathname === `/${storeId}/settings`,
     },
   ];
+
   return (
-    <>
-      <ul className={cn("flex items-center space-x-4 lg:space-x-6", className)}>
-        {routes.map(route => (
-          <li key={route.href}>
-            <Link
+    <nav className={cn("flex items-center gap-1", className)} {...props}>
+      {routes.map(route => {
+        const Icon = route.icon;
+        return (
+          <Link
+            key={route.href}
+            href={route.href}
+            className={cn(
+              "flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-all duration-200",
+              "hover:bg-muted hover:text-foreground",
+              route.active
+                ? "bg-muted text-foreground"
+                : "text-muted-foreground"
+            )}
+          >
+            <Icon
               className={cn(
-                "font-medium text-sm transition-colors hover:text-primary dark:text-white ",
-                route.active
-                  ? "text-black dark:text-white"
-                  : "text-muted-foreground"
+                "h-3.5 w-3.5 shrink-0",
+                route.active ? "text-foreground" : "text-muted-foreground/70"
               )}
-              href={route.href}
-            >
-              {route.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </>
+            />
+            <span className="hidden lg:inline">{route.label}</span>
+          </Link>
+        );
+      })}
+    </nav>
   );
 };
 

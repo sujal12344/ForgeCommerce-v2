@@ -3,8 +3,8 @@ import getProducts from "@/components/overview-actions/get-products";
 import getRevenue from "@/components/overview-actions/get-revenue";
 import getSales from "@/components/overview-actions/get-sales";
 import getUserinfo from "@/components/overview-actions/get-userinfo";
-import SampleDataModal from "@/components/quick-adds/sample-data";
 import FillStoreButton from "@/components/quick-adds/fill-store-button";
+import SampleDataModal from "@/components/quick-adds/sample-data";
 import { dataExists } from "@/components/sample-actions/data-exists";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -20,6 +20,7 @@ import {
   ExternalLink,
   Shirt,
   ShoppingCart,
+  TrendingUp,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -39,12 +40,15 @@ const Dashboard = async ({
       dataExists(storeId),
     ]);
   return (
-    <div className="px-4 py-2 md:px-6 lg:px-8 w-full h-full">
-      <div className="flex flex-row justify-between items-center">
-        <Heading title="Dashboard" description="Overview of your store" />
+    <div className="px-4 py-4 md:px-6 lg:px-8 w-full space-y-6">
+      {/* ── Header ── */}
+      <div className="flex flex-row justify-between items-start gap-4">
+        <div className="space-y-0.5">
+          <Heading title="Dashboard" description="Overview of your store" />
+        </div>
 
-        <div className="flex space-x-4 items-center">
-          {dataExist ? <></> : (
+        <div className="flex flex-wrap gap-2 items-center justify-end">
+          {!dataExist && (
             <>
               <FillStoreButton storeId={storeId} />
               <SampleDataModal />
@@ -62,76 +66,101 @@ const Dashboard = async ({
           )}
         </div>
       </div>
+
       <Separator />
-      <div className="grid sm:grid-cols-3 w-full gap-6 mt-2 ">
+
+      {/* ── Stat Cards ── */}
+      <div className="grid sm:grid-cols-3 w-full gap-4">
+        {/* Revenue */}
         <div className="group">
-          <Card className="transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border-l-4 border-l-green-500 dark:border-l-green-400">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">
+          <Card className="relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-border/50 bg-card/80">
+            <div className="absolute -top-6 -right-6 h-28 w-28 rounded-full bg-green-500/10 blur-2xl pointer-events-none" />
+            <CardHeader className="flex flex-row items-center justify-between pb-2 relative">
+              <CardTitle className="text-sm font-medium text-muted-foreground">
                 Total Revenue
               </CardTitle>
-              <div className="h-10 w-10 rounded-full bg-linear-to-br from-green-400 to-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <div className="h-10 w-10 rounded-xl bg-linear-to-br from-green-400 to-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm shadow-green-500/25">
                 <DollarSign className="w-5 h-5 text-white" />
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold bg-linear-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+            <CardContent className="relative">
+              <div className="text-2xl font-bold tracking-tight text-green-500">
                 {totalRevenue !== null
                   ? formatter.format(totalRevenue)
                   : "$0.00"}
               </div>
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+                <TrendingUp className="h-3 w-3 text-green-500" />
                 From paid orders
               </p>
             </CardContent>
           </Card>
         </div>
+
+        {/* Sales */}
         <div className="group">
-          <Card className="transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border-l-4 border-l-blue-500 dark:border-l-blue-400">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">Total Sales</CardTitle>
-              <div className="h-10 w-10 rounded-full bg-linear-to-br from-blue-400 to-indigo-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+          <Card className="relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-border/50 bg-card/80">
+            <div className="absolute -top-6 -right-6 h-28 w-28 rounded-full bg-blue-500/10 blur-2xl pointer-events-none" />
+            <CardHeader className="flex flex-row items-center justify-between pb-2 relative">
+              <CardTitle className="text-sm font-medium text-muted-foreground">
+                Total Sales
+              </CardTitle>
+              <div className="h-10 w-10 rounded-xl bg-linear-to-br from-blue-400 to-indigo-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm shadow-blue-500/25">
                 <CreditCard className="w-5 h-5 text-white" />
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            <CardContent className="relative">
+              <div className="text-2xl font-bold tracking-tight text-blue-500">
                 +{sales ?? 0}
               </div>
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+                <TrendingUp className="h-3 w-3 text-blue-500" />
                 Completed orders
               </p>
             </CardContent>
           </Card>
         </div>
+
+        {/* Products */}
         <div className="group">
-          <Card className="transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border-l-4 border-l-purple-500 dark:border-l-purple-400">
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium flex items-center gap-1">
-                Total products
-                <span className="hidden md:inline">(in stock)</span>
+          <Card className="relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-border/50 bg-card/80">
+            <div className="absolute -top-6 -right-6 h-28 w-28 rounded-full bg-purple-500/10 blur-2xl pointer-events-none" />
+            <CardHeader className="flex flex-row items-center justify-between pb-2 relative">
+              <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-1">
+                Products in Stock
               </CardTitle>
-              <div className="h-10 w-10 rounded-full bg-linear-to-br from-purple-400 to-pink-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <div className="h-10 w-10 rounded-xl bg-linear-to-br from-purple-400 to-pink-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm shadow-purple-500/25">
                 <Shirt className="w-5 h-5 text-white" />
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold bg-linear-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <CardContent className="relative">
+              <div className="text-2xl font-bold tracking-tight text-purple-500">
                 {availProducts ?? 0}
               </div>
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+                <TrendingUp className="h-3 w-3 text-purple-500" />
                 Available items
               </p>
             </CardContent>
           </Card>
         </div>
       </div>
-      <div className="grid lg:grid-cols-6 gap-6 md:mt-12 mt-5">
-        <div className="lg:col-span-4 transition-all duration-300 hover:scale-[1.01]">
-          <OverviewGraph data={graphData} />
+
+      {/* ── Analytics ── */}
+      <div>
+        <div className="flex items-center gap-2">
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            Performance Analytics
+          </p>
+          <div className="flex-1 h-px bg-border/50" />
         </div>
-        <div className="lg:col-span-2 hidden lg:block transition-all duration-300 hover:scale-[1.01]">
-          <Sales data={salesData} />
+        <div className="grid lg:grid-cols-6 gap-4 items-stretch">
+          <div className="lg:col-span-4 transition-all duration-300 h-full hover:scale-[1.005]">
+            <OverviewGraph data={graphData} />
+          </div>
+          <div className="lg:col-span-2 lg:flex flex-col transition-all duration-300 hover:scale-[1.005]">
+            <Sales data={salesData} />
+          </div>
         </div>
       </div>
     </div>

@@ -1,9 +1,13 @@
 import prisma from "@/prisma/client";
-import Sizes from "./components/Sizes";
 import { format } from "date-fns";
+import Sizes from "./components/Sizes";
 
-const SizesPage = async ({ params }: { params: { storeId: string } }) => {
-  const { storeId } = params;
+const SizesPage = async ({
+  params,
+}: {
+  params: Promise<{ storeId: string }>;
+}) => {
+  const { storeId } = await params;
 
   const FindSizes = await prisma.size.findMany({
     where: {
