@@ -4,6 +4,7 @@ import getRevenue from "@/components/overview-actions/get-revenue";
 import getSales from "@/components/overview-actions/get-sales";
 import getUserinfo from "@/components/overview-actions/get-userinfo";
 import SampleDataModal from "@/components/quick-adds/sample-data";
+import FillStoreButton from "@/components/quick-adds/fill-store-button";
 import { dataExists } from "@/components/sample-actions/data-exists";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -43,7 +44,12 @@ const Dashboard = async ({
         <Heading title="Dashboard" description="Overview of your store" />
 
         <div className="flex space-x-4 items-center">
-          {dataExist ? <></> : <SampleDataModal />}
+          {dataExist ? <></> : (
+            <>
+              <FillStoreButton storeId={storeId} />
+              <SampleDataModal />
+            </>
+          )}
 
           {storeId === DEMO_STORE_ID && (
             <Link href={DEMO_STORE_URL} target="_blank">

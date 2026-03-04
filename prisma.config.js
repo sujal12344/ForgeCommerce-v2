@@ -12,7 +12,7 @@ export default defineConfig({
   },
   migrations: {
     directory: "prisma/migrations", // Directory for migration files
-    seed: "npx prisma generate && npx tsx prisma/seed.ts", // Command to run seed script
+    seed: "npx tsx prisma/seed.ts", // Command to run seed script
   },
   datasource: {
     url: process.env.DATABASE_URL,
