@@ -1,14 +1,14 @@
 "use client";
 
 import { StoreModal } from "@/components/modals-and-nav/store-modal";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 export const ModalProvider = () => {
-  const [isMounted, SetIsMounted] = useState(false);
-
-  useEffect(() => {
-    SetIsMounted(true); //Until this lifecycle is runned , there shouldnt be any difference between server and client side components hence we are passingn null back
-  }, []);
+  const isMounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
 
   if (!isMounted) {
     return null; //this is used to not cause hydration as the provider is a client component

@@ -5,7 +5,7 @@ import {
   CloudinaryUploadWidgetResults,
 } from "next-cloudinary";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { Button } from "./button";
 
 type ImageUploadProps = {
@@ -20,11 +20,11 @@ const ImageUpload = ({
   onRemove,
   values,
 }: ImageUploadProps) => {
-  const [mounted, isMounted] = useState(false);
-
-  useEffect(() => {
-    isMounted(true);
-  }, []);
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
 
   const onSuccess = (result: CloudinaryUploadWidgetResults) => {
     if (

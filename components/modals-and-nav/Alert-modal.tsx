@@ -2,7 +2,7 @@
 
 import { Modal } from "@/components/modals-and-nav/modal";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 type AlertModalProps = {
   isOpen: boolean;
@@ -12,7 +12,12 @@ type AlertModalProps = {
   description?: string;
   confirmLabel?: string;
   loadingLabel?: string;
-  confirmVariant?: "destructive" | "default" | "outline" | "secondary" | "ghost";
+  confirmVariant?:
+    | "destructive"
+    | "default"
+    | "outline"
+    | "secondary"
+    | "ghost";
 };
 
 export const AlertModal = ({
@@ -25,11 +30,11 @@ export const AlertModal = ({
   loadingLabel = "Deleting...",
   confirmVariant = "destructive",
 }: AlertModalProps) => {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true); // Until this lifecycle has run, there shouldn't be any difference between server and client side components, hence we return null
-  }, []);
+  const isMounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
 
   if (!isMounted) {
     return null; //this is used to not cause hydration as the provider is a client component
