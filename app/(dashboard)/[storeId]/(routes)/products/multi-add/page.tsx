@@ -1,18 +1,19 @@
 "use client";
 
-import * as z from "zod";
-import axios from "axios";
-import { useState, useEffect, ComponentPropsWithoutRef, useRef } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Category, Color, Size } from "@prisma/client";
+import axios from "axios";
+import { MinusIcon, PlusIcon } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import { ComponentPropsWithoutRef, useEffect, useRef, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { Category, Color, Image, Size } from "@prisma/client";
-import { useParams, useRouter } from "next/navigation";
 import ReactMarkdown from "react-markdown";
-import { PlusIcon, MinusIcon } from "lucide-react";
+import * as z from "zod";
 
-import { Input } from "@/components/ui/input";
+import ImageUpload from "@/components/ui/Image-upload";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -22,8 +23,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Separator } from "@/components/ui/separator";
 import Heading from "@/components/ui/heading";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -31,11 +32,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import ImageUpload from "@/components/ui/Image-upload";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Separator } from "@/components/ui/separator";
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
-import remarkGfm from "remark-gfm";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import remarkGfm from "remark-gfm";
 
 const formSchema = z.object({
   name: z.string().min(1),

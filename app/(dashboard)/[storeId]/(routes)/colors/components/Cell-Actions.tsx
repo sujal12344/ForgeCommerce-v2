@@ -8,7 +8,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import axios from "axios";
-import { CopyIcon, Edit3Icon, MoreHorizontalIcon, Trash2Icon } from "lucide-react";
+import {
+  CopyIcon,
+  Edit3Icon,
+  MoreHorizontalIcon,
+  Trash2Icon,
+} from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
