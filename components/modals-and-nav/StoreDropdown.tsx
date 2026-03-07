@@ -65,7 +65,7 @@ const StoreDropdown = ({ items = [] }: StoreDropdownItems) => {
           <span className="hidden sm:block truncate flex-1 text-left text-sm font-medium">
             {currentStore?.label ?? "Select store"}
           </span>
-          <ChevronsUpDown className="hidden sm:block h-3.5 w-3.5 shrink-0 text-muted-foreground 60" />
+          <ChevronsUpDown className="hidden sm:block h-3.5 w-3.5 shrink-0 text-muted-foreground/60" />
         </Button>
       </PopoverTrigger>
       <PopoverContent

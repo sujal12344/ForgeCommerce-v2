@@ -1,6 +1,6 @@
 "use client";
+import PreviewCell from "@/components/ui/preview-image-cell";
 import { ColumnDef } from "@tanstack/react-table";
-import Image from "next/image";
 import CellActions from "./Cell-Actions";
 
 export type FilteredDataProps = {
@@ -24,9 +24,7 @@ export const columns: ColumnDef<FilteredDataProps>[] = [
     id: "preview",
     cell: ({ row }) => {
       const data = row.original;
-      return (
-        <Image src={data.imageUrl} alt={data.label} width={70} height={70} />
-      );
+      return <PreviewCell imageUrl={data.imageUrl} label={data.label} />;
     },
   },
   {

@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Check, Copy, ExternalLink, Server } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 type ApiBlockProps = {
@@ -80,6 +80,18 @@ const ApiBlock = ({
   type = "endpoint",
 }: ApiBlockProps) => {
   const [copyState, setCopyState] = useState<CopyState>("idle");
+  const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const idleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const mountedRef = useRef(true);
+
+  useEffect(() => {
+    return () => {
+      mountedRef.current = false;
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current);
+    };
+  }, []);
+
   const hasParams = description.includes("{");
   const isPublicGet = variant === "public" && title === "GET";
   const cfg = methodConfig[title] ?? {
@@ -92,12 +104,14 @@ const ApiBlock = ({
 
   const onCopy = () => {
     if (copyState !== "idle") return;
+    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current);
     setCopyState("flash");
-    setTimeout(async () => {
+    copyTimeoutRef.current = setTimeout(async () => {
       try {
         await navigator.clipboard.writeText(description);
         setCopyState("copied");
-        setTimeout(() => setCopyState("idle"), 2000);
+        idleTimeoutRef.current = setTimeout(() => setCopyState("idle"), 2000);
         toast.success("Copied to clipboard");
       } catch {
         setCopyState("idle");
@@ -126,6 +140,7 @@ const ApiBlock = ({
             size="icon"
             className="h-8 w-8 shrink-0 text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
             onClick={onCopy}
+            aria-label={copied ? "Copied!" : "Copy to clipboard"}
           >
             {copied ? (
               <Check className="h-3.5 w-3.5 text-emerald-400" />
@@ -225,6 +240,7 @@ const ApiBlock = ({
           role="button"
           tabIndex={0}
           title={copied ? "Copied!" : "Click to copy"}
+          aria-label={copied ? "Copied!" : "Click to copy URL"}
           className={`rounded-lg border px-4 py-3 transition-all duration-300 cursor-pointer select-none overflow-x-auto scrollbar-none ${
             copyState === "flash"
               ? "bg-white/6 border-white/15 shadow-sm"

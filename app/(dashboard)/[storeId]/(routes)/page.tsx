@@ -152,7 +152,7 @@ const Dashboard = async ({
       {/* ── Analytics ── */}
       <div>
         <div className="flex items-center gap-2">
-          <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
             Performance Analytics
           </p>
           <div className="flex-1 h-px bg-border/50" />
