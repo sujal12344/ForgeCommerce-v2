@@ -18,6 +18,12 @@ export async function GET(
         storeId,
       },
     });
+    if (!FindBillboards || FindBillboards.length === 0)
+      return NextResponse.json(
+        { error: "No billboards found for this store" },
+        { status: 404 }
+      );
+
     return NextResponse.json(FindBillboards);
   } catch (err) {
     console.log(err);
@@ -35,10 +41,11 @@ export async function POST(
   try {
     const { storeId } = await params;
     const { userId } = await auth();
-    const { label, ImageUrl } = await req.json();
+    const { label, imageUrl } = await req.json();
+    console.log("Creating billboard with values:", { label, imageUrl });
     if (!userId)
       return NextResponse.json({ error: "Unauthenticated" }, { status: 401 });
-    if (!label || !ImageUrl)
+    if (!label || !imageUrl)
       return NextResponse.json(
         { error: "Label and ImageUrl are required" },
         {
@@ -62,10 +69,17 @@ export async function POST(
     const createBill = await prisma.billBoard.create({
       data: {
         label: label,
-        imageUrl: ImageUrl,
+        imageUrl: imageUrl,
         storeId,
       },
     });
+
+    if (!createBill)
+      return NextResponse.json(
+        { error: "Failed to create billboard" },
+        { status: 500 }
+      );
+
     return NextResponse.json(createBill, { status: 201 });
   } catch (error) {
     console.log(error);

@@ -20,9 +20,9 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import {
-  Check,
-  ChevronsUpDown,
-  PlusCircle,
+  CheckIcon,
+  ChevronsUpDownIcon,
+  PlusCircleIcon,
   Store as StoreIcon,
 } from "lucide-react";
 import { Button } from "../ui/button";
@@ -61,11 +61,11 @@ const StoreDropdown = ({ items = [] }: StoreDropdownItems) => {
           aria-label="Select a store"
           className="border-border/60 bg-background hover:bg-accent hover:text-accent-foreground transition-colors h-9 w-9 p-0 sm:w-47.5 sm:px-3 sm:justify-between sm:gap-2"
         >
-          <StoreIcon className="h-4 w-4 shrink-0 text-muted-foreground" />
+          <StoreIcon className="size-4 shrink-0 text-muted-foreground" />
           <span className="hidden sm:block truncate flex-1 text-left text-sm font-medium">
             {currentStore?.label ?? "Select store"}
           </span>
-          <ChevronsUpDown className="hidden sm:block h-3.5 w-3.5 shrink-0 text-muted-foreground/60" />
+          <ChevronsUpDownIcon className="hidden sm:block size-3.5 shrink-0 text-muted-foreground/60" />
         </Button>
       </PopoverTrigger>
       <PopoverContent
@@ -86,11 +86,11 @@ const StoreDropdown = ({ items = [] }: StoreDropdownItems) => {
                   onSelect={() => onStoreSelect(item)}
                   className="flex items-center gap-2 text-sm cursor-pointer"
                 >
-                  <StoreIcon className="h-4 w-4 shrink-0 text-muted-foreground" />
+                  <StoreIcon className="size-4 shrink-0 text-muted-foreground" />
                   <span className="truncate flex-1">{item.label}</span>
-                  <Check
+                  <CheckIcon
                     className={cn(
-                      "h-4 w-4 shrink-0 text-primary transition-opacity",
+                      "size-4 shrink-0 text-primary transition-opacity",
                       currentStore?.value === item.value
                         ? "opacity-100"
                         : "opacity-0"
@@ -110,7 +110,7 @@ const StoreDropdown = ({ items = [] }: StoreDropdownItems) => {
                 }}
                 className="flex items-center gap-2 text-sm cursor-pointer"
               >
-                <PlusCircle className="h-4 w-4 shrink-0 text-muted-foreground" />
+                <PlusCircleIcon className="size-4 shrink-0 text-muted-foreground" />
                 <span>Create Store</span>
               </CommandItem>
             </CommandGroup>

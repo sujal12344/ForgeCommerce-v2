@@ -5,7 +5,7 @@ import Heading from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { BillBoard } from "@prisma/client";
 import axios from "axios";
-import { Plus } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import ApiList from "../../../../../../components/ui/api-list";
@@ -57,7 +57,7 @@ const Billboards = ({ BillboardData }: billboardsprops) => {
             onClick={() => router.push(`/${storeIdSafe}/billboards/new`)}
             className="gap-x-1.5 bg-linear-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white hover:scale-105 transition-all duration-200 shadow-sm"
           >
-            <Plus className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <PlusIcon className="size-3.5 sm:size-4" />
             New Billboard
           </Button>
         </div>

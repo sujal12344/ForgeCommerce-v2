@@ -16,7 +16,7 @@ import { Separator } from "@/components/ui/separator";
 import UseOrigin from "@/hooks/origin-client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { Trash as TrashIcon } from "lucide-react";
+import { TrashIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -155,7 +155,7 @@ const SettingsPage = ({ name, id }: SettingsProps) => {
           disabled={loading}
           className="shrink-0 ml-4"
         >
-          <TrashIcon className="h-4 w-4 mr-2" />
+          <TrashIcon className="size-4 mr-2" />
           Delete Store
         </Button>
       </div>

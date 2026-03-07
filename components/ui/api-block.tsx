@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Check, Copy, ExternalLink, Server } from "lucide-react";
+import { CheckIcon, CopyIcon, ExternalLinkIcon, ServerIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -124,7 +124,7 @@ const ApiBlock = ({
     return (
       <div className="group relative rounded-xl border border-border/60 bg-card overflow-hidden transition-all duration-200 hover:border-border hover:shadow-sm">
         <div className="flex items-center gap-4 px-5 py-4">
-          <Server className="h-4 w-4 text-muted-foreground shrink-0" />
+          <ServerIcon className="size-4 text-muted-foreground shrink-0" />
           <div className="flex-1 min-w-0">
             <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground mb-1.5">
               {title}
@@ -138,14 +138,14 @@ const ApiBlock = ({
           <Button
             variant="ghost"
             size="icon"
-            className="h-8 w-8 shrink-0 text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
+            className="size-8 shrink-0 text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
             onClick={onCopy}
             aria-label={copied ? "Copied!" : "Copy to clipboard"}
           >
             {copied ? (
-              <Check className="h-3.5 w-3.5 text-emerald-400" />
+              <CheckIcon className="size-3.5 text-emerald-400" />
             ) : (
-              <Copy className="h-3.5 w-3.5" />
+              <CopyIcon className="size-3.5" />
             )}
           </Button>
         </div>
@@ -183,7 +183,7 @@ const ApiBlock = ({
             {/* Param badge */}
             {hasParams && (
               <span className="hidden sm:inline-flex items-center gap-1 text-[10px] text-amber-300/80 bg-amber-500/10 border border-amber-400/20 rounded-md px-1.5 py-0.75 font-medium">
-                <span className="h-1 w-1 rounded-full bg-amber-400 inline-block" />
+                <span className="size-1 rounded-full bg-amber-400 inline-block" />
                 requires ID
               </span>
             )}
@@ -198,9 +198,9 @@ const ApiBlock = ({
                 rel="noopener noreferrer"
                 title="Open in browser"
                 onClick={e => e.stopPropagation()}
-                className="inline-flex items-center justify-center h-7 w-7 rounded-lg text-muted-foreground hover:text-emerald-400 hover:bg-emerald-500/10 transition-all"
+                className="inline-flex items-center justify-center size-7 rounded-lg text-muted-foreground hover:text-emerald-400 hover:bg-emerald-500/10 transition-all"
               >
-                <ExternalLink className="h-3.5 w-3.5" />
+                <ExternalLinkIcon className="size-3.5" />
               </a>
             )}
             <Button
@@ -211,7 +211,7 @@ const ApiBlock = ({
                 e.stopPropagation();
                 onCopy();
               }}
-              className={`h-7 w-7 rounded-lg transition-all ${
+              className={`size-7 rounded-lg transition-all ${
                 copyState === "copied"
                   ? "text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/10"
                   : copyState === "flash"
@@ -220,9 +220,9 @@ const ApiBlock = ({
               }`}
             >
               {copied ? (
-                <Check className="h-3.5 w-3.5" />
+                <CheckIcon className="size-3.5" />
               ) : (
-                <Copy className="h-3.5 w-3.5" />
+                <CopyIcon className="size-3.5" />
               )}
             </Button>
           </div>

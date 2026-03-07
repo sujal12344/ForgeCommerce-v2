@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { AlertCircle } from "lucide-react";
+import { AlertCircleIcon } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { useToast } from "../ui/use-toast";
 
@@ -59,7 +59,7 @@ const JsonEditor: React.FC<JsonEditorProps> = ({
       />
       {error && (
         <Alert variant="destructive" className="mt-2">
-          <AlertCircle className="h-4 w-4" />
+          <AlertCircleIcon className="size-4" />
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       )}

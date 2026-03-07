@@ -1,11 +1,11 @@
 "use client";
 import {
-  ArchiveRestore,
+  ArchiveRestoreIcon,
   CopyIcon,
   Edit3Icon,
-  Magnet,
-  MoreHorizontal,
-  Trash2,
+  MagnetIcon,
+  MoreHorizontalIcon,
+  Trash2Icon,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -130,7 +130,7 @@ const CellActions = ({ data }: CellActionsProps) => {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon" disabled={loading}>
             <span className="sr-only">Open menu</span>
-            <MoreHorizontal className="h-4 w-4" />
+            <MoreHorizontalIcon className="size-4" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
@@ -146,7 +146,7 @@ const CellActions = ({ data }: CellActionsProps) => {
               }
             }}
           >
-            <CopyIcon className="h-4 w-4 mr-2" />
+            <CopyIcon className="size-4 mr-2" />
             Copy ID
           </DropdownMenuItem>
 
@@ -156,7 +156,7 @@ const CellActions = ({ data }: CellActionsProps) => {
               HandleEdit();
             }}
           >
-            <Edit3Icon className="h-4 w-4 mr-2" />
+            <Edit3Icon className="size-4 mr-2" />
             <h2> Edit</h2>
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -165,12 +165,12 @@ const CellActions = ({ data }: CellActionsProps) => {
               setOpen(true);
             }}
           >
-            <Trash2 className="h-4 w-4 mr-2" />
+            <Trash2Icon className="size-4 mr-2" />
             Delete
           </DropdownMenuItem>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-              <Magnet className="h-4 w-4 mr-2" />
+              <MagnetIcon className="size-4 mr-2" />
               Feature
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
@@ -194,7 +194,7 @@ const CellActions = ({ data }: CellActionsProps) => {
           </DropdownMenuSub>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-              <ArchiveRestore className="h-4 w-4 mr-2" />
+              <ArchiveRestoreIcon className="size-4 mr-2" />
               Archive
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>

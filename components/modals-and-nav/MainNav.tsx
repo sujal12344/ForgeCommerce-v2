@@ -1,15 +1,15 @@
 "use client";
 import { cn } from "@/lib/utils";
 import {
-  Image,
-  LayoutDashboard,
+  ImageIcon,
+  LayoutDashboardIcon,
   LucideIcon,
-  Package,
-  Palette,
-  Ruler,
-  Settings,
-  ShoppingCart,
-  Tag,
+  PackageIcon,
+  PaletteIcon,
+  RulerIcon,
+  SettingsIcon,
+  ShoppingCartIcon,
+  TagIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
@@ -32,49 +32,49 @@ const MainNav = ({
     {
       href: `/${storeId}`,
       label: "Dashboard",
-      icon: LayoutDashboard,
+      icon: LayoutDashboardIcon,
       active: pathname === `/${storeId}`,
     },
     {
       href: `/${storeId}/billboards`,
       label: "Billboards",
-      icon: Image,
+      icon: ImageIcon,
       active: pathname === `/${storeId}/billboards`,
     },
     {
       href: `/${storeId}/categories`,
       label: "Categories",
-      icon: Tag,
+      icon: TagIcon,
       active: pathname === `/${storeId}/categories`,
     },
     {
       href: `/${storeId}/colors`,
       label: "Colors",
-      icon: Palette,
+      icon: PaletteIcon,
       active: pathname === `/${storeId}/colors`,
     },
     {
       href: `/${storeId}/sizes`,
       label: "Sizes",
-      icon: Ruler,
+      icon: RulerIcon,
       active: pathname === `/${storeId}/sizes`,
     },
     {
       href: `/${storeId}/products`,
       label: "Products",
-      icon: Package,
+      icon: PackageIcon,
       active: pathname === `/${storeId}/products`,
     },
     {
       href: `/${storeId}/orders`,
       label: "Orders",
-      icon: ShoppingCart,
+      icon: ShoppingCartIcon,
       active: pathname === `/${storeId}/orders`,
     },
     {
       href: `/${storeId}/settings`,
       label: "Settings",
-      icon: Settings,
+      icon: SettingsIcon,
       active: pathname === `/${storeId}/settings`,
     },
   ];
@@ -97,7 +97,7 @@ const MainNav = ({
           >
             <Icon
               className={cn(
-                "h-3.5 w-3.5 shrink-0",
+                "size-3.5 shrink-0",
                 route.active ? "text-foreground" : "text-muted-foreground/70"
               )}
             />

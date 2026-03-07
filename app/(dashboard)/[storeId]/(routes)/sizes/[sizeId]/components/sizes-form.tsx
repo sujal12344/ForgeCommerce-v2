@@ -14,7 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Size } from "@prisma/client";
 import axios from "axios";
-import { Trash } from "lucide-react";
+import { TrashIcon } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -117,7 +117,7 @@ const SizeForm = ({ initialData }: SizesFormProps) => {
             size="icon"
             onClick={() => setOpen(true)}
           >
-            <Trash className="h-4 w-4" />
+            <TrashIcon className="size-4" />
           </Button>
         )}
       </div>

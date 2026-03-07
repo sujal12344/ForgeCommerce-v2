@@ -1,5 +1,5 @@
 "use client";
-import { CopyIcon, Edit3Icon, MoreHorizontal, Trash2 } from "lucide-react";
+import { CopyIcon, Edit3Icon, MoreHorizontalIcon, Trash2Icon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -57,7 +57,7 @@ const CellActions = ({ data }: CellActionsProps) => {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon">
             <span className="sr-only">Open menu</span>
-            <MoreHorizontal className="h-4 w-4" />
+            <MoreHorizontalIcon className="size-4" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
@@ -69,7 +69,7 @@ const CellActions = ({ data }: CellActionsProps) => {
               toast.success("copied to clipboard");
             }}
           >
-            <CopyIcon className="h-4 w-4 mr-2" />
+            <CopyIcon className="size-4 mr-2" />
             Copy ID
           </DropdownMenuItem>
 
@@ -79,7 +79,7 @@ const CellActions = ({ data }: CellActionsProps) => {
               HandleEdit();
             }}
           >
-            <Edit3Icon className="h-4 w-4 mr-2" />
+            <Edit3Icon className="size-4 mr-2" />
             Edit
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -88,7 +88,7 @@ const CellActions = ({ data }: CellActionsProps) => {
               setOpen(true);
             }}
           >
-            <Trash2 className="h-4 w-4 mr-2" />
+            <Trash2Icon className="size-4 mr-2" />
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>

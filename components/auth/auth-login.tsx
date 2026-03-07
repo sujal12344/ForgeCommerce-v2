@@ -6,7 +6,7 @@ import { useState } from "react";
 // import { useRouter } from "next/navigation";
 import { DEMO_STORE_ID } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { Loader2, LogIn } from "lucide-react";
+import { Loader2Icon, LogInIcon } from "lucide-react";
 
 export default function AutoLoginButton() {
   const { signIn, isLoaded } = useSignIn();
@@ -60,12 +60,12 @@ export default function AutoLoginButton() {
       >
         {isLogging ? (
           <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <Loader2Icon className="mr-2 size-4 animate-spin" />
             <span>Logging in...</span>
           </>
         ) : (
           <>
-            <LogIn className="mr-2 h-4 w-4" />
+            <LogInIcon className="mr-2 size-4" />
             <span>Quick Login (Test)</span>
           </>
         )}

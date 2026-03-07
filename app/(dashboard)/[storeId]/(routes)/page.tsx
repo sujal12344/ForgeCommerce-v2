@@ -15,12 +15,12 @@ import { Separator } from "@/components/ui/separator";
 import { DEMO_STORE_ID, DEMO_STORE_URL } from "@/lib/constants";
 import { formatter } from "@/lib/utils";
 import {
-  CreditCard,
-  DollarSign,
-  ExternalLink,
-  Shirt,
-  ShoppingCart,
-  TrendingUp,
+  CreditCardIcon,
+  DollarSignIcon,
+  ExternalLinkIcon,
+  ShirtIcon,
+  ShoppingCartIcon,
+  TrendingUpIcon,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -61,9 +61,9 @@ const Dashboard = async ({
                 size="sm"
                 className="bg-linear-to-r transition-all duration-300 from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 hover:scale-105 hover:shadow-lg text-white flex items-center gap-1.5 p-4"
               >
-                <ShoppingCart className="h-3.5 w-3.5" />
+                <ShoppingCartIcon className="size-3.5" />
                 <span className="hidden sm:inline">View</span> Store
-                <ExternalLink className="h-3.5 w-3.5" />
+                <ExternalLinkIcon className="size-3.5" />
               </Button>
             </Link>
           )}
@@ -82,8 +82,8 @@ const Dashboard = async ({
               <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
                 Total Revenue
               </CardTitle>
-              <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-xl bg-linear-to-br from-green-400 to-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm shadow-green-500/25">
-                <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+              <div className="size-8 sm:size-10 rounded-xl bg-linear-to-br from-green-400 to-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm shadow-green-500/25">
+                <DollarSignIcon className="size-4 sm:size-5 text-white" />
               </div>
             </CardHeader>
             <CardContent className="relative">
@@ -93,7 +93,7 @@ const Dashboard = async ({
                   : "$0.00"}
               </div>
               <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                <TrendingUp className="h-3 w-3 text-green-500" />
+                <TrendingUpIcon className="size-3 text-green-500" />
                 From paid orders
               </p>
             </CardContent>
@@ -108,8 +108,8 @@ const Dashboard = async ({
               <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
                 Total Sales
               </CardTitle>
-              <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-xl bg-linear-to-br from-blue-400 to-indigo-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm shadow-blue-500/25">
-                <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+              <div className="size-8 sm:size-10 rounded-xl bg-linear-to-br from-blue-400 to-indigo-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm shadow-blue-500/25">
+                <CreditCardIcon className="size-4 sm:size-5 text-white" />
               </div>
             </CardHeader>
             <CardContent className="relative">
@@ -117,7 +117,7 @@ const Dashboard = async ({
                 +{sales ?? 0}
               </div>
               <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                <TrendingUp className="h-3 w-3 text-blue-500" />
+                <TrendingUpIcon className="size-3 text-blue-500" />
                 Completed orders
               </p>
             </CardContent>
@@ -132,8 +132,8 @@ const Dashboard = async ({
               <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground flex items-center gap-1">
                 Products in Stock
               </CardTitle>
-              <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-xl bg-linear-to-br from-purple-400 to-pink-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm shadow-purple-500/25">
-                <Shirt className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+              <div className="size-8 sm:size-10 rounded-xl bg-linear-to-br from-purple-400 to-pink-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm shadow-purple-500/25">
+                <ShirtIcon className="size-4 sm:size-5 text-white" />
               </div>
             </CardHeader>
             <CardContent className="relative">
@@ -141,7 +141,7 @@ const Dashboard = async ({
                 {availProducts ?? 0}
               </div>
               <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                <TrendingUp className="h-3 w-3 text-purple-500" />
+                <TrendingUpIcon className="size-3 text-purple-500" />
                 Available items
               </p>
             </CardContent>

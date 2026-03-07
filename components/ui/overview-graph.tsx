@@ -54,7 +54,7 @@ const OverviewGraph = ({ data }: OverviewGraphProps) => {
             </CardDescription>
           </div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse inline-block" />
+            <span className="size-2 rounded-full bg-emerald-500 animate-pulse inline-block" />
             Live
           </div>
         </div>

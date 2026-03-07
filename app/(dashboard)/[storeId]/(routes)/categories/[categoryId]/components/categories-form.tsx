@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BillBoard, Category } from "@prisma/client";
 import axios from "axios";
-import { Trash } from "lucide-react";
+import { TrashIcon } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -128,7 +128,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
             onClick={() => setOpen(true)}
             aria-label="Delete category"
           >
-            <Trash className="h-4 w-4" />
+            <TrashIcon className="size-4" />
           </Button>
         )}
       </div>

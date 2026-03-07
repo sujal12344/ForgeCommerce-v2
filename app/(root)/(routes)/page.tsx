@@ -34,7 +34,7 @@ const SetupPage = () => {
         </div>
 
         <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-          <div className="h-2 w-2 rounded-full bg-primary animate-pulse"></div>
+          <div className="size-2 rounded-full bg-primary animate-pulse"></div>
           <span>Initializing workspace</span>
         </div>
       </div>

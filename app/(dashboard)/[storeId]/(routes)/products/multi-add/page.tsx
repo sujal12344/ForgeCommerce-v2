@@ -9,7 +9,7 @@ import { toast } from "react-hot-toast";
 import { Category, Color, Image, Size } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
 import ReactMarkdown from "react-markdown";
-import { Plus, Minus } from "lucide-react";
+import { PlusIcon, MinusIcon } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -154,7 +154,7 @@ const BulkProductForm = () => {
             }
             className="flex items-center"
           >
-            <Plus className="mr-2 h-4 w-4" /> Add Product
+            <PlusIcon className="mr-2 size-4" /> Add Product
           </Button>
         </div>
         <Separator />
@@ -172,7 +172,7 @@ const BulkProductForm = () => {
                   variant="destructive"
                   disabled={fields.length === 1}
                 >
-                  <Minus className="h-4 w-4" />
+                  <MinusIcon className="size-4" />
                 </Button>
                 <Heading
                   title={`Product ${index + 1}`}

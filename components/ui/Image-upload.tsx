@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Button } from "./button";
-import { ImagePlus, Trash } from "lucide-react";
+import { ImagePlusIcon, TrashIcon } from "lucide-react";
 import Image from "next/image";
 import {
   CldUploadWidget,
@@ -53,7 +53,7 @@ const ImageUpload = ({
                   onRemove(url);
                 }}
               >
-                <Trash className="h-5 w-4" />
+                <TrashIcon className="h-5 w-4" />
               </Button>
             </div>
             <Image
@@ -79,7 +79,7 @@ const ImageUpload = ({
               variant={"secondary"}
               onClick={onClick}
             >
-              <ImagePlus className="h-5 w-4 mr-3" />
+              <ImagePlusIcon className="h-5 w-4 mr-3" />
               Upload an image
             </Button>
           );

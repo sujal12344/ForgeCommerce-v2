@@ -50,7 +50,7 @@ const FillStoreButton = ({ storeId }: FillStoreButtonProps) => {
         size="sm"
         className="bg-linear-to-r transition-all duration-300 from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 hover:scale-105 hover:shadow-lg text-white flex items-center gap-1.5"
       >
-        <DatabaseIcon className="h-3.5 w-3.5" />
+        <DatabaseIcon className="size-3.5" />
         <span className="hidden sm:inline">Fill Store</span>
       </Button>
     </>
