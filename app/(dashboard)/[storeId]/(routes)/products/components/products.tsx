@@ -51,7 +51,7 @@ const Products = ({ ProductsData }: ProductsProps) => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <Heading
           title={`Products (${Products.length})`}
           description="Create and manage store products"
@@ -59,9 +59,9 @@ const Products = ({ ProductsData }: ProductsProps) => {
         <div>
           <Button
             onClick={() => router.push(`/${storeId}/products/multi-add`)}
-            className="gap-x-2 bg-linear-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white hover:scale-105 transition-all duration-200 shadow-sm"
+            className="gap-x-1.5 bg-linear-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white hover:scale-105 transition-all duration-200 shadow-sm"
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             New Product
           </Button>
           {/* <Button
@@ -84,7 +84,9 @@ const Products = ({ ProductsData }: ProductsProps) => {
       />
       <div className="space-y-3 pt-2">
         <div className="flex items-center gap-2">
-          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">API Reference</p>
+          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            API Reference
+          </p>
           <div className="flex-1 h-px bg-border/50" />
         </div>
         <ApiList Entityname="products" EntityIdname="productId" />

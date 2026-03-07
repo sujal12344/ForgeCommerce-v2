@@ -40,14 +40,14 @@ const Dashboard = async ({
       dataExists(storeId),
     ]);
   return (
-    <div className="px-4 py-4 md:px-6 lg:px-8 w-full space-y-6">
+    <div className="px-3 py-3 sm:px-4 sm:py-4 md:px-6 lg:px-8 w-full space-y-4 sm:space-y-6">
       {/* ── Header ── */}
-      <div className="flex flex-row justify-between items-start gap-4">
+      <div className="flex gap-2 items-center justify-between">
         <div className="space-y-0.5">
           <Heading title="Dashboard" description="Overview of your store" />
         </div>
 
-        <div className="flex flex-wrap gap-2 items-center justify-end">
+        <div className="flex flex-wrap gap-1 sm:gap-2 items-center">
           {!dataExist && (
             <>
               <FillStoreButton storeId={storeId} />
@@ -57,10 +57,13 @@ const Dashboard = async ({
 
           {storeId === DEMO_STORE_ID && (
             <Link href={DEMO_STORE_URL} target="_blank">
-              <Button className="bg-linear-to-r transition-all duration-300 from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 hover:scale-105 hover:shadow-lg text-white flex items-center gap-2">
-                <ShoppingCart className="h-4 w-4" />
+              <Button
+                size="sm"
+                className="bg-linear-to-r transition-all duration-300 from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 hover:scale-105 hover:shadow-lg text-white flex items-center gap-1.5 p-4"
+              >
+                <ShoppingCart className="h-3.5 w-3.5" />
                 <span className="hidden sm:inline">View</span> Store
-                <ExternalLink className="h-4 w-4 ml-1" />
+                <ExternalLink className="h-3.5 w-3.5" />
               </Button>
             </Link>
           )}
@@ -70,21 +73,21 @@ const Dashboard = async ({
       <Separator />
 
       {/* ── Stat Cards ── */}
-      <div className="grid sm:grid-cols-3 w-full gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full gap-3 sm:gap-4">
         {/* Revenue */}
         <div className="group">
           <Card className="relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-border/50 bg-card/80">
             <div className="absolute -top-6 -right-6 h-28 w-28 rounded-full bg-green-500/10 blur-2xl pointer-events-none" />
-            <CardHeader className="flex flex-row items-center justify-between pb-2 relative">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardHeader className="flex flex-row items-center justify-between pb-1 sm:pb-2 relative">
+              <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
                 Total Revenue
               </CardTitle>
-              <div className="h-10 w-10 rounded-xl bg-linear-to-br from-green-400 to-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm shadow-green-500/25">
-                <DollarSign className="w-5 h-5 text-white" />
+              <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-xl bg-linear-to-br from-green-400 to-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm shadow-green-500/25">
+                <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
             </CardHeader>
             <CardContent className="relative">
-              <div className="text-2xl font-bold tracking-tight text-green-500">
+              <div className="text-xl sm:text-2xl font-bold tracking-tight text-green-500">
                 {totalRevenue !== null
                   ? formatter.format(totalRevenue)
                   : "$0.00"}
@@ -101,16 +104,16 @@ const Dashboard = async ({
         <div className="group">
           <Card className="relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-border/50 bg-card/80">
             <div className="absolute -top-6 -right-6 h-28 w-28 rounded-full bg-blue-500/10 blur-2xl pointer-events-none" />
-            <CardHeader className="flex flex-row items-center justify-between pb-2 relative">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardHeader className="flex flex-row items-center justify-between pb-1 sm:pb-2 relative">
+              <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground">
                 Total Sales
               </CardTitle>
-              <div className="h-10 w-10 rounded-xl bg-linear-to-br from-blue-400 to-indigo-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm shadow-blue-500/25">
-                <CreditCard className="w-5 h-5 text-white" />
+              <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-xl bg-linear-to-br from-blue-400 to-indigo-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm shadow-blue-500/25">
+                <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
             </CardHeader>
             <CardContent className="relative">
-              <div className="text-2xl font-bold tracking-tight text-blue-500">
+              <div className="text-xl sm:text-2xl font-bold tracking-tight text-blue-500">
                 +{sales ?? 0}
               </div>
               <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
@@ -125,16 +128,16 @@ const Dashboard = async ({
         <div className="group">
           <Card className="relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-border/50 bg-card/80">
             <div className="absolute -top-6 -right-6 h-28 w-28 rounded-full bg-purple-500/10 blur-2xl pointer-events-none" />
-            <CardHeader className="flex flex-row items-center justify-between pb-2 relative">
-              <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-1">
+            <CardHeader className="flex flex-row items-center justify-between pb-1 sm:pb-2 relative">
+              <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground flex items-center gap-1">
                 Products in Stock
               </CardTitle>
-              <div className="h-10 w-10 rounded-xl bg-linear-to-br from-purple-400 to-pink-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm shadow-purple-500/25">
-                <Shirt className="w-5 h-5 text-white" />
+              <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-xl bg-linear-to-br from-purple-400 to-pink-600 flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm shadow-purple-500/25">
+                <Shirt className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
             </CardHeader>
             <CardContent className="relative">
-              <div className="text-2xl font-bold tracking-tight text-purple-500">
+              <div className="text-xl sm:text-2xl font-bold tracking-tight text-purple-500">
                 {availProducts ?? 0}
               </div>
               <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
@@ -149,16 +152,16 @@ const Dashboard = async ({
       {/* ── Analytics ── */}
       <div>
         <div className="flex items-center gap-2">
-          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+          <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-widest text-muted-foreground">
             Performance Analytics
           </p>
           <div className="flex-1 h-px bg-border/50" />
         </div>
-        <div className="grid lg:grid-cols-6 gap-4 items-stretch">
-          <div className="lg:col-span-4 transition-all duration-300 h-full hover:scale-[1.005]">
+        <div className="grid lg:grid-cols-6 gap-3 sm:gap-4 items-stretch mt-3">
+          <div className="lg:col-span-4 transition-all duration-300 h-full sm:hover:scale-[1.005]">
             <OverviewGraph data={graphData} />
           </div>
-          <div className="lg:col-span-2 lg:flex flex-col transition-all duration-300 hover:scale-[1.005]">
+          <div className="flex flex-col lg:col-span-2 transition-all duration-300 sm:hover:scale-[1.005]">
             <Sales data={salesData} />
           </div>
         </div>

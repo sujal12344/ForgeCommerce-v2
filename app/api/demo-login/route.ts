@@ -1,15 +1,13 @@
 import { NextResponse } from "next/server";
 
+// Credentials are now NEXT_PUBLIC_ env vars read directly by the client component.
+// This route is kept for backwards compatibility but returns no sensitive data.
 export async function GET() {
-  const email = process.env.DEMO_USER_EMAIL;
-  const password = process.env.DEMO_USER_PASSWORD;
-
-  if (!email || !password) {
-    return NextResponse.json(
-      { error: "Demo credentials not configured" },
-      { status: 500 }
-    );
-  }
-
-  return NextResponse.json({ email, password });
+  return NextResponse.json(
+    {
+      message:
+        "Use NEXT_PUBLIC_DEMO_USER_EMAIL / NEXT_PUBLIC_DEMO_USER_PASSWORD env vars",
+    },
+    { status: 410 }
+  );
 }

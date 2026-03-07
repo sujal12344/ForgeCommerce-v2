@@ -25,12 +25,12 @@ export const columns: ColumnDef<ColorsColumn>[] = [
     accessorKey: "value",
     header: "Value",
     cell: ({ row }) => (
-      <div className="grid grid-cols-2 lg:w-1/4 w-1/3">
-        <div>{row.original.value}</div>
+      <div className="flex items-center gap-2">
         <div
-          className="h-6 w-6 ml-3 rounded-full border"
+          className="h-5 w-5 sm:h-6 sm:w-6 rounded-full border shrink-0"
           style={{ backgroundColor: row.original.value }}
-        ></div>
+        />
+        <span>{row.original.value}</span>
       </div>
     ),
   },

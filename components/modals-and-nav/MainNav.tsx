@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import {
   Image,
   LayoutDashboard,
+  LucideIcon,
   Package,
   Palette,
   Ruler,
@@ -22,7 +23,12 @@ const MainNav = ({
   const { storeId } = params;
   const pathname = usePathname();
 
-  const routes = [
+  const routes: {
+    href: string;
+    label: string;
+    icon: LucideIcon;
+    active: boolean;
+  }[] = [
     {
       href: `/${storeId}`,
       label: "Dashboard",
@@ -82,7 +88,7 @@ const MainNav = ({
             key={route.href}
             href={route.href}
             className={cn(
-              "flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-all duration-200",
+              "flex items-center gap-1 sm:gap-1.5 lg:gap-2 rounded-md px-2 sm:px-2.5 lg:px-3 py-1.5 text-sm font-medium transition-all duration-200",
               "hover:bg-muted hover:text-foreground",
               route.active
                 ? "bg-muted text-foreground"

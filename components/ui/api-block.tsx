@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Check, Copy, ExternalLink, Server } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -37,8 +38,7 @@ const methodConfig: Record<
   },
 };
 
-function ParsedUrl({ url }: { url: string }) {
-  // Split on protocol+host vs path
+function ParsedUrl({ url, copied }: { url: string; copied: boolean }) {
   const match = url.match(/^(https?:\/\/[^/]+)(\/.*)?$/);
   if (!match) return <span className="text-slate-300">{url}</span>;
 
@@ -46,13 +46,18 @@ function ParsedUrl({ url }: { url: string }) {
   const pathParts = path.split(/(\{[^}]+\})/);
 
   return (
-    <>
-      <span className="text-slate-500">{base}</span>
+    <div
+      className={cn(
+        "text-slate-500 w-fit px-2.5 py-0.5 rounded",
+        copied && "bg-violet-950"
+      )}
+    >
+      <span className={"text-slate-500"}>{base}</span>
       {pathParts.map((part, i) =>
         part.startsWith("{") && part.endsWith("}") ? (
           <span
             key={i}
-            className="text-amber-300 font-semibold underline decoration-dotted decoration-amber-400/50"
+            className="text-amber-300 font-semibold decoration-amber-400/50"
           >
             {part}
           </span>
@@ -62,9 +67,11 @@ function ParsedUrl({ url }: { url: string }) {
           </span>
         )
       )}
-    </>
+    </div>
   );
 }
+
+type CopyState = "idle" | "flash" | "copied";
 
 const ApiBlock = ({
   title,
@@ -72,7 +79,7 @@ const ApiBlock = ({
   variant,
   type = "endpoint",
 }: ApiBlockProps) => {
-  const [copied, setCopied] = useState(false);
+  const [copyState, setCopyState] = useState<CopyState>("idle");
   const hasParams = description.includes("{");
   const isPublicGet = variant === "public" && title === "GET";
   const cfg = methodConfig[title] ?? {
@@ -81,15 +88,22 @@ const ApiBlock = ({
     urlText: "group-hover:border-zinc-500/30",
   };
 
-  const onCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(description);
-      setCopied(true);
-      toast.success("Copied!");
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      toast.error("Failed to copy");
-    }
+  const copied = copyState === "copied";
+
+  const onCopy = () => {
+    if (copyState !== "idle") return;
+    setCopyState("flash");
+    setTimeout(async () => {
+      try {
+        await navigator.clipboard.writeText(description);
+        setCopyState("copied");
+        setTimeout(() => setCopyState("idle"), 2000);
+        toast.success("Copied to clipboard");
+      } catch {
+        setCopyState("idle");
+        toast.error("Failed to copy");
+      }
+    }, 160);
   };
 
   if (type === "env") {
@@ -163,27 +177,35 @@ const ApiBlock = ({
           {/* Action buttons */}
           <div className="flex items-center gap-0.5">
             {isPublicGet && !hasParams && (
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-7 w-7 rounded-lg text-muted-foreground hover:text-emerald-400 hover:bg-emerald-500/10 transition-all"
+              <a
+                href={description}
+                target="_blank"
+                rel="noopener noreferrer"
                 title="Open in browser"
-                asChild
+                onClick={e => e.stopPropagation()}
+                className="inline-flex items-center justify-center h-7 w-7 rounded-lg text-muted-foreground hover:text-emerald-400 hover:bg-emerald-500/10 transition-all"
               >
-                <a href={description} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-3.5 w-3.5" />
-                </a>
-              </Button>
+                <ExternalLink className="h-3.5 w-3.5" />
+              </a>
             )}
             <Button
               variant="ghost"
               size="icon"
-              className="h-7 w-7 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-all"
-              title="Copy URL"
-              onClick={onCopy}
+              title={copied ? "Copied!" : "Copy URL"}
+              onClick={e => {
+                e.stopPropagation();
+                onCopy();
+              }}
+              className={`h-7 w-7 rounded-lg transition-all ${
+                copyState === "copied"
+                  ? "text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/10"
+                  : copyState === "flash"
+                    ? "text-sky-400 bg-sky-500/10 hover:bg-sky-500/10"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+              }`}
             >
               {copied ? (
-                <Check className="h-3.5 w-3.5 text-emerald-400" />
+                <Check className="h-3.5 w-3.5" />
               ) : (
                 <Copy className="h-3.5 w-3.5" />
               )}
@@ -191,12 +213,28 @@ const ApiBlock = ({
           </div>
         </div>
 
-        {/* URL block — terminal style */}
+        {/* URL block */}
         <div
-          className={`rounded-lg bg-zinc-950/70 border border-white/5 px-4 py-3 transition-colors duration-200 ${cfg.urlText}`}
+          onClick={onCopy}
+          onKeyDown={e => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              onCopy();
+            }
+          }}
+          role="button"
+          tabIndex={0}
+          title={copied ? "Copied!" : "Click to copy"}
+          className={`rounded-lg border px-4 py-3 transition-all duration-300 cursor-pointer select-none overflow-x-auto scrollbar-none ${
+            copyState === "flash"
+              ? "bg-white/6 border-white/15 shadow-sm"
+              : copyState === "copied"
+                ? "bg-emerald-500/8 border-emerald-500/20"
+                : `bg-zinc-950/70 border-white/5 ${cfg.urlText}`
+          }`}
         >
-          <code className="text-sm font-mono leading-relaxed break-all">
-            <ParsedUrl url={description} />
+          <code className="text-sm leading-relaxed pointer-events-none whitespace-nowrap">
+            <ParsedUrl url={description} copied={copied} />
           </code>
         </div>
       </div>
@@ -205,5 +243,3 @@ const ApiBlock = ({
 };
 
 export default ApiBlock;
-
-

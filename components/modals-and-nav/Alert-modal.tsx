@@ -9,6 +9,10 @@ type AlertModalProps = {
   onClose: () => void;
   loading: boolean;
   onConfirm: () => void;
+  description?: string;
+  confirmLabel?: string;
+  loadingLabel?: string;
+  confirmVariant?: "destructive" | "default" | "outline" | "secondary" | "ghost";
 };
 
 export const AlertModal = ({
@@ -16,6 +20,10 @@ export const AlertModal = ({
   onClose,
   loading,
   onConfirm,
+  description = "This action cannot be undone. This will permanently delete the selected data.",
+  confirmLabel = "Delete",
+  loadingLabel = "Deleting...",
+  confirmVariant = "destructive",
 }: AlertModalProps) => {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -30,26 +38,26 @@ export const AlertModal = ({
   return (
     <Modal
       title="Are you sure?"
-      description="This action cannot be undone. This will permanently delete the selected data."
+      description={description}
       isOpen={isOpen}
       onClose={onClose}
     >
-      <div className="pt-4 flex items-center justify-end gap-3 w-full">
+      <div className="pt-3 sm:pt-4 flex items-center justify-end gap-2 sm:gap-3 w-full">
         <Button
           disabled={loading}
           onClick={onClose}
           variant="outline"
-          className="min-w-20"
+          className="min-w-16 sm:min-w-20 h-8 sm:h-9 text-xs sm:text-sm"
         >
           Cancel
         </Button>
         <Button
           disabled={loading}
           onClick={onConfirm}
-          variant="destructive"
-          className="min-w-20"
+          variant={confirmVariant}
+          className="min-w-16 sm:min-w-20 h-8 sm:h-9 text-xs sm:text-sm"
         >
-          {loading ? "Deleting..." : "Delete"}
+          {loading ? loadingLabel : confirmLabel}
         </Button>
       </div>
     </Modal>

@@ -17,6 +17,7 @@ export const columns: ColumnDef<OrderColumn>[] = [
   {
     accessorKey: "product",
     header: "Products",
+    // cell: ({ row }) => <div className="w-32">{row.original.product}</div>,
   },
   {
     accessorKey: "createdAt",

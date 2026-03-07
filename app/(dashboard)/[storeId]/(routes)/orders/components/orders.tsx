@@ -41,7 +41,7 @@ const Orders = ({ OrdersData }: OrdersProps) => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <Heading
           title={`Orders (${Orders.length})`}
           description="View and manage customer orders"

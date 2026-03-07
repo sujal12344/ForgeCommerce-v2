@@ -18,12 +18,10 @@ export default function AutoLoginButton() {
     setIsLogging(true);
 
     try {
-      const res = await fetch("/api/demo-login");
-      if (!res.ok) throw new Error("Failed to fetch demo credentials");
-      const { email, password } = (await res.json()) as {
-        email: string;
-        password: string;
-      };
+      const email = process.env.NEXT_PUBLIC_DEMO_USER_EMAIL;
+      const password = process.env.NEXT_PUBLIC_DEMO_USER_PASSWORD;
+      if (!email || !password)
+        throw new Error("Demo credentials not configured");
 
       const signInAttempt = await signIn.create({
         identifier: email,

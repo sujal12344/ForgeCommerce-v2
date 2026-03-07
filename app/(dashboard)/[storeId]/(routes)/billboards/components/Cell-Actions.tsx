@@ -34,7 +34,7 @@ const CellActions = ({ data }: CellActionsProps) => {
       await axios.delete(`/api/${storeId}/billboards/${data.id}`);
       toast.success("Billboard successfully deleted");
       router.refresh();
-    } catch (err) {
+    } catch {
       toast.error(
         "Please delete all the categories before deleting this first"
       );
@@ -55,7 +55,7 @@ const CellActions = ({ data }: CellActionsProps) => {
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
+          <Button variant="ghost" size="icon">
             <span className="sr-only">Open menu</span>
             <MoreHorizontal className="h-4 w-4" />
           </Button>

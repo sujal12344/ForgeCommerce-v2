@@ -1,19 +1,19 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
-import { AlertCircle } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogDescription,
   DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Textarea } from "@/components/ui/textarea";
+import { AlertCircle } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
 import { useToast } from "../ui/use-toast";
 
 interface JsonEditorProps {
@@ -113,7 +113,7 @@ const JsonEditorModal: React.FC<JsonEditorModalProps> = ({
   );
 
   // Reset state if fields change after mount (e.g. dynamic field sets)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
   const fieldsKey = JSON.stringify(fields);
   useEffect(() => {
     setJsonData(
@@ -188,49 +188,45 @@ const JsonEditorModal: React.FC<JsonEditorModalProps> = ({
   };
 
   return (
-    <div className="">
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogTrigger asChild>
-          <Button variant="outline" onClick={() => setIsOpen(true)}>
-            {triggerButtonText}
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="max-w-[90vw] max-h-[80vh] h-full w-full overflow-y-scroll">
-          <div className="">
-            <DialogHeader>
-              <DialogTitle>{title}</DialogTitle>
-              <DialogDescription>{description}</DialogDescription>
-            </DialogHeader>
-            <div
-              className={`grid gap-6 mt-10 ${getGridColumns(fields.length)}`}
-            >
-              {fields.map(field => (
-                <JsonEditor
-                  key={field.name}
-                  label={field.label}
-                  value={jsonData[field.name]}
-                  onChange={newValue => handleJsonChange(newValue, field.name)}
-                  error={jsonErrors[field.name]}
-                />
-              ))}
-            </div>
-            <DialogFooter>
-              <Button
-                type="submit"
-                onClick={handleSubmit}
-                disabled={
-                  Object.values(jsonErrors).some(error => error !== "") ||
-                  isLoading
-                }
-                className="relative"
-              >
-                {isLoading ? "Saving Changes..." : "Save Changes"}
-              </Button>
-            </DialogFooter>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline" size="sm" onClick={() => setIsOpen(true)}>
+          {triggerButtonText}
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-w-[90vw] max-h-[80vh] h-full w-full overflow-y-scroll">
+        <div className="">
+          <DialogHeader>
+            <DialogTitle>{title}</DialogTitle>
+            <DialogDescription>{description}</DialogDescription>
+          </DialogHeader>
+          <div className={`grid gap-6 mt-10 ${getGridColumns(fields.length)}`}>
+            {fields.map(field => (
+              <JsonEditor
+                key={field.name}
+                label={field.label}
+                value={jsonData[field.name]}
+                onChange={newValue => handleJsonChange(newValue, field.name)}
+                error={jsonErrors[field.name]}
+              />
+            ))}
           </div>
-        </DialogContent>
-      </Dialog>
-    </div>
+          <DialogFooter>
+            <Button
+              type="submit"
+              onClick={handleSubmit}
+              disabled={
+                Object.values(jsonErrors).some(error => error !== "") ||
+                isLoading
+              }
+              className="relative"
+            >
+              {isLoading ? "Saving Changes..." : "Save Changes"}
+            </Button>
+          </DialogFooter>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 

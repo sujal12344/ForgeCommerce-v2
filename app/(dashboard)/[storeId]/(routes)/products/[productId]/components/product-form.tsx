@@ -149,13 +149,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         onConfirm={onDelete}
         loading={loading}
       />
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-2">
         <Heading title={title} description={description} />
         {initialData && (
           <Button
             disabled={loading}
             variant="destructive"
-            size="sm"
+            size="icon"
             onClick={() => setOpen(true)}
           >
             <Trash className="h-4 w-4" />
@@ -412,7 +412,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           </div>
           <Button
             disabled={loading}
-            className="bg-linear-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white hover:scale-105 transition-all duration-200 shadow-sm"
+            className="bg-linear-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white hover:scale-105 transition-all duration-200 shadow-sm"
             type="submit"
           >
             {action}

@@ -1,4 +1,5 @@
 "use client";
+import { AlertModal } from "@/components/modals-and-nav/Alert-modal";
 import ApiBlock from "@/components/ui/api-block";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,7 +22,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
-import { AlertModal } from "../../../../../../components/modals-and-nav/Alert-modal";
 
 type SettingsProps = {
   name: string;

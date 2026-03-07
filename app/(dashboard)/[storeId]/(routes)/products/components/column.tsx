@@ -55,12 +55,12 @@ export const columns: ColumnDef<FilteredDataProps>[] = [
     accessorKey: "color",
     header: "Color",
     cell: ({ row }) => (
-      <div className="flex items-center gap-x-2">
-        {row.original.color}
+      <div className="flex items-center gap-2">
         <div
-          className="h-6 w-6 rounded-full border"
+          className="h-5 w-5 sm:h-6 sm:w-6 rounded-full border shrink-0"
           style={{ backgroundColor: row.original.color }}
-        ></div>
+        />
+        <span>{row.original.color}</span>
       </div>
     ),
   },

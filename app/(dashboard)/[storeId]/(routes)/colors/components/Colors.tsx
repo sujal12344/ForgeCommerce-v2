@@ -40,7 +40,7 @@ const Colors = ({ ColorsData }: ColorsProps) => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <Heading
           title={`Colors (${Colors.length})`}
           description="Create and manage product colors"
@@ -49,9 +49,9 @@ const Colors = ({ ColorsData }: ColorsProps) => {
           <SampleDataModalColors />
           <Button
             onClick={() => router.push(`/${storeId}/colors/new`)}
-            className="gap-x-2 bg-linear-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white hover:scale-105 transition-all duration-200 shadow-sm"
+            className="gap-x-1.5 bg-linear-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white hover:scale-105 transition-all duration-200 shadow-sm"
           >
-            <Plus className="h-4 w-4" />
+            <Plus className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             New Color
           </Button>
         </div>

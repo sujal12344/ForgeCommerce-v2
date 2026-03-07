@@ -33,7 +33,13 @@ export const columns: ColumnDef<CategoryColumn>[] = [
     cell: ({ row }) => {
       const data = row.original;
       return data.imageUrl ? (
-        <Image src={data.imageUrl} alt={data.name} width={70} height={70} />
+        <Image
+          src={data.imageUrl}
+          alt={data.name}
+          width={70}
+          height={70}
+          className="w-10 h-10 sm:w-16 sm:h-16 object-cover rounded"
+        />
       ) : (
         <span className="text-muted-foreground text-sm">No image</span>
       );

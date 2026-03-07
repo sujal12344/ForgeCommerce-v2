@@ -30,54 +30,67 @@ import { Button } from "../ui/button";
 type StoreDropdownItems = {
   items: Store[];
 };
+
 const StoreDropdown = ({ items = [] }: StoreDropdownItems) => {
   const [open, setOpen] = React.useState(false);
   const storemodal = useStoreModal();
   const params = useParams();
   const { storeId } = params;
   const router = useRouter();
+
   const formattedItems = items.map(item => ({
     label: item.name,
     value: item.id,
   }));
 
   const currentStore = formattedItems.find(item => item.value === storeId);
+
   const onStoreSelect = (store: { label: string; value: string }) => {
     setOpen(false);
     router.push(`/${store.value}`);
   };
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
+        {/* Mobile: icon-only button */}
         <Button
-          variant={"outline"}
+          variant="outline"
           role="combobox"
           aria-expanded={open}
           aria-label="Select a store"
-          className="w-50 justify-between"
+          className="border-border/60 bg-background hover:bg-accent hover:text-accent-foreground transition-colors h-9 w-9 p-0 sm:w-47.5 sm:px-3 sm:justify-between sm:gap-2"
         >
-          <StoreIcon className="mr-2 h-4 w-4" />
-          {currentStore?.label ?? "Select store"}
-          <ChevronsUpDown className="ml-2 h-4 w-4  shrink-0 opacity-50" />
+          <StoreIcon className="h-4 w-4 shrink-0 text-muted-foreground" />
+          <span className="hidden sm:block truncate flex-1 text-left text-sm font-medium">
+            {currentStore?.label ?? "Select store"}
+          </span>
+          <ChevronsUpDown className="hidden sm:block h-3.5 w-3.5 shrink-0 text-muted-foreground 60" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-75 ml-4">
+      <PopoverContent
+        align="start"
+        sideOffset={6}
+        className="min-w-52 w-47.5 sm:w-57.5 p-0 border-border/60 shadow-lg shadow-black/20"
+      >
         <Command>
-          <CommandInput placeholder="Search store..." />
-          <CommandList>
-            <CommandEmpty>No store found.</CommandEmpty>
+          <CommandInput placeholder="Search store..." className="h-9 text-sm" />
+          <CommandList className="max-h-52 overflow-y-auto">
+            <CommandEmpty className="py-4 text-center text-xs text-muted-foreground">
+              No store found.
+            </CommandEmpty>
             <CommandGroup heading="Stores">
               {formattedItems.map(item => (
                 <CommandItem
                   key={item.value}
                   onSelect={() => onStoreSelect(item)}
-                  className="text-sm"
+                  className="flex items-center gap-2 text-sm cursor-pointer"
                 >
-                  <StoreIcon className="h-5 w-4 mr-2" />
-                  {item.label}
+                  <StoreIcon className="h-4 w-4 shrink-0 text-muted-foreground" />
+                  <span className="truncate flex-1">{item.label}</span>
                   <Check
                     className={cn(
-                      "ml-auto h-4 w-4",
+                      "h-4 w-4 shrink-0 text-primary transition-opacity",
                       currentStore?.value === item.value
                         ? "opacity-100"
                         : "opacity-0"
@@ -95,9 +108,10 @@ const StoreDropdown = ({ items = [] }: StoreDropdownItems) => {
                   setOpen(false);
                   storemodal.onOpen();
                 }}
+                className="flex items-center gap-2 text-sm cursor-pointer"
               >
-                <PlusCircle className="mr-2 h-4 w-4" />
-                Create Store
+                <PlusCircle className="h-4 w-4 shrink-0 text-muted-foreground" />
+                <span>Create Store</span>
               </CommandItem>
             </CommandGroup>
           </CommandList>

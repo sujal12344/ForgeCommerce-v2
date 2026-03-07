@@ -1,4 +1,15 @@
-import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { useToast } from "@/components/ui/use-toast";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -8,19 +19,8 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface DataTableProps<TData extends { id: string }, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -112,7 +112,7 @@ export function DataTable<TData extends { id: string }, TValue>({
       });
       setRowSelection({});
       router.refresh();
-    } catch (error) {
+    } catch {
       toast({
         title: "Error",
         description: "An error occurred while deleting rows",
@@ -125,17 +125,18 @@ export function DataTable<TData extends { id: string }, TValue>({
 
   return (
     <div>
-      <div className="flex items-center justify-between py-4">
+      <div className="flex flex-wrap items-center gap-2 py-3 sm:py-4">
         <Input
           placeholder="Search.."
           value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
           onChange={event =>
             table.getColumn(searchKey)?.setFilterValue(event.target.value)
           }
-          className="max-w-xs"
+          className="flex-1 min-w-32 sm:max-w-xs"
         />
         {!isOrder && ( // temporary fix for order deleting issue
           <Button
+            size="sm"
             onClick={handleDeleteSelected}
             disabled={isDeleting || Object.keys(rowSelection).length === 0}
           >
@@ -143,7 +144,7 @@ export function DataTable<TData extends { id: string }, TValue>({
           </Button>
         )}
       </div>
-      <div className="rounded-lg border">
+      <div className="rounded-lg border overflow-x-auto">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map(headerGroup => (

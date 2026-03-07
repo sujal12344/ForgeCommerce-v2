@@ -44,8 +44,7 @@ const SampleDataModal = () => {
   return (
     <JsonEditorModal
       title="Edit Store and Add Sample Data"
-      description="Make changes to your profile and add sample data for categories,
-                colors, and sizes in JSON format."
+      description="Make changes to your profile and add sample data for categories, colors, and sizes in JSON format."
       fields={[
         {
           name: "categories",
