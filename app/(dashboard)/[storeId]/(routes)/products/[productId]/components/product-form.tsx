@@ -400,7 +400,10 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                         <p className="text-xs text-muted-foreground mb-2 font-medium uppercase tracking-wide">
                           Preview
                         </p>
-                        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSanitize]}>
+                        <ReactMarkdown
+                          remarkPlugins={[remarkGfm]}
+                          rehypePlugins={[rehypeSanitize]}
+                        >
                           {field.value}
                         </ReactMarkdown>
                       </div>

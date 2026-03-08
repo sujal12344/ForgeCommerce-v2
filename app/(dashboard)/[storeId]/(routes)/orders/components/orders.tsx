@@ -32,7 +32,7 @@ const Orders = ({ OrdersData }: OrdersProps) => {
       return {
         success: false,
         error:
-          "Check if the orders attached to products is deleted and try again",
+          "Failed to delete orders. Please ensure no dependent records exist and try again.",
       };
     }
   };

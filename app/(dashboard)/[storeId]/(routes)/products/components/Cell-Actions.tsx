@@ -152,12 +152,7 @@ const CellActions = ({ data }: CellActionsProps) => {
             Copy ID
           </DropdownMenuItem>
 
-          <DropdownMenuItem
-            className="cursor-pointer"
-            onClick={() => {
-              handleEdit();
-            }}
-          >
+          <DropdownMenuItem className="cursor-pointer" onClick={handleEdit}>
             <Edit3Icon className="size-4 mr-2" />
             Edit
           </DropdownMenuItem>
@@ -202,16 +197,14 @@ const CellActions = ({ data }: CellActionsProps) => {
             <DropdownMenuPortal>
               <DropdownMenuSubContent className="cursor-pointer">
                 <DropdownMenuItem
-                  onClick={() => {
-                    handleArchive();
-                  }}
+                  disabled={loading}
+                  onClick={handleArchive}
                 >
                   Archive
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => {
-                    handleDearchive();
-                  }}
+                  disabled={loading}
+                  onClick={handleDearchive}
                 >
                   De-Archive
                 </DropdownMenuItem>

@@ -121,7 +121,7 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 403 });
     }
 
-    const sizes = await prisma.size.update({
+    const size = await prisma.size.update({
       where: {
         id: sizeId,
         storeId,
@@ -132,7 +132,7 @@ export async function PATCH(
       },
     });
 
-    return NextResponse.json(sizes);
+    return NextResponse.json(size);
   } catch (error) {
     console.log("[SIZE_PATCH]", error);
     return new NextResponse("Internal error", { status: 500 });
