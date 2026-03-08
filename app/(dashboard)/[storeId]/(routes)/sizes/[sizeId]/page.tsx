@@ -1,5 +1,4 @@
 import prisma from "@/prisma/client";
-import { notFound } from "next/navigation";
 import SizeForm from "./components/sizes-form";
 
 const SizePage = async ({
@@ -14,10 +13,6 @@ const SizePage = async ({
       storeId,
     },
   });
-
-  if (!size) {
-    notFound();
-  }
 
   return (
     <div className="flex-col">
