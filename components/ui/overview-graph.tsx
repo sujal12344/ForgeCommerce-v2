@@ -16,11 +16,26 @@ import {
   YAxis,
 } from "recharts";
 
-type OverviewGraphProps = {
-  data: any[] | null;
+type GraphDataPoint = {
+  name: string;
+  total: number;
 };
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+type TooltipPayloadEntry = {
+  value: number;
+};
+
+type CustomTooltipProps = {
+  active?: boolean;
+  payload?: TooltipPayloadEntry[];
+  label?: string;
+};
+
+type OverviewGraphProps = {
+  data: GraphDataPoint[] | null;
+};
+
+const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     return (
       <div className="rounded-xl border border-border/50 bg-background/95 backdrop-blur-sm px-4 py-3 shadow-2xl">

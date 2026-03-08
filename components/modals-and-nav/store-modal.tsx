@@ -41,7 +41,7 @@ export const StoreModal = () => {
       } else {
         toast.error("Invalid response from server");
       }
-    } catch (err) {
+    } catch {
       toast.error("Something went wrong");
     } finally {
       setloading(false);

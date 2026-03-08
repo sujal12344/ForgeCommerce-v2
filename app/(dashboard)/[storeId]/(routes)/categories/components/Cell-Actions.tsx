@@ -1,5 +1,10 @@
 "use client";
-import { CopyIcon, Edit3Icon, MoreHorizontalIcon, Trash2Icon } from "lucide-react";
+import {
+  CopyIcon,
+  Edit3Icon,
+  MoreHorizontalIcon,
+  Trash2Icon,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
