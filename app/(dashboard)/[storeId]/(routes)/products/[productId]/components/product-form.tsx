@@ -9,6 +9,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import ReactMarkdown from "react-markdown";
+import rehypeSanitize from "rehype-sanitize";
+import remarkGfm from "remark-gfm";
 import * as z from "zod";
 
 import { AlertModal } from "@/components/modals-and-nav/Alert-modal";
@@ -34,6 +36,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -370,25 +373,40 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               control={form.control}
               name="description"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <textarea
-                      className="flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                      disabled={loading}
-                      placeholder="Product description"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                  {field.value && (
-                    <div className="mt-2">
-                      <FormLabel>MarkdownPreview:</FormLabel>
-                      <div className="p-2 border rounded-md">
-                        <ReactMarkdown>{field.value}</ReactMarkdown>
+                <FormItem className="md:col-span-3">
+                  <FormLabel>
+                    Description{" "}
+                    <span className="text-xs font-normal text-muted-foreground">
+                      (Markdown supported)
+                    </span>
+                  </FormLabel>
+                  <div
+                    className={
+                      field.value ? "grid md:grid-cols-2 gap-4" : undefined
+                    }
+                  >
+                    <FormControl>
+                      <Textarea
+                        className="min-h-40 resize-y"
+                        disabled={loading}
+                        placeholder={
+                          "Product description\n\nSupports **bold**, *italic*, `code`, lists, and more."
+                        }
+                        {...field}
+                      />
+                    </FormControl>
+                    {field.value && (
+                      <div className="rounded-lg border bg-muted/30 p-4 text-sm overflow-y-auto max-h-75 [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:mb-2 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:mb-1 [&_h3]:text-base [&_h3]:font-medium [&_p]:my-2 [&_p]:leading-relaxed [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:my-1.5 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:my-1.5 [&_li]:my-0.5 [&_code]:bg-muted [&_code]:rounded [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-xs [&_code]:font-mono [&_pre]:bg-muted [&_pre]:rounded-md [&_pre]:p-3 [&_pre]:my-2 [&_pre]:overflow-x-auto [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_blockquote]:border-l-4 [&_blockquote]:border-border [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-muted-foreground [&_strong]:font-semibold [&_a]:text-primary [&_a]:underline [&_hr]:border-border [&_hr]:my-3 [&_table]:w-full [&_table]:border-collapse [&_th]:border [&_th]:border-border [&_th]:px-2 [&_th]:py-1 [&_th]:bg-muted [&_td]:border [&_td]:border-border [&_td]:px-2 [&_td]:py-1 [&_img]:max-w-full [&_img]:rounded-md [&_img]:my-2">
+                        <p className="text-xs text-muted-foreground mb-2 font-medium uppercase tracking-wide">
+                          Preview
+                        </p>
+                        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSanitize]}>
+                          {field.value}
+                        </ReactMarkdown>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
+                  <FormMessage />
                 </FormItem>
               )}
             />
