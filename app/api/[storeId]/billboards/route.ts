@@ -42,7 +42,6 @@ export async function POST(
     const { storeId } = await params;
     const { userId } = await auth();
     const { label, imageUrl } = await req.json();
-    console.log("Creating billboard with values:", { label, imageUrl });
     if (!userId)
       return NextResponse.json({ error: "Unauthenticated" }, { status: 401 });
     if (!label || !imageUrl)

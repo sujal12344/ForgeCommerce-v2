@@ -77,7 +77,7 @@ const ColorForm = ({ initialData }: ColorsFormProps) => {
       toast.success("Color successfully deleted");
       router.refresh();
       router.push(`/${storeId}/colors`);
-    } catch (err) {
+    } catch {
       toast.error(
         "Please delete all products using this color first and try again"
       );
