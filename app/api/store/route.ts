@@ -4,6 +4,9 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const { userId } = await auth();
+  if (!userId) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   let body;
   try {
     body = await req.json();
@@ -12,9 +15,6 @@ export async function POST(req: Request) {
   }
   const { name } = body;
 
-  if (!userId) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
   if (!name) {
     return NextResponse.json(
       { error: "Store name is required" },
