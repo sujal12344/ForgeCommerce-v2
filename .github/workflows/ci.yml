@@ -7,8 +7,9 @@ on:
     branches: [main]
 
 jobs:
-  ci:
-    name: Lint, Type-check & Build
+  # ── Job 1: fast quality gates (no secrets needed) ────────────────────────
+  quality:
+    name: Lint · Type-check · Audit
     runs-on: ubuntu-latest
 
     steps:
@@ -24,23 +25,56 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint
-        run: npm run lint
+      - name: Lint (zero warnings allowed)
+        # --max-warnings 0 turns every ESLint warning into a build failure.
+        # This catches unused vars, any types, missing deps, etc. before they merge.
+        run: npm run lint -- --max-warnings 0
 
       - name: Type-check
         run: npx tsc --noEmit
 
+      - name: Security audit
+        # Fails if any HIGH or CRITICAL vulnerability exists in production deps.
+        # Use --audit-level=moderate to be stricter.
+        run: npm audit --audit-level=high --omit=dev
+
+  # ── Job 2: full build + bundle size guard (needs secrets) ─────────────────
+  build:
+    name: Build · Bundle check
+    runs-on: ubuntu-latest
+    needs: quality # only run if quality passes
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
       - name: Build
         run: npm run build
         env:
-          # Add these as repository secrets in GitHub → Settings → Secrets and variables → Actions
+          # Add these as repository secrets:
+          # GitHub → Settings → Secrets and variables → Actions → New repository secret
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
           CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
           STRIPE_API_KEY: ${{ secrets.STRIPE_API_KEY }}
           STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
           NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME }}
+          NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET }}
           NEXT_PUBLIC_DEMO_STORE_ID: ${{ secrets.NEXT_PUBLIC_DEMO_STORE_ID }}
           NEXT_PUBLIC_DEMO_STORE_URL: ${{ secrets.NEXT_PUBLIC_DEMO_STORE_URL }}
           NEXT_PUBLIC_DEMO_STORE_NAME: ${{ secrets.NEXT_PUBLIC_DEMO_STORE_NAME }}
           FRONTEND_STORE_URL: ${{ secrets.FRONTEND_STORE_URL }}
+
+      - name: Bundle size check
+        # Fails if any single JS chunk in .next/static/chunks/ exceeds 500 KB.
+        # Catches accidental barrel imports or adding a huge library without tree-shaking.
+        run: npm run check-bundle
