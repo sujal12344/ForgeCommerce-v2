@@ -14,9 +14,10 @@ export async function POST(req: Request) {
   } catch {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
-  const { name } = body;
+  const { name: reqName } = body;
 
-  if (!name || typeof name !== "string") {
+  const name = typeof reqName === "string" ? reqName.trim() : "";
+  if (!name) {
     return NextResponse.json(
       { error: "Store name is required and must be a string" },
       { status: 400 }
