@@ -217,12 +217,50 @@ export default function DashboardClient({ storeId }: { storeId: string }) {
           <div className="flex-1 h-px bg-border/50" />
         </div>
         <div className="grid lg:grid-cols-6 gap-3 sm:gap-4 items-stretch mt-3">
-          <div className="lg:col-span-4 transition-all duration-300 h-full sm:hover:scale-[1.005]">
-            <OverviewGraph data={graphData ?? null} />
-          </div>
-          <div className="flex flex-col lg:col-span-2 transition-all duration-300 sm:hover:scale-[1.005]">
-            <Sales data={salesData ?? null} />
-          </div>
+          {isLoading ? (
+            <>
+              <div className="lg:col-span-4">
+                <Card className="border border-border/50 bg-card/80 h-full flex flex-col">
+                  <CardHeader className="pb-4">
+                    <div className="h-4 w-32 rounded bg-muted animate-pulse" />
+                    <div className="h-3 w-44 rounded bg-muted animate-pulse mt-1" />
+                  </CardHeader>
+                  <CardContent className="flex-1">
+                    <div className="h-48 w-full rounded bg-muted animate-pulse" />
+                  </CardContent>
+                </Card>
+              </div>
+              <div className="lg:col-span-2">
+                <Card className="border border-border/50 bg-card/80 h-full">
+                  <CardHeader className="pb-4">
+                    <div className="h-4 w-28 rounded bg-muted animate-pulse" />
+                    <div className="h-3 w-36 rounded bg-muted animate-pulse mt-1" />
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {[...Array(4)].map((_, i) => (
+                      <div key={i} className="flex items-center gap-3">
+                        <div className="size-9 rounded-full bg-muted animate-pulse shrink-0" />
+                        <div className="flex-1 space-y-1.5">
+                          <div className="h-3 w-24 rounded bg-muted animate-pulse" />
+                          <div className="h-2.5 w-32 rounded bg-muted animate-pulse" />
+                        </div>
+                        <div className="h-3 w-14 rounded bg-muted animate-pulse" />
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="lg:col-span-4 transition-all duration-300 h-full sm:hover:scale-[1.005]">
+                <OverviewGraph data={graphData ?? null} />
+              </div>
+              <div className="flex flex-col lg:col-span-2 transition-all duration-300 sm:hover:scale-[1.005]">
+                <Sales data={salesData ?? null} />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

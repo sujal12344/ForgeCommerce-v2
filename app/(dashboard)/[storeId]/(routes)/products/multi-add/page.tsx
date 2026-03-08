@@ -116,7 +116,11 @@ const BulkProductForm = () => {
   });
 
   if (initialLoading) {
-    return <div>Loading form data...</div>;
+    return (
+      <div className="flex-1 py-6 px-8 flex items-center justify-center">
+        <div className="text-muted-foreground">Loading form data...</div>
+      </div>
+    );
   }
 
   const onSubmit = async (data: BulkProductFormValues) => {
