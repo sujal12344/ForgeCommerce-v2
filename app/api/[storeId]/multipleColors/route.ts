@@ -11,26 +11,13 @@ export async function POST(
     return new NextResponse("Unauthenticated", { status: 403 });
   }
 
-  const { dataObj } = await req.json();
-
-  if (!dataObj) {
-    return new NextResponse("Data object is required", { status: 400 });
-  }
-
-  if (!userId) {
-    return new NextResponse("Unauthenticated", { status: 403 });
-  }
-
   const { storeId } = await params;
   if (!storeId) {
     return new NextResponse("Store id is required", { status: 400 });
   }
 
   const storeByUserId = await prisma.store.findFirst({
-    where: {
-      id: storeId,
-      userId,
-    },
+    where: { id: storeId, userId },
   });
 
   if (!storeByUserId) {

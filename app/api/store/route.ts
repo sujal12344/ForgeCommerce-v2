@@ -33,13 +33,13 @@ export async function POST(req: Request) {
     return NextResponse.json(store, { status: 201 });
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
-     if (error.code === "P2002") {
-       return NextResponse.json(
-         { error: "A store with this name already exists" },
-         { status: 409 }
-       );
-     }
-   }
+      if (error.code === "P2002") {
+        return NextResponse.json(
+          { error: "A store with this name already exists" },
+          { status: 409 }
+        );
+      }
+    }
     console.error("Failed to create store:", error);
     return NextResponse.json(
       { error: "Failed to create store" },
