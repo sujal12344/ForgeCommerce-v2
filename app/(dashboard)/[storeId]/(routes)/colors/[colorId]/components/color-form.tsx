@@ -140,30 +140,41 @@ const ColorForm = ({ initialData }: ColorsFormProps) => {
                     <div className="flex items-center gap-x-4">
                       <Input
                         disabled={loading}
-                        placeholder="Color value"
+                        placeholder="#RRGGBB or css color"
                         {...field}
                       />
-                      <div
-                        className="h-9 w-9 rounded-full border-2 border-border shadow-sm shrink-0 transition-transform hover:scale-110"
+                      <label
+                        className="relative h-9 w-9 rounded-full border-2 border-border shadow-sm shrink-0 cursor-pointer transition-transform hover:scale-110 overflow-hidden"
+                        title="Pick a color"
                         style={{ backgroundColor: field.value }}
-                        title={field.value}
-                      />
+                      >
+                        <input
+                          type="color"
+                          disabled={loading}
+                          value={
+                            /^#[0-9A-Fa-f]{6}$/.test(field.value)
+                              ? field.value
+                              : "#000000"
+                          }
+                          onChange={e => field.onChange(e.target.value)}
+                          className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                        />
+                      </label>
                     </div>
                   </FormControl>
                   <FormMessage />
-                  <div className="text-sm font-light">
-                    You can also use{" "}
+                  <p className="text-sm text-muted-foreground">
+                    Click the circle to open the color picker, or type any{" "}
                     <a
                       href="https://www.color-hex.com/"
-                      target={"_blank"}
+                      target="_blank"
                       rel="noopener noreferrer"
-                      className="font-semibold underline  cursor-pointer"
+                      className="font-medium underline hover:text-foreground"
                     >
-                      {" "}
-                      hex{" "}
-                    </a>
-                    values
-                  </div>
+                      hex
+                    </a>{" "}
+                    / CSS color value.
+                  </p>
                 </FormItem>
               )}
             />
