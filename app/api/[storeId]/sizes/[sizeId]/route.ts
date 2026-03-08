@@ -4,7 +4,7 @@ import prisma from "@/prisma/client";
 import { auth } from "@clerk/nextjs/server";
 
 export async function GET(
-  req: Request,
+  _req: Request,
   { params }: { params: Promise<{ sizeId: string; storeId: string }> }
 ) {
   try {
@@ -37,7 +37,7 @@ export async function GET(
 }
 
 export async function DELETE(
-  req: Request,
+  _req: Request,
   { params }: { params: Promise<{ sizeId: string; storeId: string }> }
 ) {
   try {

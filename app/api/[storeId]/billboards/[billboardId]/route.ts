@@ -109,7 +109,7 @@ export async function PATCH(
 }
 
 export async function DELETE(
-  req: Request,
+  _req: Request,
   { params }: { params: Promise<{ storeId: string; billboardId: string }> }
 ) {
   try {

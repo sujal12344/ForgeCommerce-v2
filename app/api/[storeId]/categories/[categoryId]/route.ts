@@ -34,7 +34,7 @@ export async function GET(
 }
 
 export async function DELETE(
-  req: Request,
+  _req: Request,
   { params }: { params: Promise<{ categoryId: string; storeId: string }> }
 ) {
   try {
