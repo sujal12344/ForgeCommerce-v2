@@ -24,7 +24,9 @@ export default async function getGraphData(storeId: string) {
     include: {
       orderItems: {
         include: {
-          product: true,
+          product: {
+            select: { price: true },
+          },
         },
       },
     },
