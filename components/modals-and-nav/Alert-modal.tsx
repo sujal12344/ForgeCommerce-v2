@@ -1,8 +1,12 @@
 "use client";
 
 import { Modal } from "@/components/modals-and-nav/modal";
-import { Button } from "@/components/ui/button";
+import { Button, type ButtonProps } from "@/components/ui/button";
 import { useSyncExternalStore } from "react";
+
+const subscribe = () => () => {};
+const getSnapshot = () => true;
+const getServerSnapshot = () => false;
 
 type AlertModalProps = {
   isOpen: boolean;
@@ -12,12 +16,7 @@ type AlertModalProps = {
   description?: string;
   confirmLabel?: string;
   loadingLabel?: string;
-  confirmVariant?:
-    | "destructive"
-    | "default"
-    | "outline"
-    | "secondary"
-    | "ghost";
+  confirmVariant?: ButtonProps["variant"];
 };
 
 export const AlertModal = ({
@@ -31,9 +30,9 @@ export const AlertModal = ({
   confirmVariant = "destructive",
 }: AlertModalProps) => {
   const isMounted = useSyncExternalStore(
-    () => () => {},
-    () => true,
-    () => false
+    subscribe,
+    getSnapshot,
+    getServerSnapshot
   );
 
   if (!isMounted) {

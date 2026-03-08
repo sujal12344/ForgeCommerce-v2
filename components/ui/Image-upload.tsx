@@ -8,6 +8,10 @@ import Image from "next/image";
 import { useSyncExternalStore } from "react";
 import { Button } from "./button";
 
+const subscribe = () => () => {};
+const getSnapshot = () => true;
+const getServerSnapshot = () => false;
+
 type ImageUploadProps = {
   disabled: boolean;
   onChange: (value: string) => void;
@@ -21,9 +25,9 @@ const ImageUpload = ({
   values,
 }: ImageUploadProps) => {
   const mounted = useSyncExternalStore(
-    () => () => {},
-    () => true,
-    () => false
+    subscribe,
+    getSnapshot,
+    getServerSnapshot
   );
 
   const onSuccess = (result: CloudinaryUploadWidgetResults) => {
