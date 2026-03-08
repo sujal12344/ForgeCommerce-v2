@@ -1,6 +1,8 @@
 "use client";
 import SampleDataModalBill from "@/components/quick-adds/sample-data-bill";
+import ApiList from "@/components/ui/api-list";
 import { Button } from "@/components/ui/button";
+import { DataTable } from "@/components/ui/data-table";
 import Heading from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { BillBoard } from "@prisma/client";
@@ -8,8 +10,6 @@ import axios from "axios";
 import { PlusIcon } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import ApiList from "../../../../../../components/ui/api-list";
-import { DataTable } from "../../../../../../components/ui/data-table";
 import { columns } from "./TableColumn";
 
 type billboardsprops = {

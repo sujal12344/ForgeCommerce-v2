@@ -1,4 +1,5 @@
 "use client";
+import JsonEditorModal from "@/components/editors/JSON-editor";
 import {
   defaultBills,
   defaultCategories,
@@ -7,7 +8,6 @@ import {
 } from "@/utils/quick-data";
 import axios from "axios";
 import { useParams } from "next/navigation";
-import JsonEditorModal from "../editors/JSON-editor";
 type OnSubmitProps = {
   categories?: string[];
   colors?: Record<string, string>;

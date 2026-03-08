@@ -21,7 +21,7 @@ export async function GET(
     if (!FindBillboards || FindBillboards.length === 0)
       return NextResponse.json(
         { error: "No billboards found for this store" },
-        { status: 404 }
+        { status: 201 }
       );
 
     return NextResponse.json(FindBillboards);
@@ -51,13 +51,13 @@ export async function POST(
           status: 400,
         }
       );
-    const IsStorevalid = await prisma.store.findFirst({
+    const isStoreValid = await prisma.store.findFirst({
       where: {
         userId: userId,
         id: storeId,
       },
     });
-    if (!IsStorevalid)
+    if (!isStoreValid)
       return NextResponse.json(
         { error: "Store not found or access denied" },
         {
@@ -72,12 +72,6 @@ export async function POST(
         storeId,
       },
     });
-
-    if (!createBill)
-      return NextResponse.json(
-        { error: "Failed to create billboard" },
-        { status: 500 }
-      );
 
     return NextResponse.json(createBill, { status: 201 });
   } catch (error) {

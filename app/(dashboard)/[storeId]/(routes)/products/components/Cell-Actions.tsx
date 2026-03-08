@@ -8,6 +8,7 @@ import {
   Trash2Icon,
 } from "lucide-react";
 
+import { AlertModal } from "@/components/modals-and-nav/Alert-modal";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -24,7 +25,6 @@ import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { AlertModal } from "../../../../../../components/modals-and-nav/Alert-modal";
 import { FilteredDataProps } from "./column";
 type CellActionsProps = {
   data: FilteredDataProps;
@@ -36,23 +36,24 @@ const CellActions = ({ data }: CellActionsProps) => {
   const params = useParams();
   const { storeId } = params;
   const router = useRouter();
-  const HandleEdit = () => {
+  const handleEdit = () => {
     router.push(`/${storeId}/products/${data.id}`);
   };
-  const Handledelete = async () => {
+  const handleDelete = async () => {
     try {
       setLoading(true);
       await axios.delete(`/api/${storeId}/products/${data.id}`);
       toast.success("Product successfully deleted");
       router.refresh();
-    } catch {
+    } catch (error) {
+      console.error("Failed to delete product:", error);
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
       setOpen(false);
     }
   };
-  const HandleFeature = async () => {
+  const handleFeature = async () => {
     try {
       setLoading(true);
       await axios.patch(`/api/${storeId}/products/${data.id}`, {
@@ -61,14 +62,15 @@ const CellActions = ({ data }: CellActionsProps) => {
       });
       toast.success("Product successfully featured");
       router.refresh();
-    } catch {
+    } catch (error) {
+      console.error("Failed to feature product:", error);
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
       setOpen(false);
     }
   };
-  const HandleDeFeature = async () => {
+  const handleDeFeature = async () => {
     try {
       setLoading(true);
       await axios.patch(`/api/${storeId}/products/${data.id}`, {
@@ -84,7 +86,7 @@ const CellActions = ({ data }: CellActionsProps) => {
       setOpen(false);
     }
   };
-  const HandleArchive = async () => {
+  const handleArchive = async () => {
     try {
       setLoading(true);
       await axios.patch(`/api/${storeId}/products/${data.id}`, {
@@ -100,7 +102,7 @@ const CellActions = ({ data }: CellActionsProps) => {
       setOpen(false);
     }
   };
-  const HandleDearchive = async () => {
+  const handleDearchive = async () => {
     try {
       setLoading(true);
       await axios.patch(`/api/${storeId}/products/${data.id}`, {
@@ -124,7 +126,7 @@ const CellActions = ({ data }: CellActionsProps) => {
         onClose={() => {
           setOpen(false);
         }}
-        onConfirm={Handledelete}
+        onConfirm={handleDelete}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -153,11 +155,11 @@ const CellActions = ({ data }: CellActionsProps) => {
           <DropdownMenuItem
             className="cursor-pointer"
             onClick={() => {
-              HandleEdit();
+              handleEdit();
             }}
           >
             <Edit3Icon className="size-4 mr-2" />
-            <h2> Edit</h2>
+            Edit
           </DropdownMenuItem>
           <DropdownMenuItem
             className="cursor-pointer text-red-500 focus:text-red-500 focus:bg-red-500/10"
@@ -177,14 +179,14 @@ const CellActions = ({ data }: CellActionsProps) => {
               <DropdownMenuSubContent className="cursor-pointer">
                 <DropdownMenuItem
                   onClick={() => {
-                    HandleFeature();
+                    handleFeature();
                   }}
                 >
                   Feature
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => {
-                    HandleDeFeature();
+                    handleDeFeature();
                   }}
                 >
                   De-Feature
@@ -201,14 +203,14 @@ const CellActions = ({ data }: CellActionsProps) => {
               <DropdownMenuSubContent className="cursor-pointer">
                 <DropdownMenuItem
                   onClick={() => {
-                    HandleArchive();
+                    handleArchive();
                   }}
                 >
                   Archive
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => {
-                    HandleDearchive();
+                    handleDearchive();
                   }}
                 >
                   De-Archive

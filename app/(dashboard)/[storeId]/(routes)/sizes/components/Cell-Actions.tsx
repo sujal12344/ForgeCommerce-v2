@@ -1,4 +1,5 @@
 "use client";
+import { AlertModal } from "@/components/modals-and-nav/Alert-modal";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -17,31 +18,30 @@ import {
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { AlertModal } from "../../../../../../components/modals-and-nav/Alert-modal";
 import { SizesColumn } from "./column";
 type CellActionsProps = {
   data: SizesColumn;
 };
 
 const CellActions = ({ data }: CellActionsProps) => {
-  const [loading, setloading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const params = useParams();
   const { storeId } = params;
   const router = useRouter();
-  const HandleEdit = () => {
+  const handleEdit = () => {
     router.push(`/${storeId}/sizes/${data.id}`);
   };
-  const Handledelete = async () => {
+  const handleDelete = async () => {
     try {
-      setloading(true);
+      setLoading(true);
       await axios.delete(`/api/${storeId}/sizes/${data.id}`);
       toast.success("Size successfully deleted");
       router.refresh();
     } catch {
       toast.error("Something went wrong");
     } finally {
-      setloading(false);
+      setLoading(false);
       setOpen(false);
     }
   };
@@ -53,7 +53,7 @@ const CellActions = ({ data }: CellActionsProps) => {
         onClose={() => {
           setOpen(false);
         }}
-        onConfirm={Handledelete}
+        onConfirm={handleDelete}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -75,12 +75,7 @@ const CellActions = ({ data }: CellActionsProps) => {
             Copy ID
           </DropdownMenuItem>
 
-          <DropdownMenuItem
-            className="cursor-pointer"
-            onClick={() => {
-              HandleEdit();
-            }}
-          >
+          <DropdownMenuItem className="cursor-pointer" onClick={handleEdit}>
             <Edit3Icon className="size-4 mr-2" />
             Edit
           </DropdownMenuItem>

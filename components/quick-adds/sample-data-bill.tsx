@@ -1,9 +1,9 @@
 "use client";
+import JsonEditorModal from "@/components/editors/JSON-editor";
 import { defaultBills } from "@/utils/quick-data";
 import axios from "axios";
 import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
-import JsonEditorModal from "../editors/JSON-editor";
 
 const SampleDataModalBill = () => {
   const param = useParams();

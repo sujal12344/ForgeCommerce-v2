@@ -54,7 +54,7 @@ function ParsedUrl({ url, copied }: { url: string; copied: boolean }) {
     <div
       className={cn(
         "text-slate-500 w-fit px-2.5 py-0.5 rounded",
-        copied && "bg-violet-950"
+        copied && "bg-emerald-950"
       )}
     >
       <span className={"text-slate-500"}>{base}</span>

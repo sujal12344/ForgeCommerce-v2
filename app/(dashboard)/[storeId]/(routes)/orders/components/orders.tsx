@@ -1,10 +1,10 @@
 "use client";
+import { DataTable } from "@/components/ui/data-table";
 import Heading from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import axios from "axios";
 import { useParams } from "next/navigation";
 import React from "react";
-import { DataTable } from "../../../../../../components/ui/data-table";
 import { OrderColumn, columns } from "./column";
 
 type OrdersProps = {
@@ -12,7 +12,7 @@ type OrdersProps = {
 };
 
 const Orders = ({ OrdersData }: OrdersProps) => {
-  const [Orders, setOrders] = React.useState<OrderColumn[]>(OrdersData);
+  const [orders, setOrders] = React.useState<OrderColumn[]>(OrdersData);
   const params = useParams();
   const { storeId } = params;
 
@@ -22,15 +22,13 @@ const Orders = ({ OrdersData }: OrdersProps) => {
     }
 
     try {
-      console.log(ids, "ids deleted");
-      const res = await axios.delete(`/api/${storeId}/orders/multidelete`, {
+      await axios.delete(`/api/${storeId}/orders/multidelete`, {
         data: { idsArr: ids },
       });
-      console.log(res, "res");
       setOrders(prev => prev.filter(item => !ids.includes(item.id)));
       return { success: true };
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.error("Failed to delete orders:", error);
       return {
         success: false,
         error:
@@ -43,7 +41,7 @@ const Orders = ({ OrdersData }: OrdersProps) => {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <Heading
-          title={`Orders (${Orders.length})`}
+          title={`Orders (${orders.length})`}
           description="View and manage customer orders"
         />
       </div>
@@ -52,7 +50,7 @@ const Orders = ({ OrdersData }: OrdersProps) => {
         onDeleteSelected={onDeleteSelected}
         searchKey="product"
         columns={columns}
-        data={Orders}
+        data={orders}
         isOrder={true}
       />
     </div>

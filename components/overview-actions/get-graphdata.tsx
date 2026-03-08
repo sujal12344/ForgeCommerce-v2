@@ -38,7 +38,7 @@ export default async function getGraphData(storeId: string) {
     for (const item of order.orderItems) {
       if (!item.product) continue;
       const quantity = item.quantity ?? 1;
-      revenueForOrder += (item.product?.price.toNumber() ?? 0) * quantity;
+      revenueForOrder += item.product?.price.toNumber() * quantity;
     }
     monthlyRevenue[month] = (monthlyRevenue[month] || 0) + revenueForOrder;
   }

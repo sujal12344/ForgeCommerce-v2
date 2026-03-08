@@ -6,10 +6,10 @@ import { useParams, useRouter } from "next/navigation";
 import React from "react";
 
 import SampleDataModalColors from "@/components/quick-adds/sample-data-colors";
+import ApiList from "@/components/ui/api-list";
+import { DataTable } from "@/components/ui/data-table";
 import { Separator } from "@/components/ui/separator";
 import axios from "axios";
-import ApiList from "../../../../../../components/ui/api-list";
-import { DataTable } from "../../../../../../components/ui/data-table";
 import { ColorsColumn, columns } from "./column";
 
 type ColorsProps = {

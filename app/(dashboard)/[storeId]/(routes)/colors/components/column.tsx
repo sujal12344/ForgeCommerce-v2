@@ -29,6 +29,7 @@ export const columns: ColumnDef<ColorsColumn>[] = [
         <div
           className="size-5 sm:size-6 rounded-full border shrink-0"
           style={{ backgroundColor: row.original.value }}
+          aria-hidden="true"
         />
         <span>{row.original.value}</span>
       </div>

@@ -1,4 +1,5 @@
 "use client";
+import { AlertModal } from "@/components/modals-and-nav/Alert-modal";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -20,7 +21,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
-import { AlertModal } from "../../../../../../../components/modals-and-nav/Alert-modal";
 
 type ColorsFormProps = {
   initialData: Color | null;
@@ -151,6 +151,7 @@ const ColorForm = ({ initialData }: ColorsFormProps) => {
                         <input
                           type="color"
                           disabled={loading}
+                          aria-label="Pick a color"
                           value={
                             /^#[0-9A-Fa-f]{6}$/.test(field.value)
                               ? field.value

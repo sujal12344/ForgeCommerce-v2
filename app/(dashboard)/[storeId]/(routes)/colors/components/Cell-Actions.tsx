@@ -1,4 +1,5 @@
 "use client";
+import { AlertModal } from "@/components/modals-and-nav/Alert-modal";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -17,33 +18,33 @@ import {
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { AlertModal } from "../../../../../../components/modals-and-nav/Alert-modal";
 import { ColorsColumn } from "./column";
 type CellActionsProps = {
   data: ColorsColumn;
 };
 
 const CellActions = ({ data }: CellActionsProps) => {
-  const [loading, setloading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const params = useParams();
   const { storeId } = params;
   const router = useRouter();
-  const HandleEdit = () => {
+  const handleEdit = () => {
     router.push(`/${storeId}/colors/${data.id}`);
   };
-  const Handledelete = async () => {
+  const handleDelete = async () => {
     try {
-      setloading(true);
+      setLoading(true);
       await axios.delete(`/api/${storeId}/colors/${data.id}`);
       toast.success("Color successfully deleted");
       router.refresh();
-    } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Something went wrong";
+    } catch (error) {
+      const message = axios.isAxiosError(error)
+        ? (error.response?.data?.message ?? error.message)
+        : "Something went wrong";
       toast.error(message);
     } finally {
-      setloading(false);
+      setLoading(false);
       setOpen(false);
     }
   };
@@ -55,7 +56,7 @@ const CellActions = ({ data }: CellActionsProps) => {
         onClose={() => {
           setOpen(false);
         }}
-        onConfirm={Handledelete}
+        onConfirm={handleDelete}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -81,12 +82,7 @@ const CellActions = ({ data }: CellActionsProps) => {
             Copy ID
           </DropdownMenuItem>
 
-          <DropdownMenuItem
-            className="cursor-pointer"
-            onClick={() => {
-              HandleEdit();
-            }}
-          >
+          <DropdownMenuItem className="cursor-pointer" onClick={handleEdit}>
             <Edit3Icon className="size-4 mr-2" />
             Edit
           </DropdownMenuItem>

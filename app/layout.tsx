@@ -28,7 +28,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        <body className={`${inter.className} ${geistMono.variable}`}>
+        <body
+          className={`${inter.className} ${inter.variable} ${geistMono.variable}`}
+        >
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <QueryProvider>
               <ToastProvider />

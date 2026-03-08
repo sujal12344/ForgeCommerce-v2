@@ -67,14 +67,14 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 403 });
     }
 
-    const sizes = await prisma.size.delete({
+    const size = await prisma.size.delete({
       where: {
         id: sizeId,
         storeId,
       },
     });
 
-    return NextResponse.json(sizes);
+    return NextResponse.json(size);
   } catch (error) {
     console.log("[SIZE_DELETE]", error);
     return new NextResponse("Internal error", { status: 500 });

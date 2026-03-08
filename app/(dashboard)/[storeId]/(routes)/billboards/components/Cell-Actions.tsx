@@ -6,6 +6,7 @@ import {
   Trash2Icon,
 } from "lucide-react";
 
+import { AlertModal } from "@/components/modals-and-nav/Alert-modal";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -18,7 +19,6 @@ import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { AlertModal } from "../../../../../../components/modals-and-nav/Alert-modal";
 import { FilteredDataProps } from "./TableColumn";
 type CellActionsProps = {
   data: FilteredDataProps;
@@ -39,7 +39,8 @@ const CellActions = ({ data }: CellActionsProps) => {
       await axios.delete(`/api/${storeId}/billboards/${data.id}`);
       toast.success("Billboard successfully deleted");
       router.refresh();
-    } catch {
+    } catch (error) {
+      console.error("Failed to delete billboard:", error);
       toast.error(
         "Please delete all the categories before deleting this first"
       );

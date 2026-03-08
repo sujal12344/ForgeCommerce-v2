@@ -85,15 +85,18 @@ const ImageUpload = ({
     return () => window.removeEventListener("paste", handlePaste);
   }, [mounted, disabled, uploadFileToCloudinary]);
 
-  const onSuccess = useCallback((result: CloudinaryUploadWidgetResults) => {
-    if (
-      result.info &&
-      typeof result.info === "object" &&
-      result.info.secure_url
-    ) {
-      onChange(result.info.secure_url);
-    }
-  }, [onChange]);
+  const onSuccess = useCallback(
+    (result: CloudinaryUploadWidgetResults) => {
+      if (
+        result.info &&
+        typeof result.info === "object" &&
+        result.info.secure_url
+      ) {
+        onChange(result.info.secure_url);
+      }
+    },
+    [onChange]
+  );
 
   if (!mounted) {
     return null;
@@ -136,7 +139,7 @@ const ImageUpload = ({
             <Button
               type="button"
               disabled={disabled}
-              variant={"secondary"}
+              variant="secondary"
               onClick={() => open()}
             >
               <ImagePlusIcon className="h-5 w-4 mr-3" />

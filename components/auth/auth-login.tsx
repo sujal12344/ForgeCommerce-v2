@@ -1,17 +1,17 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useSignIn } from "@clerk/nextjs";
-import { useState } from "react";
-// import { useRouter } from "next/navigation";
 import { DEMO_STORE_ID } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { useSignIn } from "@clerk/nextjs";
 import { Loader2Icon, LogInIcon } from "lucide-react";
+import { useState } from "react";
+import { useToast } from "../ui/use-toast";
 
 export default function AutoLoginButton() {
   const { signIn, isLoaded } = useSignIn();
   const [isLogging, setIsLogging] = useState(false);
-  // const router = useRouter();
+  const { toast } = useToast();
   const handleAutoLogin = async () => {
     if (!isLoaded || !signIn) return;
 
@@ -39,6 +39,12 @@ export default function AutoLoginButton() {
       }
     } catch (err) {
       console.error("Auto login error details:", err);
+      toast({
+        title: "Auto login failed",
+        description:
+          err instanceof Error ? err.message : "An unexpected error occurred",
+        variant: "destructive",
+      });
     } finally {
       setIsLogging(false);
     }

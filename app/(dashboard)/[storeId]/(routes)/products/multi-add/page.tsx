@@ -87,7 +87,7 @@ const BulkProductForm = () => {
     },
   });
 
-  const [, setInitialLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -100,7 +100,8 @@ const BulkProductForm = () => {
         setCategories(categoriesRes.data);
         setColors(colorsRes.data);
         setSizes(sizesRes.data);
-      } catch {
+      } catch (error) {
+        console.error("Failed to load form data:", error);
         toast.error("Failed to load form data.");
       } finally {
         setInitialLoading(false);
@@ -114,6 +115,10 @@ const BulkProductForm = () => {
     control: form.control,
   });
 
+  if (initialLoading) {
+    return <div>Loading form data...</div>;
+  }
+
   const onSubmit = async (data: BulkProductFormValues) => {
     try {
       setLoading(true);
@@ -121,7 +126,8 @@ const BulkProductForm = () => {
       router.refresh();
       router.push(`/${storeId}/products`);
       toast.success("Products created.");
-    } catch {
+    } catch (error) {
+      console.error("Failed to create products:", error);
       toast.error("Something went wrong.");
     } finally {
       setLoading(false);

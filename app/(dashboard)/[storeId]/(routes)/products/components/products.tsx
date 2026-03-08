@@ -5,11 +5,11 @@ import { PlusIcon } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
 
+import ApiList from "@/components/ui/api-list";
+import { DataTable } from "@/components/ui/data-table";
 import { Separator } from "@/components/ui/separator";
 import axios from "axios";
 import toast from "react-hot-toast";
-import ApiList from "../../../../../../components/ui/api-list";
-import { DataTable } from "../../../../../../components/ui/data-table";
 import { FilteredDataProps, columns } from "./column";
 
 type ProductsProps = {

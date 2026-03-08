@@ -4,6 +4,7 @@ import { Modal } from "@/components/modals-and-nav/modal";
 import { Button, type ButtonProps } from "@/components/ui/button";
 import { useSyncExternalStore } from "react";
 
+// Hydration-safe mounting detection: server returns false, client returns true
 const subscribe = () => () => {};
 const getSnapshot = () => true;
 const getServerSnapshot = () => false;

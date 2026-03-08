@@ -15,6 +15,13 @@ import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import React from "react";
 
+interface NavRoute {
+  href: string;
+  label: string;
+  icon: LucideIcon;
+  active: boolean;
+}
+
 const MainNav = ({
   className,
   ...props
@@ -23,12 +30,7 @@ const MainNav = ({
   const { storeId } = params;
   const pathname = usePathname();
 
-  const routes: {
-    href: string;
-    label: string;
-    icon: LucideIcon;
-    active: boolean;
-  }[] = [
+  const routes: NavRoute[] = [
     {
       href: `/${storeId}`,
       label: "Dashboard",

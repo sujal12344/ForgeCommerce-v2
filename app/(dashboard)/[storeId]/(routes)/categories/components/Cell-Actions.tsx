@@ -6,6 +6,7 @@ import {
   Trash2Icon,
 } from "lucide-react";
 
+import { AlertModal } from "@/components/modals-and-nav/Alert-modal";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -18,7 +19,6 @@ import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { AlertModal } from "../../../../../../components/modals-and-nav/Alert-modal";
 import { CategoryColumn } from "./column";
 type CellActionsProps = {
   data: CategoryColumn;
@@ -33,10 +33,10 @@ const CellActions = ({ data }: CellActionsProps) => {
     ? rawStoreId[0]
     : (rawStoreId ?? "");
   const router = useRouter();
-  const HandleEdit = () => {
+  const handleEdit = () => {
     router.push(`/${storeId}/categories/${data.id}`);
   };
-  const Handledelete = async () => {
+  const handleDelete = async () => {
     try {
       setLoading(true);
       await axios.delete(`/api/${storeId}/categories/${data.id}`);
@@ -57,7 +57,7 @@ const CellActions = ({ data }: CellActionsProps) => {
         onClose={() => {
           setOpen(false);
         }}
-        onConfirm={Handledelete}
+        onConfirm={handleDelete}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -86,11 +86,11 @@ const CellActions = ({ data }: CellActionsProps) => {
           <DropdownMenuItem
             className="cursor-pointer"
             onClick={() => {
-              HandleEdit();
+              handleEdit();
             }}
           >
             <Edit3Icon className="size-4 mr-2" />
-            <h2> Edit</h2>
+            Edit
           </DropdownMenuItem>
           <DropdownMenuItem
             className="cursor-pointer text-red-500 focus:text-red-500 focus:bg-red-500/10"

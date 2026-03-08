@@ -81,8 +81,6 @@ export function DataTable<TData extends { id: string }, TValue>({
   });
 
   const handleDeleteSelected = async () => {
-    if (!onDeleteSelected) return;
-
     const selectedRows = table.getFilteredSelectedRowModel().rows;
     const selectedIds = selectedRows.map(row => row.original.id);
 
@@ -103,7 +101,6 @@ export function DataTable<TData extends { id: string }, TValue>({
           description: response.error ?? "Unknown error",
           variant: "destructive",
         });
-        setRowSelection({});
         return;
       }
       toast({

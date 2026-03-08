@@ -4,6 +4,7 @@ import { Store } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
 
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -25,7 +26,6 @@ import {
   PlusCircleIcon,
   Store as StoreIcon,
 } from "lucide-react";
-import { Button } from "../ui/button";
 
 type StoreDropdownItems = {
   items: Store[];

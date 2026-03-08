@@ -31,11 +31,16 @@ export async function POST(
     }
 
     const addColors = await prisma.color.createMany({
-      data: Object.entries(dataObj).map(([key, value]) => ({
-        name: key,
-        value: String(value),
-        storeId,
-      })),
+      data: Object.entries(dataObj).map(([key, value]) => {
+        if (typeof value !== "string") {
+          throw new Error(`Invalid color value for "${key}": expected string`);
+        }
+        return {
+          name: key,
+          value: String(value),
+          storeId,
+        };
+      }),
     });
 
     return NextResponse.json(addColors);

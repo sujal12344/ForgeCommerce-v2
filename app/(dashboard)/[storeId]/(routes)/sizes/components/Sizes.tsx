@@ -6,11 +6,11 @@ import { useParams, useRouter } from "next/navigation";
 import React from "react";
 
 import SampleDataModalSizes from "@/components/quick-adds/sample-data-sizes";
+import ApiList from "@/components/ui/api-list";
+import { DataTable } from "@/components/ui/data-table";
 import { Separator } from "@/components/ui/separator";
 import axios from "axios";
 import toast from "react-hot-toast";
-import ApiList from "../../../../../../components/ui/api-list";
-import { DataTable } from "../../../../../../components/ui/data-table";
 import { SizesColumn, columns } from "./column";
 
 type SizesProps = {
@@ -37,15 +37,15 @@ const Sizes = ({ SizesData }: SizesProps) => {
       router.refresh();
       toast.success("Sizes deleted successfully");
       return { success: true };
-    } catch {
-      // console.log(err);
+    } catch (error) {
+      console.error("Failed to delete sizes:", error);
       toast.error(
         "Check if the sizes attached to products are deleted and try again"
       );
       return {
         success: false,
         error:
-          "Check if the sizes attached to products is deleted and try again",
+          "Check if the sizes attached to products are deleted and try again",
       };
     }
   };

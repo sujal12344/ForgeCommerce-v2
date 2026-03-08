@@ -5,9 +5,9 @@
  * Do NOT import this file anywhere in the app.
  * Use `loadSampleData` from `./sample-data` instead.
  */
+import { DEMO_STORE_ID, DEMO_STORE_NAME } from "@/lib/constants";
 import { createClerkClient } from "@clerk/backend";
 import "dotenv/config";
-import { DEMO_STORE_ID, DEMO_STORE_NAME } from "../lib/constants";
 import prisma from "./client";
 import { loadSampleData } from "./sample-data";
 

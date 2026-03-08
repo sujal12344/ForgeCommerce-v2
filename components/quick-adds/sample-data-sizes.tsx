@@ -1,8 +1,8 @@
 "use client";
+import JsonEditorModal from "@/components/editors/JSON-editor";
 import { defaultSizes } from "@/utils/quick-data";
 import axios from "axios";
 import { useParams } from "next/navigation";
-import JsonEditorModal from "../editors/JSON-editor";
 import toast from "react-hot-toast";
 type OnSubmitProps = {
   categories?: string[];

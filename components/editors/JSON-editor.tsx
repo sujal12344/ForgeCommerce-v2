@@ -10,6 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import {
   AlertCircleIcon,
@@ -25,7 +26,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { useToast } from "../ui/use-toast";
 
 interface JsonEditorProps {
   label: string;
@@ -96,6 +96,8 @@ const JsonEditor = ({ label, value, onChange, error }: JsonEditorProps) => {
     }
   };
 
+  const { toast } = useToast();
+
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(value);
@@ -104,6 +106,11 @@ const JsonEditor = ({ label, value, onChange, error }: JsonEditorProps) => {
       copyTimeoutRef.current = setTimeout(() => setCopied(false), 2000);
     } catch (error) {
       console.error("Failed to copy to clipboard:", error);
+      toast({
+        title: "Error",
+        description: "Failed to copy to clipboard.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -165,6 +172,7 @@ const JsonEditor = ({ label, value, onChange, error }: JsonEditorProps) => {
             onClick={handleCopy}
             className="size-8 sm:p-0 text-muted-foreground hover:text-primary transition-colors"
             title={copied ? "Copied!" : "Copy to clipboard"}
+            aria-label={copied ? "Copied!" : "Copy to clipboard"}
           >
             {copied ? (
               <CheckIcon className="size-4 text-emerald-500" />
@@ -178,6 +186,7 @@ const JsonEditor = ({ label, value, onChange, error }: JsonEditorProps) => {
             onClick={handleReset}
             className="size-8 sm:p-0 text-muted-foreground hover:text-primary transition-colors"
             title="Reset to {}"
+            aria-label="Reset to empty object"
           >
             <RotateCcwIcon className="size-4" />
           </Button>
