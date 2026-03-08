@@ -87,7 +87,7 @@ const BulkProductForm = () => {
     },
   });
 
-  const [initialLoading, setInitialLoading] = useState(true);
+  const [, setInitialLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -321,7 +321,6 @@ const BulkProductForm = () => {
                         <FormControl>
                           <Checkbox
                             checked={field.value}
-                            // @ts-ignore
                             onCheckedChange={field.onChange}
                           />
                         </FormControl>
@@ -342,7 +341,6 @@ const BulkProductForm = () => {
                         <FormControl>
                           <Checkbox
                             checked={field.value}
-                            // @ts-ignore
                             onCheckedChange={field.onChange}
                           />
                         </FormControl>
@@ -378,14 +376,13 @@ const BulkProductForm = () => {
                                 remarkPlugins={[remarkGfm]}
                                 components={{
                                   code({
-                                    node,
                                     inline,
                                     className,
                                     children,
                                     ...props
                                   }: ComponentPropsWithoutRef<"code"> & {
                                     inline?: boolean;
-                                    node?: any;
+                                    node?: unknown;
                                   }) {
                                     const match = /language-(\w+)/.exec(
                                       className || ""
@@ -393,6 +390,7 @@ const BulkProductForm = () => {
                                     return !inline && match ? (
                                       <SyntaxHighlighter
                                         ref={syntaxHighlighterRef}
+                                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                         style={vscDarkPlus as any}
                                         language={match[1]}
                                         PreTag="div"
