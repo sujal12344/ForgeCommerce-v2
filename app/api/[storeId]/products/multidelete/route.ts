@@ -6,7 +6,6 @@ export async function DELETE(
   req: Request,
   { params }: { params: Promise<{ storeId: string }> }
 ) {
-  console.log(params);
   const { userId } = await auth();
   let idsArr;
   try {
