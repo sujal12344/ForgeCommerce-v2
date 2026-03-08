@@ -39,6 +39,7 @@ const JsonEditor = ({ label, value, onChange, error }: JsonEditorProps) => {
   const [cursorPosition, setCursorPosition] = useState<number | null>(null);
   const [copied, setCopied] = useState(false);
   const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { toast } = useToast();
 
   const isValid = !error;
   const lineCount = value ? value.split("\n").length : 1;
@@ -95,8 +96,6 @@ const JsonEditor = ({ label, value, onChange, error }: JsonEditorProps) => {
       // No-op
     }
   };
-
-  const { toast } = useToast();
 
   const handleCopy = async () => {
     try {

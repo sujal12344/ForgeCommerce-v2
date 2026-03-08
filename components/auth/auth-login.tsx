@@ -5,6 +5,7 @@ import { DEMO_STORE_ID } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { useSignIn } from "@clerk/nextjs";
 import { Loader2Icon, LogInIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useToast } from "../ui/use-toast";
 
@@ -12,6 +13,7 @@ export default function AutoLoginButton() {
   const { signIn, isLoaded } = useSignIn();
   const [isLogging, setIsLogging] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
   const handleAutoLogin = async () => {
     if (!isLoaded || !signIn) return;
 
@@ -33,7 +35,7 @@ export default function AutoLoginButton() {
       });
 
       if (result.status === "complete") {
-        window.location.href = `/${DEMO_STORE_ID}`;
+        router.push(`/${DEMO_STORE_ID}`);
       } else {
         console.error("Sign in incomplete:", result);
       }

@@ -1,6 +1,6 @@
 import prisma from "@/prisma/client";
-import { Prisma } from "@prisma/client";
 import { auth } from "@clerk/nextjs/server";
+import { Prisma } from "@prisma/client";
 
 import { NextResponse } from "next/server";
 
