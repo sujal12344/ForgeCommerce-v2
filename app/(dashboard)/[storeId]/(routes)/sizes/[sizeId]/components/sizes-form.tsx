@@ -38,7 +38,7 @@ const SizeForm = ({ initialData }: SizesFormProps) => {
   const buttontag = initialData ? "Change" : "Create";
   const toastMsg = initialData ? "Edited the Size" : "Added new size";
 
-  const [loading, setloading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const params = useParams();
   const rawStoreId = params.storeId;
@@ -63,7 +63,7 @@ const SizeForm = ({ initialData }: SizesFormProps) => {
       return;
     }
     try {
-      setloading(true);
+      setLoading(true);
       if (initialData) {
         await axios.patch(`/api/${storeId}/sizes/${sizeId}`, values);
       } else {
@@ -77,27 +77,28 @@ const SizeForm = ({ initialData }: SizesFormProps) => {
         err instanceof Error ? err.message : "Something went wrong";
       toast.error(message);
     } finally {
-      setloading(false);
+      setLoading(false);
     }
   };
 
-  const Handledelete = async () => {
+  const handleDelete = async () => {
     if (!storeId || !sizeId) {
       toast.error("Missing route params");
       return;
     }
     try {
-      setloading(true);
+      setLoading(true);
       await axios.delete(`/api/${storeId}/sizes/${sizeId}`);
       toast.success("Size successfully deleted");
       router.refresh();
       router.push(`/${storeId}/sizes`);
-    } catch {
+    } catch (error) {
+      console.error("Failed to delete size:", error);
       toast.error(
         "Please delete all products using this size before deleting it"
       );
     } finally {
-      setloading(false);
+      setLoading(false);
     }
   };
   return (
@@ -105,7 +106,7 @@ const SizeForm = ({ initialData }: SizesFormProps) => {
       <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        onConfirm={Handledelete}
+        onConfirm={handleDelete}
         loading={loading}
       />
       <div className="flex items-center justify-between gap-2">

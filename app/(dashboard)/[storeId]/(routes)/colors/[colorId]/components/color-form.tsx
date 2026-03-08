@@ -38,7 +38,7 @@ const ColorForm = ({ initialData }: ColorsFormProps) => {
   const buttontag = initialData ? "Change" : "Create";
   const toastMsg = initialData ? "Edited the Color" : "Added new color";
 
-  const [loading, setloading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const params = useParams();
   const { storeId, colorId } = params;
@@ -52,7 +52,7 @@ const ColorForm = ({ initialData }: ColorsFormProps) => {
   });
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      setloading(true);
+      setLoading(true);
       if (initialData) {
         await axios.patch(`/api/${storeId}/colors/${colorId}`, values);
       } else {
@@ -66,13 +66,13 @@ const ColorForm = ({ initialData }: ColorsFormProps) => {
         err instanceof Error ? err.message : "Something went wrong";
       toast.error(message);
     } finally {
-      setloading(false);
+      setLoading(false);
     }
   };
 
   const handleDelete = async () => {
     try {
-      setloading(true);
+      setLoading(true);
       await axios.delete(`/api/${storeId}/colors/${colorId}`);
       toast.success("Color successfully deleted");
       router.refresh();
@@ -82,7 +82,7 @@ const ColorForm = ({ initialData }: ColorsFormProps) => {
         "Please delete all products using this color first and try again"
       );
     } finally {
-      setloading(false);
+      setLoading(false);
     }
   };
   return (
