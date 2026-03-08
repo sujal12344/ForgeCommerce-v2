@@ -1,5 +1,5 @@
-import { Toaster } from "@/components/ui/toaster";
 import { ModalProvider } from "@/providers/modal-provider";
+import { QueryProvider } from "@/providers/query-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { ToastProvider } from "@/providers/toast-provider";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -30,10 +30,11 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <body className={`${inter.className} ${geistMono.variable}`}>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-            <ToastProvider />
-            <Toaster />
-            <ModalProvider />
-            {children}
+            <QueryProvider>
+              <ToastProvider />
+              <ModalProvider />
+              {children}
+            </QueryProvider>
           </ThemeProvider>
         </body>
       </html>
