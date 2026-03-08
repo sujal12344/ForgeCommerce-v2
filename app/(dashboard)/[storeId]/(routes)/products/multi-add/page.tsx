@@ -100,7 +100,7 @@ const BulkProductForm = () => {
         setCategories(categoriesRes.data);
         setColors(colorsRes.data);
         setSizes(sizesRes.data);
-      } catch (error) {
+      } catch {
         toast.error("Failed to load form data.");
       } finally {
         setInitialLoading(false);
@@ -121,7 +121,7 @@ const BulkProductForm = () => {
       router.refresh();
       router.push(`/${storeId}/products`);
       toast.success("Products created.");
-    } catch (error: any) {
+    } catch {
       toast.error("Something went wrong.");
     } finally {
       setLoading(false);

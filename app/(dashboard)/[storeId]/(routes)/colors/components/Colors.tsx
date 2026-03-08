@@ -23,7 +23,7 @@ const Colors = ({ ColorsData }: ColorsProps) => {
   const [Colors, setColors] = React.useState<ColorsColumn[]>(ColorsData);
   const onDeleteSelected = async (ids: string[]) => {
     try {
-      const res = await axios.delete(`/api/${storeId}/colors/multidelete`, {
+      await axios.delete(`/api/${storeId}/colors/multidelete`, {
         data: { idsArr: ids },
       });
       setColors(prev => prev.filter(item => !ids.includes(item.id)));

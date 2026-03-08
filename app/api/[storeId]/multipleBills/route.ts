@@ -11,7 +11,7 @@ export async function POST(
   try {
     const body = await req.json();
     dataObj = body.dataObj;
-  } catch (error) {
+  } catch {
     return new NextResponse("Invalid JSON body", { status: 400 });
   }
   const { userId } = await auth();

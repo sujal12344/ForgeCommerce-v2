@@ -45,7 +45,7 @@ const CellActions = ({ data }: CellActionsProps) => {
       await axios.delete(`/api/${storeId}/products/${data.id}`);
       toast.success("Product successfully deleted");
       router.refresh();
-    } catch (err) {
+    } catch {
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
@@ -61,7 +61,7 @@ const CellActions = ({ data }: CellActionsProps) => {
       });
       toast.success("Product successfully featured");
       router.refresh();
-    } catch (err) {
+    } catch {
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
@@ -77,7 +77,7 @@ const CellActions = ({ data }: CellActionsProps) => {
       });
       toast.success("Product successfully De-featured");
       router.refresh();
-    } catch (err) {
+    } catch {
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
@@ -93,7 +93,7 @@ const CellActions = ({ data }: CellActionsProps) => {
       });
       toast.success("Product successfully archived");
       router.refresh();
-    } catch (err) {
+    } catch {
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
@@ -109,7 +109,7 @@ const CellActions = ({ data }: CellActionsProps) => {
       });
       toast.success("Product successfully dearchived");
       router.refresh();
-    } catch (error) {
+    } catch {
       toast.error("Something went wrong");
     } finally {
       setLoading(false);

@@ -29,8 +29,7 @@ const Sizes = ({ SizesData }: SizesProps) => {
 
   const onDeleteSelected = async (ids: string[]) => {
     try {
-      // console.log(ids, "ids deleted");
-      const res = await axios.delete(`/api/${storeId}/sizes/multidelete`, {
+      await axios.delete(`/api/${storeId}/sizes/multidelete`, {
         data: { idsArr: ids },
       });
       // console.log(res, "res");
@@ -38,7 +37,7 @@ const Sizes = ({ SizesData }: SizesProps) => {
       router.refresh();
       toast.success("Sizes deleted successfully");
       return { success: true };
-    } catch (err) {
+    } catch {
       // console.log(err);
       toast.error(
         "Check if the sizes attached to products are deleted and try again"
