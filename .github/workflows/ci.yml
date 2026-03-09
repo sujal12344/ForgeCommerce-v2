@@ -58,22 +58,22 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # - name: Build
-      #   run: npm run build
-      #   env:
-      #     # Add these as repository secrets:
-      #     # GitHub → Settings → Secrets and variables → Actions → New repository secret
-      #     DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      #     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
-      #     CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
-      #     STRIPE_API_KEY: ${{ secrets.STRIPE_API_KEY }}
-      #     STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
-      #     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME }}
-      #     NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET }}
-      #     NEXT_PUBLIC_DEMO_STORE_ID: ${{ secrets.NEXT_PUBLIC_DEMO_STORE_ID }}
-      #     NEXT_PUBLIC_DEMO_STORE_URL: ${{ secrets.NEXT_PUBLIC_DEMO_STORE_URL }}
-      #     NEXT_PUBLIC_DEMO_STORE_NAME: ${{ secrets.NEXT_PUBLIC_DEMO_STORE_NAME }}
-      #     FRONTEND_STORE_URL: ${{ secrets.FRONTEND_STORE_URL }}
+      - name: Build
+        run: npm run build
+        env:
+          # Add these as repository secrets:
+          # GitHub → Settings → Secrets and variables → Actions → New repository secret
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+          STRIPE_API_KEY: ${{ secrets.STRIPE_API_KEY }}
+          STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
+          NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME }}
+          NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET: ${{ secrets.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET }}
+          NEXT_PUBLIC_DEMO_STORE_ID: ${{ secrets.NEXT_PUBLIC_DEMO_STORE_ID }}
+          NEXT_PUBLIC_DEMO_STORE_URL: ${{ secrets.NEXT_PUBLIC_DEMO_STORE_URL }}
+          NEXT_PUBLIC_DEMO_STORE_NAME: ${{ secrets.NEXT_PUBLIC_DEMO_STORE_NAME }}
+          FRONTEND_STORE_URL: ${{ secrets.FRONTEND_STORE_URL }}
 
       - name: Bundle size check
         # Fails if any single JS chunk in .next/static/chunks/ exceeds 500 KB.
