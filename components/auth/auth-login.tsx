@@ -25,6 +25,7 @@ export default function AutoLoginButton() {
       if (!res.ok) throw new Error("Failed to get demo login token");
       const { token, error } = await res.json();
       if (error) throw new Error(error);
+      if (!token) throw new Error("No token received from server");
 
       const result = await signIn.create({
         strategy: "ticket",

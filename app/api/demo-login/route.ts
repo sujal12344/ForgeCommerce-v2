@@ -19,7 +19,8 @@ export async function GET() {
       expiresInSeconds: 60,
     });
     return NextResponse.json({ token });
-  } catch {
+  } catch (error) {
+    console.error("Failed to create demo sign-in token:", error);
     return NextResponse.json(
       { error: "Failed to create sign-in token" },
       { status: 500 }

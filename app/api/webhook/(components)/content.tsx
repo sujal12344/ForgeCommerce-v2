@@ -14,7 +14,7 @@ const Content = ({ isTestMode = false }: { isTestMode?: boolean }) => {
                   <p style="color:gray">The confirmed products and price can be viewed in the stripe dashboard (check email after payment) for any changes or cancellation of the purchase</p>
                     
                     
-                  <p style="font-size:16px;line-height:24px;margin:16px 0;color:#525f7f;text-align:left">Once you have confirmed the details of the order and have any complaints or want to get in touch you can always mail on <a style="color:blue; text-decoration: none;" href="mailto:${process.env.SUPPORT_EMAIL}">${process.env.SUPPORT_EMAIL}</a> </p>
+                  <p style="font-size:16px;line-height:24px;margin:16px 0;color:#525f7f;text-align:left">Once you have confirmed the details of the order and have any complaints or want to get in touch you can always mail on <a style="color:blue; text-decoration: none;" href="mailto:${process.env.NEXT_PUBLIC_DEMO_USER_EMAIL}">${process.env.NEXT_PUBLIC_DEMO_USER_EMAIL}</a> </p>
         
                   <p style="font-size:16px;line-height:24px;margin:16px 0;color:#525f7f;text-align:left">For any payment queries?! We&#x27;ll be here to help you with any step along the way. You can find answers to most questions and get in touch with us on our <a target="_blank" style="color:#556cd6;text-decoration:none" href="https://support.stripe.com/">support site</a>.</p>
                   <p style="font-size:16px;line-height:24px;margin:16px 0;color:#525f7f;text-align:left">— The Stripe team and E-comm store</p>
