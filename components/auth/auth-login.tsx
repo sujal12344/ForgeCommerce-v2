@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useToast } from "../ui/use-toast";
 
 export default function AutoLoginButton() {
-  const { signIn, isLoaded } = useSignIn();
+  const { signIn, isLoaded, setActive } = useSignIn();
   const [isLogging, setIsLogging] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
@@ -20,21 +20,19 @@ export default function AutoLoginButton() {
     setIsLogging(true);
 
     try {
-      const email = process.env.NEXT_PUBLIC_DEMO_USER_EMAIL;
-      const password = process.env.NEXT_PUBLIC_DEMO_USER_PASSWORD;
-      if (!email || !password)
-        throw new Error("Demo credentials not configured");
+      // Get a server-issued sign-in token to bypass Clerk's needs_client_trust
+      const res = await fetch("/api/demo-login");
+      if (!res.ok) throw new Error("Failed to get demo login token");
+      const { token, error } = await res.json();
+      if (error) throw new Error(error);
 
-      const signInAttempt = await signIn.create({
-        identifier: email,
-      });
-
-      const result = await signInAttempt.attemptFirstFactor({
-        strategy: "password",
-        password,
+      const result = await signIn.create({
+        strategy: "ticket",
+        ticket: token,
       });
 
       if (result.status === "complete") {
+        await setActive({ session: result.createdSessionId });
         router.push(`/${DEMO_STORE_ID}`);
       } else {
         console.error("Sign in incomplete:", result);
