@@ -1,22 +1,21 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 /**
  * Bundle size guard — runs after `next build`.
  * Fails CI if any single client-side JS chunk exceeds MAX_CHUNK_KB.
  * Tweak the threshold as the project grows.
  */
 
-const fs = require("fs");
-const path = require("path");
+import { existsSync, readdirSync, statSync } from "fs";
+import { join } from "path";
 
 const MAX_CHUNK_KB = 500; // 500 KB uncompressed per chunk
-const CHUNKS_DIR = path.join(".next", "static", "chunks");
+const CHUNKS_DIR = join(".next", "static", "chunks");
 
-if (!fs.existsSync(CHUNKS_DIR)) {
+if (!existsSync(CHUNKS_DIR)) {
   console.log("⚠️  .next/static/chunks not found — skipping bundle check.");
   process.exit(0);
 }
 
-const files = fs.readdirSync(CHUNKS_DIR).filter(f => f.endsWith(".js"));
+const files = readdirSync(CHUNKS_DIR).filter(f => f.endsWith(".js"));
 
 if (files.length === 0) {
   console.log("No JS chunks found.");
@@ -27,8 +26,8 @@ let failed = false;
 const oversized = [];
 
 for (const file of files) {
-  const filePath = path.join(CHUNKS_DIR, file);
-  const sizeKB = fs.statSync(filePath).size / 1024;
+  const filePath = join(CHUNKS_DIR, file);
+  const sizeKB = statSync(filePath).size / 1024;
   if (sizeKB > MAX_CHUNK_KB) {
     oversized.push({ file, sizeKB: sizeKB.toFixed(1) });
     failed = true;

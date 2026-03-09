@@ -12,7 +12,7 @@
     "prepare": "husky",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check-bundle": "node scripts/check-bundle.mjs",
+    "check-bundle": "node scripts/check-bundle.js",
     "test": "echo \"No tests yet\""
   },
   "lint-staged": {
