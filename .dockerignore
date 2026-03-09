@@ -1,0 +1,27 @@
+# Dependencies & build output – rebuilt inside Docker
+node_modules
+.next
+
+# Source control
+.git
+.gitignore
+
+# Local env files – secrets stay on the host, injected via docker-compose env_file
+.env
+.env.local
+.env*.local
+
+# Editor & OS
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+
+# Docker files themselves don't need to be in the image
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Misc
+*.md
+coverage

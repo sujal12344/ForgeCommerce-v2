@@ -1,0 +1,20 @@
+services:
+  app:
+    build:
+      context: .
+      # NEXT_PUBLIC_* must be available at build time (baked into the JS bundle).
+      # Docker Compose reads these automatically from your .env file.
+      args:
+        NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+        NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}
+        NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET: ${NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+        NEXT_PUBLIC_DEMO_STORE_ID: ${NEXT_PUBLIC_DEMO_STORE_ID}
+        NEXT_PUBLIC_DEMO_STORE_URL: ${NEXT_PUBLIC_DEMO_STORE_URL}
+        NEXT_PUBLIC_DEMO_STORE_NAME: ${NEXT_PUBLIC_DEMO_STORE_NAME}
+    ports:
+      - "3000:3000"
+    # Server-side secrets (DATABASE_URL, CLERK_SECRET_KEY, STRIPE_*, etc.)
+    # are injected at runtime — they never touch the image.
+    env_file:
+      - .env
+    restart: unless-stopped
