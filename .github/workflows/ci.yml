@@ -79,3 +79,20 @@ jobs:
         # Fails if any single JS chunk in .next/static/chunks/ exceeds 500 KB.
         # Catches accidental barrel imports or adding a huge library without tree-shaking.
         run: npm run check-bundle
+
+  # ── Job 3: smoke test against staging (needs STAGING_URL variable) ────────
+  smoke-test:
+    name: Smoke test · Artillery
+    runs-on: ubuntu-latest
+    needs: build
+    # Skips automatically if STAGING_URL repo variable is not set yet
+    if: ${{ vars.STAGING_URL != '' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run smoke test
+        # artillery is invoked via npx – no install step needed.
+        # 3 VUs/s × 30s = ~90 requests. Fails if p95 > 2s or any 500 error.
+        run: npx --yes artillery run --env BASE_URL=${{ vars.STAGING_URL }} artillery/smoke.yml

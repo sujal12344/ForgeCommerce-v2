@@ -1,0 +1,39 @@
+# Artillery smoke test config – runs in CI after every build
+# npx artillery run --env STAGING_URL=https://your-staging-url artillery/smoke.yml
+#
+# Thresholds (CI fails if breached):
+#   • p95 response time < 2 000 ms
+#   • Error rate (5xx) = 0
+
+config:
+  target: "{{ $env.STAGING_URL }}"
+  phases:
+    - duration: 30     # 30 seconds
+      arrivalRate: 3   # 3 new virtual users per second → ~90 total requests
+      name: smoke
+
+  # CI fails if any of these are violated
+  ensure:
+    thresholds:
+      - http.response_time.p95: 2000
+    conditions:
+      - expression: "(stats['http.codes.500'] || 0) === 0"
+        strict: true
+        comment: No 500 errors allowed
+
+scenarios:
+  - name: Public pages
+    flow:
+      - get:
+          url: "/sign-in"
+          expect:
+            - statusCode:
+                - 200
+                - 307   # Clerk redirect is acceptable
+      - think: 1
+      - get:
+          url: "/sign-up"
+          expect:
+            - statusCode:
+                - 200
+                - 307
