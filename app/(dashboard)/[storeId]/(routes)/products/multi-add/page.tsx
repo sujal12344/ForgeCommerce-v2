@@ -40,14 +40,19 @@ import remarkGfm from "remark-gfm";
 const formSchema = z.object({
   name: z.string().min(1),
   description: z.string().optional(),
-  Image: z.object({ url: z.string() }).array().min(1),
-  price: z.number().min(0),
+  image: z.object({ url: z.string() }).array().min(1),
+  price: z
+    .string()
+    .min(1, "Price is required")
+    .refine(value => !Number.isNaN(Number(value)) && Number(value) >= 1, {
+      message: "Price must be at least 1",
+    }),
   categoryId: z.string().min(1),
   colorId: z.string().min(1),
   sizeId: z.string().min(1),
-  Featured: z.boolean().default(false).optional(),
-  Archived: z.boolean().default(false).optional(),
-  ytURL: z.string().url().optional().or(z.literal("")),
+  featured: z.boolean().default(false).optional(),
+  archived: z.boolean().default(false).optional(),
+  ytURL: z.union([z.literal(""), z.url()]).optional(),
 });
 
 const bulkFormSchema = z.object({
@@ -74,13 +79,13 @@ const BulkProductForm = () => {
         {
           name: "",
           description: "",
-          Image: [],
-          price: 0,
+          image: [],
+          price: "",
           categoryId: "",
           colorId: "",
           sizeId: "",
-          Featured: false,
-          Archived: false,
+          featured: false,
+          archived: false,
           ytURL: "",
         },
       ],
@@ -126,7 +131,19 @@ const BulkProductForm = () => {
   const onSubmit = async (data: BulkProductFormValues) => {
     try {
       setLoading(true);
-      await axios.post(`/api/${storeId}/products/multiadd`, data.products);
+      const payload = data.products.map(product => ({
+        name: product.name,
+        price: Number(product.price),
+        categoryId: product.categoryId,
+        colorId: product.colorId,
+        sizeId: product.sizeId,
+        images: product.image,
+        featured: product.featured ?? false,
+        archived: product.archived ?? false,
+        description: product.description ?? "",
+        ytURL: product.ytURL ?? "",
+      }));
+      await axios.post(`/api/${storeId}/products/multiadd`, payload);
       router.refresh();
       router.push(`/${storeId}/products`);
       toast.success("Products created.");
@@ -152,13 +169,13 @@ const BulkProductForm = () => {
               append({
                 name: "",
                 description: "",
-                Image: [],
-                price: 0,
+                image: [],
+                price: "",
                 categoryId: "",
                 colorId: "",
                 sizeId: "",
-                Featured: false,
-                Archived: false,
+                featured: false,
+                archived: false,
                 ytURL: "",
               })
             }
@@ -218,9 +235,8 @@ const BulkProductForm = () => {
                             disabled={loading}
                             placeholder="9.99"
                             {...field}
-                            onChange={e =>
-                              field.onChange(parseFloat(e.target.value) || 0)
-                            }
+                            step="0.01"
+                            inputMode="decimal"
                           />
                         </FormControl>
                         <FormMessage />
@@ -325,13 +341,15 @@ const BulkProductForm = () => {
                   />
                   <FormField
                     control={form.control}
-                    name={`products.${index}.Featured`}
+                    name={`products.${index}.featured`}
                     render={({ field }) => (
                       <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                         <FormControl>
                           <Checkbox
                             checked={field.value}
-                            onCheckedChange={field.onChange}
+                            onCheckedChange={checked =>
+                              field.onChange(checked === true)
+                            }
                           />
                         </FormControl>
                         <div className="space-y-1 leading-none">
@@ -345,13 +363,15 @@ const BulkProductForm = () => {
                   />
                   <FormField
                     control={form.control}
-                    name={`products.${index}.Archived`}
+                    name={`products.${index}.archived`}
                     render={({ field }) => (
                       <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                         <FormControl>
                           <Checkbox
                             checked={field.value}
-                            onCheckedChange={field.onChange}
+                            onCheckedChange={checked =>
+                              field.onChange(checked === true)
+                            }
                           />
                         </FormControl>
                         <div className="space-y-1 leading-none">
@@ -443,7 +463,7 @@ const BulkProductForm = () => {
                   />
                   <FormField
                     control={form.control}
-                    name={`products.${index}.Image`}
+                    name={`products.${index}.image`}
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Images</FormLabel>

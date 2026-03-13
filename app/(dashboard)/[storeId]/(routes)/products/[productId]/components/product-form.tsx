@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Category, Color, Image, Product, Size } from "@prisma/client";
+import { Category, Color, Image, Size } from "@prisma/client";
 import axios from "axios";
 import { TrashIcon } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
@@ -41,21 +41,40 @@ import { Textarea } from "@/components/ui/textarea";
 const formSchema = z.object({
   name: z.string().min(1),
   description: z.string().min(1).optional(),
-  Image: z.object({ url: z.string() }).array().min(1),
-  price: z.number().min(1),
+  image: z.object({ url: z.string() }).array().min(1),
+  price: z
+    .string()
+    .min(1, "Price is required")
+    .refine(value => !Number.isNaN(Number(value)) && Number(value) >= 1, {
+      message: "Price must be at least 1",
+    }),
   categoryId: z.string().min(1),
   colorId: z.string().min(1),
   sizeId: z.string().min(1),
-  Featured: z.boolean().default(false).optional(),
-  Archived: z.boolean().default(false).optional(),
-  ytURL: z.string().url().optional().or(z.literal("")),
+  featured: z.boolean().default(false).optional(),
+  archived: z.boolean().default(false).optional(),
+  ytURL: z.union([z.literal(""), z.url()]).optional(),
 });
 
 type ProductFormValues = z.infer<typeof formSchema>;
 
 interface ProductFormProps {
   initialData:
-    | (Product & {
+    | ({
+        id: string;
+        storeId: string;
+        categoryId: string;
+        sizeId: string;
+        colorId: string;
+        name: string;
+        price: number;
+        description: string | null;
+        ytURL: string | null;
+        featured: boolean;
+        archived: boolean;
+        createdAt: Date;
+        updatedAt: Date;
+      } & {
         images: Image[];
       })
     | null;
@@ -85,19 +104,21 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   const defaultValues = initialData
     ? {
         ...initialData,
-        Image: initialData.images.map(img => ({ url: img.url })),
-        price: parseFloat(String(initialData?.price)),
+        image: initialData.images.map(img => ({ url: img.url })),
+        price: String(initialData.price),
+        featured: initialData.featured,
+        archived: initialData.archived,
       }
     : {
         name: "",
         description: "",
-        Image: [],
-        price: 99.99,
+        image: [],
+        price: "99.99",
         categoryId: "",
         colorId: "",
         sizeId: "",
-        Featured: false,
-        Archived: false,
+        featured: false,
+        archived: false,
         ytURL: "",
       };
 
@@ -114,10 +135,22 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   const onSubmit = async (data: ProductFormValues) => {
     try {
       setLoading(true);
+      const payload = {
+        name: data.name,
+        price: Number(data.price),
+        categoryId: data.categoryId,
+        colorId: data.colorId,
+        sizeId: data.sizeId,
+        images: data.image,
+        featured: data.featured ?? false,
+        archived: data.archived ?? false,
+        description: data.description ?? "",
+        ytURL: data.ytURL ?? "",
+      };
       if (initialData) {
-        await axios.put(`/api/${storeId}/products/${productId}`, data);
+        await axios.put(`/api/${storeId}/products/${productId}`, payload);
       } else {
-        await axios.post(`/api/${storeId}/products`, data);
+        await axios.post(`/api/${storeId}/products`, payload);
       }
       router.refresh();
       router.push(`/${storeId}/products`);
@@ -173,7 +206,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         >
           <FormField
             control={form.control}
-            name="Image"
+            name="image"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Images</FormLabel>
@@ -222,6 +255,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                       type="number"
                       disabled={loading}
                       placeholder="9.99"
+                      step="0.01"
+                      inputMode="decimal"
                       {...field}
                     />
                   </FormControl>
@@ -327,7 +362,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             />
             <FormField
               control={form.control}
-              name="Featured"
+              name="featured"
               render={({ field }) => (
                 <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                   <FormControl>
@@ -349,7 +384,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             />
             <FormField
               control={form.control}
-              name="Archived"
+              name="archived"
               render={({ field }) => (
                 <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                   <FormControl>

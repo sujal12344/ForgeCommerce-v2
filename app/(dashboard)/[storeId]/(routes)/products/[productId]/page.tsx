@@ -17,6 +17,13 @@ const ProductIdPage = async ({
     },
   });
 
+  const serializedProduct = product
+    ? {
+        ...product,
+        price: Number(product.price),
+      }
+    : null;
+
   const sizes = await prisma.size.findMany({
     where: {
       storeId,
@@ -36,7 +43,7 @@ const ProductIdPage = async ({
     <div className="flex flex-col ">
       <div className="flex-1 px-8 py-6">
         <ProductForm
-          initialData={product}
+          initialData={serializedProduct}
           colors={colors}
           sizes={sizes}
           categories={categories}
