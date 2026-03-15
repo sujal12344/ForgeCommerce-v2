@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
+  provider = "postgresql"
 }
 
 model Store {
@@ -138,10 +138,10 @@ model Order {
 }
 
 model OrderItem {
-  id        String  @id @default(cuid())
+  id        String   @id @default(cuid())
   orderId   String // Foreign Key to Order
   order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  productId String?  // Foreign Key to Product (nullable to preserve history)
+  productId String? // Foreign Key to Product (nullable to preserve history)
   product   Product? @relation("ProducttoOrderitem", fields: [productId], references: [id], onDelete: SetNull)
   quantity  Int      @default(1)
   price     Decimal  @db.Decimal(10, 2) // Price snapshot at time of purchase
